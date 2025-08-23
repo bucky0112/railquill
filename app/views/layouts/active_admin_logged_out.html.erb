@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Railquill Admin - Sign In</title>
+  
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  
+  <%= stylesheet_link_tag "active_admin" %>
+  <script src="<%= asset_path('active_admin.js') %>" defer></script>
+</head>
+<body class="logged_out">
+  <div id="wrapper">
+    <div id="content_wrapper">
+      <div id="active_admin_content">
+        <%= yield %>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
