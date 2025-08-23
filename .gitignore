@@ -35,3 +35,9 @@
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+# Don't ignore static site directory - we want to commit it
+# /static_site/
+
+# Ignore Claude Code configuration
+/.claude
