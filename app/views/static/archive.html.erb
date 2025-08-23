@@ -1,0 +1,143 @@
+<div class="container-narrow">
+  <header>
+    <h1>Archive</h1>
+    <p>All published articles on Railquill, organized chronologically.</p>
+  </header>
+
+  <% if @posts.any? %>
+    <div class="archive-list">
+      <% current_year = nil %>
+      <% @posts.each do |post| %>
+        <% post_year = post.published_at&.year || post.created_at.year %>
+        <% if current_year != post_year %>
+          <% current_year = post_year %>
+          <h2 class="archive-year"><%= current_year %></h2>
+        <% end %>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="<%= (post.published_at || post.created_at).strftime('%Y-%m-%d') %>">
+              <%= (post.published_at || post.created_at).strftime('%B %d') %>
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="<%= post_path(post.slug) %>"><%= post.title %></a>
+            </h3>
+            <% if post.excerpt.present? %>
+              <p class="archive-excerpt"><%= post.excerpt %></p>
+            <% end %>
+            <div class="archive-meta">
+              <% if post.reading_time.present? %>
+                <span><%= post.reading_time %> min read</span>
+              <% end %>
+            </div>
+          </div>
+        </article>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="empty-state">
+      <h2>No articles yet</h2>
+      <p>Check back soon for new content!</p>
+    </div>
+  <% end %>
+</div>
+
+<style>
+.archive-list {
+  margin-top: 3rem;
+}
+
+.archive-year {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 3rem 0 1.5rem;
+  color: var(--primary-600);
+  border-bottom: 2px solid var(--primary-100);
+  padding-bottom: 0.5rem;
+}
+
+.archive-item {
+  display: flex;
+  gap: 2rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--gray-100);
+  transition: background-color 0.2s ease;
+}
+
+.archive-item:hover {
+  background-color: var(--gray-50);
+  margin: 0 -1rem;
+  padding: 1.5rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.archive-date {
+  flex-shrink: 0;
+  width: 120px;
+  color: var(--gray-500);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.archive-content {
+  flex: 1;
+}
+
+.archive-content h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.archive-content h3 a {
+  color: var(--gray-900);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.archive-content h3 a:hover {
+  color: var(--primary-600);
+}
+
+.archive-excerpt {
+  color: var(--gray-600);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0.5rem 0;
+}
+
+.archive-meta {
+  font-size: 0.75rem;
+  color: var(--gray-500);
+  font-weight: 500;
+}
+
+@media (max-width: 640px) {
+  .archive-item {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .archive-date {
+    width: auto;
+  }
+  
+  .archive-year {
+    font-size: 1.5rem;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 0;
+  color: var(--gray-600);
+}
+
+.empty-state h2 {
+  color: var(--gray-700);
+  margin-bottom: 0.5rem;
+}
+</style>

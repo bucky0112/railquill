@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+require_relative '../config/boot'
+require 'rake'
+
+# Load Rails environment
+Rails.application.load_tasks
+
+# Run the publish task
+Rake::Task['static:publish'].invoke
+
+puts "\nDone! Static site generated in static_site/"
