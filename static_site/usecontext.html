@@ -1,0 +1,1085 @@
+<!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>使用 useContext 處理跨元件狀態 - My Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    
+      <meta name="description" content="使用 useContext 處理跨元件狀態">
+    
+      <!-- Open Graph / Facebook -->
+      <meta property="og:type" content="article">
+      <meta property="og:title" content="使用 useContext 處理跨元件狀態">
+      <meta property="og:description" content="使用 useContext 處理跨元件狀態">
+      
+      <!-- Twitter -->
+      <meta property="twitter:card" content="summary_large_image">
+      <meta property="twitter:title" content="使用 useContext 處理跨元件狀態">
+      <meta property="twitter:description" content="使用 useContext 處理跨元件狀態">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+      /* Design System CSS Variables */
+      :root {
+        /* Brand Colors */
+        --primary-50: #EEF2FF;
+        --primary-100: #E0E7FF;
+        --primary-200: #C7D2FE;
+        --primary-300: #A5B4FC;
+        --primary-400: #818CF8;
+        --primary-500: #6366F1;
+        --primary-600: #4F46E5;
+        --primary-700: #4338CA;
+        --primary-800: #3730A3;
+        --primary-900: #312E81;
+
+        /* Neutral Colors */
+        --gray-50: #F9FAFB;
+        --gray-100: #F3F4F6;
+        --gray-200: #E5E7EB;
+        --gray-300: #D1D5DB;
+        --gray-400: #9CA3AF;
+        --gray-500: #6B7280;
+        --gray-600: #4B5563;
+        --gray-700: #374151;
+        --gray-800: #1F2937;
+        --gray-900: #111827;
+
+        /* Semantic Colors */
+        --success: #059669;
+        --success-light: #D1FAE5;
+        --warning: #D97706;
+        --warning-light: #FEF3C7;
+        --error: #DC2626;
+        --error-light: #FEE2E2;
+        --info: #2563EB;
+        --info-light: #DBEAFE;
+        
+        /* Typography */
+        --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        --font-serif: 'Lora', Georgia, 'Times New Roman', serif;
+        --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+        
+        /* Type Scale */
+        --text-xs: 0.75rem;
+        --text-sm: 0.875rem;
+        --text-base: 1rem;
+        --text-lg: 1.125rem;
+        --text-xl: 1.25rem;
+        --text-2xl: 1.5rem;
+        --text-3xl: 1.875rem;
+        --text-4xl: 2.25rem;
+        --text-5xl: 3rem;
+        --text-6xl: 3.75rem;
+        
+        /* Line Heights */
+        --leading-none: 1;
+        --leading-tight: 1.25;
+        --leading-snug: 1.375;
+        --leading-normal: 1.5;
+        --leading-relaxed: 1.625;
+        --leading-loose: 2;
+        
+        /* Letter Spacing */
+        --tracking-tighter: -0.05em;
+        --tracking-tight: -0.025em;
+        --tracking-normal: 0;
+        --tracking-wide: 0.025em;
+        --tracking-wider: 0.05em;
+        --tracking-widest: 0.1em;
+        
+        /* Spacing */
+        --space-px: 1px;
+        --space-0: 0;
+        --space-1: 0.25rem;
+        --space-2: 0.5rem;
+        --space-3: 0.75rem;
+        --space-4: 1rem;
+        --space-5: 1.25rem;
+        --space-6: 1.5rem;
+        --space-8: 2rem;
+        --space-10: 2.5rem;
+        --space-12: 3rem;
+        --space-16: 4rem;
+        --space-20: 5rem;
+        --space-24: 6rem;
+        
+        /* Transitions */
+        --ease-linear: linear;
+        --ease-in: cubic-bezier(0.4, 0, 1, 1);
+        --ease-out: cubic-bezier(0, 0, 0.2, 1);
+        --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      
+      /* Reset and base styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: var(--font-sans);
+        line-height: 1.6;
+        color: var(--gray-900);
+        background: #fff;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      
+      /* Container */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+      
+      .container-narrow {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+      
+      /* Header */
+      header {
+        background: #fff;
+        border-bottom: 1px solid var(--gray-100);
+        padding: 1.5rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.9);
+      }
+      
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      header h1 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+      }
+      
+      header a {
+        color: var(--gray-900);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      
+      header a:hover {
+        color: var(--primary-600);
+      }
+      
+      .header-nav {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+      }
+      
+      .header-nav a {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--gray-700);
+      }
+      
+      /* Main content */
+      main {
+        min-height: calc(100vh - 200px);
+        padding: 3rem 0;
+      }
+      
+      /* Hero Section */
+      /* Hero Section */
+      .hero {
+        text-align: center;
+        padding: var(--space-16) 0;
+        margin-bottom: var(--space-16);
+        background: linear-gradient(135deg, var(--gray-50) 0%, #fff 100%);
+        border-radius: 1rem;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 30% 20%, var(--primary-100) 0%, transparent 50%), 
+                    radial-gradient(circle at 80% 80%, var(--primary-50) 0%, transparent 50%);
+        opacity: 0.5;
+        z-index: 1;
+      }
+      
+      .hero > * {
+        position: relative;
+        z-index: 2;
+      }
+      
+      .hero h2 {
+        font-size: var(--text-5xl);
+        font-weight: 700;
+        letter-spacing: var(--tracking-tight);
+        margin-bottom: var(--space-4);
+        background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-500) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: var(--leading-tight);
+      }
+      
+      .hero p {
+        font-size: var(--text-xl);
+        color: var(--gray-600);
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: var(--leading-relaxed);
+      }
+      
+      /* Article styles */
+      article {
+        margin-bottom: 3rem;
+      }
+      
+      article h1 {
+        font-size: 3rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.1;
+        letter-spacing: -0.025em;
+        font-weight: 800;
+      }
+      
+      article h2 {
+        font-size: 2rem;
+        margin: 3rem 0 1.5rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+      }
+      
+      article h3 {
+        font-size: 1.5rem;
+        margin: 2rem 0 1rem;
+        font-weight: 600;
+      }
+      
+      article p {
+        margin-bottom: 1.5rem;
+        font-family: var(--font-serif);
+        font-size: 1.125rem;
+        line-height: 1.75;
+        color: var(--gray-700);
+      }
+      
+      article a {
+        color: var(--primary-600);
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.2s;
+      }
+      
+      article a:hover {
+        border-bottom-color: var(--primary-600);
+      }
+      
+      /* Drop cap for article content */
+      .post-content > p:first-of-type::first-letter {
+        float: left;
+        font-size: 4rem;
+        line-height: 3.5rem;
+        padding-right: var(--space-2);
+        margin-top: -0.25rem;
+        font-weight: 700;
+        color: var(--primary-600);
+        font-family: var(--font-serif);
+      }
+      
+      article code {
+        background: var(--gray-100);
+        padding: 0.125em 0.375em;
+        border-radius: 0.25rem;
+        font-family: var(--font-mono);
+        font-size: 0.875em;
+        color: var(--gray-900);
+      }
+      
+      article pre {
+        background: var(--gray-900);
+        color: var(--gray-100);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+        margin: 2rem 0;
+        position: relative;
+      }
+      
+      article pre code {
+        background: none;
+        padding: 0;
+        color: inherit;
+        font-size: 0.875rem;
+        line-height: 1.7;
+      }
+      
+      /* Enhanced syntax highlighting for common languages */
+      .highlight .c { color: #6B7280; font-style: italic; } /* Comment */
+      .highlight .k { color: #7C3AED; font-weight: bold; } /* Keyword */
+      .highlight .s { color: #059669; } /* String */
+      .highlight .mi { color: #DC2626; } /* Number */
+      .highlight .nf { color: #2563EB; } /* Function */
+      .highlight .nc { color: #7C2D12; font-weight: bold; } /* Class */
+      .highlight .na { color: #B45309; } /* Attribute */
+      .highlight .nb { color: #7C3AED; } /* Built-in */
+      .highlight .err { color: #DC2626; background: var(--error-light); } /* Error */
+      
+      article blockquote {
+        border-left: 4px solid var(--primary-600);
+        padding-left: 1.5rem;
+        margin: 2rem 0;
+        font-style: italic;
+        color: var(--gray-700);
+      }
+      
+      article blockquote p {
+        font-size: 1.25rem;
+      }
+      
+      article ul, article ol {
+        margin-bottom: 1.5rem;
+        padding-left: 2rem;
+        font-family: var(--font-serif);
+      }
+      
+      article li {
+        margin-bottom: 0.5rem;
+        font-size: 1.125rem;
+        line-height: 1.75;
+        color: var(--gray-700);
+      }
+      
+      article table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 2rem 0;
+        font-size: 0.875rem;
+      }
+      
+      article th, article td {
+        padding: 0.75rem;
+        border-bottom: 1px solid var(--gray-200);
+        text-align: left;
+      }
+      
+      article th {
+        background: var(--gray-50);
+        font-weight: 600;
+        color: var(--gray-900);
+        font-family: var(--font-sans);
+      }
+      
+      article tbody tr:hover {
+        background: var(--gray-50);
+      }
+      
+      /* Article images - responsive sizing */
+      article img {
+        max-width: 100%;
+        height: auto;
+        margin: 2rem 0;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      
+      article img:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      }
+      
+      /* Center images in paragraphs */
+      article p img {
+        display: block;
+        margin: 2rem auto;
+      }
+      
+      /* Article iframes - responsive embedded content */
+      article iframe {
+        max-width: 100%;
+        width: 100%;
+        height: 400px;
+        min-height: 300px;
+        margin: 2rem 0;
+        border-radius: 0.5rem;
+        border: 1px solid var(--gray-200);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+      }
+      
+      article iframe:hover {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      }
+      
+      /* Responsive iframe heights for different screen sizes */
+      @media (min-width: 768px) {
+        article iframe {
+          height: 500px;
+        }
+      }
+      
+      /* Post meta */
+      .post-meta {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: var(--gray-500);
+        margin-bottom: 2rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        flex-wrap: wrap;
+      }
+      
+      .post-meta-divider {
+        width: 4px;
+        height: 4px;
+        background: var(--gray-400);
+        border-radius: 50%;
+      }
+      
+      /* Post grid */
+      .post-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: var(--space-8);
+        margin-bottom: var(--space-12);
+      }
+      
+      /* Card Component */
+      .post-card {
+        background: white;
+        border-radius: 0.75rem;
+        overflow: hidden;
+        border: 1px solid var(--gray-100);
+        transition: all 0.3s var(--ease-out);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+      
+      .post-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.1);
+        border-color: var(--gray-200);
+      }
+      
+      .post-card-image {
+        aspect-ratio: 16/9;
+        overflow: hidden;
+        background: var(--gray-100);
+      }
+      
+      .post-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+      
+      .post-card:hover .post-card-image img {
+        transform: scale(1.05);
+      }
+      
+      .post-card-content {
+        padding: 1.5rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .post-card h2 {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        line-height: 1.4;
+      }
+      
+      .post-card a {
+        color: var(--gray-900);
+        text-decoration: none;
+      }
+      
+      .post-card a:hover {
+        color: var(--primary-600);
+      }
+      
+      .post-excerpt {
+        color: var(--gray-600);
+        margin: 0.75rem 0;
+        font-size: 0.875rem;
+        line-height: 1.6;
+        flex: 1;
+      }
+      
+      .post-card-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--gray-500);
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+      
+      /* Post list fallback */
+      .post-list {
+        list-style: none;
+        padding: 0;
+      }
+      
+      .post-list-item {
+        padding: 2rem 0;
+        border-bottom: 1px solid var(--gray-100);
+      }
+      
+      .post-list-item:last-child {
+        border-bottom: none;
+      }
+      
+      /* Featured image */
+      .featured-image {
+        margin: 0 -1.5rem 3rem;
+        position: relative;
+      }
+      
+      .featured-image img {
+        width: 100%;
+        height: auto;
+        max-height: 600px;
+        object-fit: cover;
+      }
+      
+      .featured-image-caption {
+        text-align: center;
+        margin-top: 1rem;
+        font-size: 0.875rem;
+        color: var(--gray-500);
+        font-style: italic;
+      }
+      
+      @media (min-width: 768px) {
+        .featured-image {
+          margin: 0 0 3rem;
+          border-radius: 0.75rem;
+          overflow: hidden;
+        }
+      }
+      
+      /* Post navigation */
+      .post-navigation {
+        margin-top: 4rem;
+        padding-top: 3rem;
+        border-top: 1px solid var(--gray-100);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+      
+      .post-nav-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      
+      .post-nav-item.prev {
+        text-align: left;
+      }
+      
+      .post-nav-item.next {
+        text-align: right;
+        align-items: flex-end;
+      }
+      
+      .post-nav-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--gray-500);
+        font-weight: 600;
+      }
+      
+      .post-nav-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--gray-900);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      
+      .post-nav-title:hover {
+        color: var(--primary-600);
+      }
+      
+      @media (max-width: 640px) {
+        .post-navigation {
+          grid-template-columns: 1fr;
+        }
+      }
+      
+      /* Footer */
+      footer {
+        margin-top: 5rem;
+        padding: 3rem 0;
+        border-top: 1px solid var(--gray-100);
+        background: var(--gray-50);
+      }
+      
+      .footer-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 3rem;
+        margin-bottom: 2rem;
+      }
+      
+      .footer-section h3 {
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--gray-900);
+        margin-bottom: 1rem;
+      }
+      
+      .footer-section p,
+      .footer-section a {
+        font-size: 0.875rem;
+        color: var(--gray-600);
+        text-decoration: none;
+        line-height: 1.75;
+      }
+      
+      .footer-section a:hover {
+        color: var(--primary-600);
+      }
+      
+      .footer-section ul {
+        list-style: none;
+        padding: 0;
+      }
+      
+      .footer-section li {
+        margin-bottom: 0.5rem;
+      }
+      
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid var(--gray-200);
+        color: var(--gray-500);
+        font-size: 0.875rem;
+      }
+      
+      @media (max-width: 768px) {
+        .footer-content {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+      }
+      
+      /* Utility classes */
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
+      
+      /* Loading skeleton */
+      .skeleton {
+        background: linear-gradient(90deg, var(--gray-100) 25%, var(--gray-200) 50%, var(--gray-100) 75%);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+      }
+      
+      @keyframes loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+      
+      /* Component utilities */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--space-2) var(--space-4);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        line-height: var(--leading-tight);
+        border-radius: 0.375rem;
+        transition: all 0.2s var(--ease-out);
+        cursor: pointer;
+        border: 1px solid transparent;
+        text-decoration: none;
+      }
+      
+      .btn-primary {
+        background: var(--primary-600);
+        color: white;
+      }
+      
+      .btn-primary:hover {
+        background: var(--primary-700);
+        transform: translateY(-1px);
+      }
+      
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.75rem;
+        font-size: var(--text-xs);
+        font-weight: 600;
+        line-height: 1rem;
+        border-radius: 9999px;
+        text-transform: uppercase;
+        letter-spacing: var(--tracking-wide);
+      }
+      
+      .badge-primary {
+        background: var(--primary-100);
+        color: var(--primary-700);
+      }
+      
+      .badge-featured {
+        background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+        color: white;
+        box-shadow: 0 2px 4px rgba(99, 102, 241, 0.2);
+      }
+      
+      /* Animations */
+      @keyframes fade-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      
+      @keyframes slide-up {
+        from { 
+          opacity: 0;
+          transform: translateY(1rem);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .animate-fade-in {
+        animation: fade-in 0.6s var(--ease-out);
+      }
+      
+      .animate-slide-up {
+        animation: slide-up 0.6s var(--ease-out);
+      }
+      
+      /* Responsive utilities */
+      @media (max-width: 640px) {
+        article h1 { font-size: var(--text-4xl); }
+        article h2 { font-size: var(--text-2xl); }
+        article h3 { font-size: var(--text-xl); }
+        article p { font-size: var(--text-base); }
+        .hero h2 { font-size: var(--text-4xl); }
+        .hero p { font-size: var(--text-lg); }
+        .container { padding: 0 var(--space-4); }
+        .container-narrow { padding: 0 var(--space-4); }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-content">
+          <h1><a href="/">Railquill</a></h1>
+          <nav class="header-nav">
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/archive">Archive</a>
+            <a href="/feed.xml" title="RSS Feed">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 11a9 9 0 019 9M4 4a16 16 0 0116 16M5 20a1 1 0 100-2 1 1 0 000 2z"/>
+              </svg>
+            </a>
+          </nav>
+        </div>
+      </div>
+    </header>
+    
+    <main>
+      <!-- BEGIN app/views/static/post.html.erb --><div class="container-narrow">
+  <article class="animate-fade-in">
+    <!-- Article Header -->
+    <header style="text-align: center; margin-bottom: var(--space-12); padding-top: var(--space-8);">
+      <h1 style="font-size: var(--text-5xl); font-weight: 800; line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6); color: var(--gray-900); max-width: 800px; margin-left: auto; margin-right: auto;">
+        使用 useContext 處理跨元件狀態
+      </h1>
+      <div class="post-meta" style="justify-content: center; margin-bottom: var(--space-4);">
+        <span style="color: var(--gray-600);">March 02, 2022</span>
+          <span class="post-meta-divider"></span>
+          <span style="color: var(--gray-600);">2 min read</span>
+      </div>
+        <p style="font-size: var(--text-xl); color: var(--gray-600); line-height: var(--leading-relaxed); font-style: italic; max-width: 600px; margin: 0 auto; font-family: var(--font-serif);">
+          寫了這麼久 React，發現我的筆記都沒整理過，趁最近比較不忙來清理一下筆記 XD
+這次要分享的是跨元件處理狀態的 hook -- useContext。
+        </p>
+    </header>
+    
+    <!-- Featured Image -->
+    
+    <!-- Article Content -->
+    <div class="post-content animate-slide-up" style="animation-delay: 0.4s; font-family: var(--font-serif); font-size: var(--text-lg); line-height: var(--leading-loose); color: var(--gray-800);">
+      <p>寫了這麼久 React，發現我的筆記都沒整理過，趁最近比較不忙來清理一下筆記 XD
+這次要分享的是跨元件處理狀態的 hook -- useContext。</p>
+
+<!--more-->
+
+<h2 id="part-2c030205c358ccc0">使用情境</h2>
+
+<p>一般寫 React 時，如果需要將元件的狀態傳遞的話，如果是簡單的父子元件傳遞，可以用 props 來傳。但如果是很多層的情況，或是同層的子組件要互傳狀態的話，可能用 props 就不是這麼適合。當然也可以使用一些狀態管理的套件，例如：Redux（之後會找時間分享）。不過，其實 React 內建就有 useContext 這個 hook，這邊就來示範一下作法：</p>
+
+<p>使用的情境是分別有兩個元件，有一個輸入框 - A，跟一個顯示輸入的文字 - B，如果 A 改變輸入的文字，那麼 B 就會即時顯示該文字。</p>
+
+<h2 id="part-2b9091bbbda23d55">初始設置</h2>
+
+<p>以下是原始的程式碼，可以看到分別有 InputText.js 跟 ShowText.js 兩個元件放在 App.js 中</p>
+
+<pre><code class="jsx">// App.js
+import InputText from &#39;./InputText&#39;
+import ShowText from &#39;./ShowText&#39;
+
+export default function App() {
+
+  return (
+    &lt;div className=&#39;App&#39;&gt;
+      &lt;InputText /&gt;
+      &lt;ShowText /&gt;
+    &lt;/div&gt;
+  )
+}
+
+// InputText
+const InputText = () =&gt; {
+
+  return (
+    &lt;div&gt;
+      &lt;input type=&quot;text&quot; /&gt;
+    &lt;/div&gt;
+  );
+};
+
+export default InputText;
+
+// ShowText
+const ShowText = () =&gt; {
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Hello World&lt;/p&gt;
+    &lt;/div&gt;
+  );
+};
+
+export default ShowText;
+</code></pre>
+
+<h2 id="createcontext">使用 createContext 建立共用狀態</h2>
+
+<p>首先 import createContext，並且設一個變數，然後 export 該變數，例如： AppContext，等等會給其他元件使用。</p>
+
+<pre><code class="jsx">import { createContext } from &#39;react&#39;
+
+export const AppContext = createContext()
+</code></pre>
+
+<p>接著在要傳遞狀態的父元件，在這個範例也就是 App.js 中，在最外層用 AppContext 將所有子元件包起來，並且設置 value。</p>
+
+<pre><code class="jsx">&lt;AppContext.Provider value={{}}&gt;
+  &lt;div&gt;
+    &lt;InputText /&gt;
+    &lt;ShowText /&gt;
+  &lt;/div&gt;
+&lt;/AppContext.Provider&gt;
+</code></pre>
+
+<p>可以發現 value 是一個物件，裡面可以放入任何狀態，等等就可以讓其他元件使用，這邊用一個 useState 來處理狀態。</p>
+
+<pre><code class="jsx">import { createContext, useState } from &#39;react&#39;
+
+export default function App() {
+  const [text, setText] = useState(&#39;Hello World&#39;)
+
+  return (
+    &lt;AppContext.Provider value={{ text, setText }}&gt;
+      &lt;div className=&#39;App&#39;&gt;
+        &lt;InputText /&gt;
+        &lt;ShowText /&gt;
+      &lt;/div&gt;
+    &lt;/AppContext.Provider&gt;
+  )
+}
+</code></pre>
+
+<h2 id="usecontext">利用 useContext 讓其他元件處理狀態</h2>
+
+<h3 id="inputtext">InputText</h3>
+
+<p>首先 import useContext，並且參數帶入一開始建立的 AppContext，然後從裡面取出 setText 來變更狀態。</p>
+
+<pre><code class="jsx">import { useContext } from &#39;react&#39;
+import { AppContext } from &#39;./App&#39;
+
+const InputText = () =&gt; {
+  const { text, setText } = useContext(AppContext)
+
+  return (
+    &lt;div&gt;
+      &lt;input type=&#39;text&#39; value={text} onChange={(e) =&gt; setText(e.target.value)} /&gt;
+    &lt;/div&gt;
+  )
+}
+</code></pre>
+
+<h3 id="showtext">ShowText</h3>
+
+<p>一樣 import useContext，並且參數帶入一開始建立的 AppContext，然後從裡面取出 text 來顯示狀態。</p>
+
+<pre><code class="jsx">import { useContext } from &#39;react&#39;
+import { AppContext } from &#39;./App&#39;
+
+const ShowText = () =&gt; {
+  const { text } = useContext(AppContext)
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;{text}&lt;/p&gt;
+    &lt;/div&gt;
+  )
+}
+</code></pre>
+
+<p>這樣本次範例就完成了，下面有 Demo 可以試玩看看 ⬇️</p>
+
+<iframe src="https://codesandbox.io/embed/usecontext-example-ciw09g?fontsize=14&hidenavigation=1&theme=dark"
+     style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
+     title="useContext-example"
+     allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+     sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+   ></iframe>
+
+    </div>
+    
+    <!-- Share Section -->
+    <div class="animate-slide-up" style="animation-delay: 0.6s; margin-top: var(--space-12); padding: var(--space-8) 0; background: linear-gradient(135deg, var(--gray-50) 0%, white 100%); border-radius: 1rem; border: 1px solid var(--gray-100);">
+      <div style="text-align: center;">
+        <h3 style="font-size: var(--text-lg); font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-2); font-family: var(--font-sans);">Enjoyed this article?</h3>
+        <p style="font-size: var(--text-sm); color: var(--gray-600); margin-bottom: var(--space-6); font-family: var(--font-sans);">Share it with your network and help others discover great content</p>
+        <div style="display: flex; justify-content: center; gap: var(--space-3); flex-wrap: wrap;">
+          <a href="https://twitter.com/intent/tweet?text=%E4%BD%BF%E7%94%A8+useContext+%E8%99%95%E7%90%86%E8%B7%A8%E5%85%83%E4%BB%B6%E7%8B%80%E6%85%8B&url=http%3A%2F%2Fexample.org" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             style="background: #1DA1F2; color: white; border-color: #1DA1F2; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#1a91da'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#1DA1F2'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+            </svg>
+            Share on Twitter
+          </a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=http%3A%2F%2Fexample.org" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             style="background: #0077B5; color: white; border-color: #0077B5; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#005885'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#0077B5'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            Share on LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
+  </article>
+  
+  <!-- Post Navigation -->
+  <nav class="post-navigation animate-slide-up" style="animation-delay: 0.8s; margin-top: var(--space-16); padding-top: var(--space-12); border-top: 2px solid var(--gray-100);">
+      <div class="post-nav-item prev">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">← Previous Post</span>
+        <a href="/electron-react.html" class="post-nav-title" style="font-family: var(--font-sans);">
+          使用 Electron 搭配 React 建置桌面程式
+        </a>
+      </div>
+    
+      <div class="post-nav-item next">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">Next Post →</span>
+        <a href="/usestate-usereducer.html" class="post-nav-title" style="font-family: var(--font-sans);">
+          除了 useState，你可以選擇更好管理狀態的 useReducer
+        </a>
+      </div>
+  </nav>
+  
+  <!-- Back to Home -->
+  <div style="text-align: center; margin-top: var(--space-12); padding-top: var(--space-8); border-top: 1px solid var(--gray-100);">
+    <a href="/" class="btn" style="background: var(--gray-100); color: var(--gray-700); border-color: var(--gray-200);" onmouseover="this.style.background='var(--gray-200)'; this.style.transform='translateY(-1px)';" onmouseout="this.style.background='var(--gray-100)'; this.style.transform='translateY(0)';">
+      <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+      </svg>
+      Back to Articles
+    </a>
+  </div>
+</div><!-- END app/views/static/post.html.erb -->
+    </main>
+    
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>About Railquill</h3>
+            <p>A modern blog platform built with Ruby on Rails, designed for developers who love clean code and beautiful typography.</p>
+          </div>
+          <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/archive">Archive</a></li>
+              <li><a href="/feed.xml">RSS Feed</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h3>Connect</h3>
+            <ul>
+              <li><a href="https://twitter.com/railquill" target="_blank" rel="noopener">Twitter</a></li>
+              <li><a href="https://github.com/railquill" target="_blank" rel="noopener">GitHub</a></li>
+              <li><a href="mailto:hello@railquill.com">Email</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html><!-- END app/views/layouts/static.html.erb -->

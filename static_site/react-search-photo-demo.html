@@ -1,0 +1,1270 @@
+<!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>React Search Photo Demo - My Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    
+      <meta name="description" content="在 Vite 使用 React，練習透過 Unsplash API 來搜尋圖片。">
+    
+      <!-- Open Graph / Facebook -->
+      <meta property="og:type" content="article">
+      <meta property="og:title" content="React Search Photo Demo">
+      <meta property="og:description" content="在 Vite 使用 React，練習透過 Unsplash API 來搜尋圖片。">
+      
+      <!-- Twitter -->
+      <meta property="twitter:card" content="summary_large_image">
+      <meta property="twitter:title" content="React Search Photo Demo">
+      <meta property="twitter:description" content="在 Vite 使用 React，練習透過 Unsplash API 來搜尋圖片。">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+      /* Design System CSS Variables */
+      :root {
+        /* Brand Colors */
+        --primary-50: #EEF2FF;
+        --primary-100: #E0E7FF;
+        --primary-200: #C7D2FE;
+        --primary-300: #A5B4FC;
+        --primary-400: #818CF8;
+        --primary-500: #6366F1;
+        --primary-600: #4F46E5;
+        --primary-700: #4338CA;
+        --primary-800: #3730A3;
+        --primary-900: #312E81;
+
+        /* Neutral Colors */
+        --gray-50: #F9FAFB;
+        --gray-100: #F3F4F6;
+        --gray-200: #E5E7EB;
+        --gray-300: #D1D5DB;
+        --gray-400: #9CA3AF;
+        --gray-500: #6B7280;
+        --gray-600: #4B5563;
+        --gray-700: #374151;
+        --gray-800: #1F2937;
+        --gray-900: #111827;
+
+        /* Semantic Colors */
+        --success: #059669;
+        --success-light: #D1FAE5;
+        --warning: #D97706;
+        --warning-light: #FEF3C7;
+        --error: #DC2626;
+        --error-light: #FEE2E2;
+        --info: #2563EB;
+        --info-light: #DBEAFE;
+        
+        /* Typography */
+        --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        --font-serif: 'Lora', Georgia, 'Times New Roman', serif;
+        --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+        
+        /* Type Scale */
+        --text-xs: 0.75rem;
+        --text-sm: 0.875rem;
+        --text-base: 1rem;
+        --text-lg: 1.125rem;
+        --text-xl: 1.25rem;
+        --text-2xl: 1.5rem;
+        --text-3xl: 1.875rem;
+        --text-4xl: 2.25rem;
+        --text-5xl: 3rem;
+        --text-6xl: 3.75rem;
+        
+        /* Line Heights */
+        --leading-none: 1;
+        --leading-tight: 1.25;
+        --leading-snug: 1.375;
+        --leading-normal: 1.5;
+        --leading-relaxed: 1.625;
+        --leading-loose: 2;
+        
+        /* Letter Spacing */
+        --tracking-tighter: -0.05em;
+        --tracking-tight: -0.025em;
+        --tracking-normal: 0;
+        --tracking-wide: 0.025em;
+        --tracking-wider: 0.05em;
+        --tracking-widest: 0.1em;
+        
+        /* Spacing */
+        --space-px: 1px;
+        --space-0: 0;
+        --space-1: 0.25rem;
+        --space-2: 0.5rem;
+        --space-3: 0.75rem;
+        --space-4: 1rem;
+        --space-5: 1.25rem;
+        --space-6: 1.5rem;
+        --space-8: 2rem;
+        --space-10: 2.5rem;
+        --space-12: 3rem;
+        --space-16: 4rem;
+        --space-20: 5rem;
+        --space-24: 6rem;
+        
+        /* Transitions */
+        --ease-linear: linear;
+        --ease-in: cubic-bezier(0.4, 0, 1, 1);
+        --ease-out: cubic-bezier(0, 0, 0.2, 1);
+        --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      
+      /* Reset and base styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: var(--font-sans);
+        line-height: 1.6;
+        color: var(--gray-900);
+        background: #fff;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      
+      /* Container */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+      
+      .container-narrow {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+      
+      /* Header */
+      header {
+        background: #fff;
+        border-bottom: 1px solid var(--gray-100);
+        padding: 1.5rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.9);
+      }
+      
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      header h1 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+      }
+      
+      header a {
+        color: var(--gray-900);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      
+      header a:hover {
+        color: var(--primary-600);
+      }
+      
+      .header-nav {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+      }
+      
+      .header-nav a {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--gray-700);
+      }
+      
+      /* Main content */
+      main {
+        min-height: calc(100vh - 200px);
+        padding: 3rem 0;
+      }
+      
+      /* Hero Section */
+      /* Hero Section */
+      .hero {
+        text-align: center;
+        padding: var(--space-16) 0;
+        margin-bottom: var(--space-16);
+        background: linear-gradient(135deg, var(--gray-50) 0%, #fff 100%);
+        border-radius: 1rem;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 30% 20%, var(--primary-100) 0%, transparent 50%), 
+                    radial-gradient(circle at 80% 80%, var(--primary-50) 0%, transparent 50%);
+        opacity: 0.5;
+        z-index: 1;
+      }
+      
+      .hero > * {
+        position: relative;
+        z-index: 2;
+      }
+      
+      .hero h2 {
+        font-size: var(--text-5xl);
+        font-weight: 700;
+        letter-spacing: var(--tracking-tight);
+        margin-bottom: var(--space-4);
+        background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-500) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: var(--leading-tight);
+      }
+      
+      .hero p {
+        font-size: var(--text-xl);
+        color: var(--gray-600);
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: var(--leading-relaxed);
+      }
+      
+      /* Article styles */
+      article {
+        margin-bottom: 3rem;
+      }
+      
+      article h1 {
+        font-size: 3rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.1;
+        letter-spacing: -0.025em;
+        font-weight: 800;
+      }
+      
+      article h2 {
+        font-size: 2rem;
+        margin: 3rem 0 1.5rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+      }
+      
+      article h3 {
+        font-size: 1.5rem;
+        margin: 2rem 0 1rem;
+        font-weight: 600;
+      }
+      
+      article p {
+        margin-bottom: 1.5rem;
+        font-family: var(--font-serif);
+        font-size: 1.125rem;
+        line-height: 1.75;
+        color: var(--gray-700);
+      }
+      
+      article a {
+        color: var(--primary-600);
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.2s;
+      }
+      
+      article a:hover {
+        border-bottom-color: var(--primary-600);
+      }
+      
+      /* Drop cap for article content */
+      .post-content > p:first-of-type::first-letter {
+        float: left;
+        font-size: 4rem;
+        line-height: 3.5rem;
+        padding-right: var(--space-2);
+        margin-top: -0.25rem;
+        font-weight: 700;
+        color: var(--primary-600);
+        font-family: var(--font-serif);
+      }
+      
+      article code {
+        background: var(--gray-100);
+        padding: 0.125em 0.375em;
+        border-radius: 0.25rem;
+        font-family: var(--font-mono);
+        font-size: 0.875em;
+        color: var(--gray-900);
+      }
+      
+      article pre {
+        background: var(--gray-900);
+        color: var(--gray-100);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+        margin: 2rem 0;
+        position: relative;
+      }
+      
+      article pre code {
+        background: none;
+        padding: 0;
+        color: inherit;
+        font-size: 0.875rem;
+        line-height: 1.7;
+      }
+      
+      /* Enhanced syntax highlighting for common languages */
+      .highlight .c { color: #6B7280; font-style: italic; } /* Comment */
+      .highlight .k { color: #7C3AED; font-weight: bold; } /* Keyword */
+      .highlight .s { color: #059669; } /* String */
+      .highlight .mi { color: #DC2626; } /* Number */
+      .highlight .nf { color: #2563EB; } /* Function */
+      .highlight .nc { color: #7C2D12; font-weight: bold; } /* Class */
+      .highlight .na { color: #B45309; } /* Attribute */
+      .highlight .nb { color: #7C3AED; } /* Built-in */
+      .highlight .err { color: #DC2626; background: var(--error-light); } /* Error */
+      
+      article blockquote {
+        border-left: 4px solid var(--primary-600);
+        padding-left: 1.5rem;
+        margin: 2rem 0;
+        font-style: italic;
+        color: var(--gray-700);
+      }
+      
+      article blockquote p {
+        font-size: 1.25rem;
+      }
+      
+      article ul, article ol {
+        margin-bottom: 1.5rem;
+        padding-left: 2rem;
+        font-family: var(--font-serif);
+      }
+      
+      article li {
+        margin-bottom: 0.5rem;
+        font-size: 1.125rem;
+        line-height: 1.75;
+        color: var(--gray-700);
+      }
+      
+      article table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 2rem 0;
+        font-size: 0.875rem;
+      }
+      
+      article th, article td {
+        padding: 0.75rem;
+        border-bottom: 1px solid var(--gray-200);
+        text-align: left;
+      }
+      
+      article th {
+        background: var(--gray-50);
+        font-weight: 600;
+        color: var(--gray-900);
+        font-family: var(--font-sans);
+      }
+      
+      article tbody tr:hover {
+        background: var(--gray-50);
+      }
+      
+      /* Article images - responsive sizing */
+      article img {
+        max-width: 100%;
+        height: auto;
+        margin: 2rem 0;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      
+      article img:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      }
+      
+      /* Center images in paragraphs */
+      article p img {
+        display: block;
+        margin: 2rem auto;
+      }
+      
+      /* Article iframes - responsive embedded content */
+      article iframe {
+        max-width: 100%;
+        width: 100%;
+        height: 400px;
+        min-height: 300px;
+        margin: 2rem 0;
+        border-radius: 0.5rem;
+        border: 1px solid var(--gray-200);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+      }
+      
+      article iframe:hover {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      }
+      
+      /* Responsive iframe heights for different screen sizes */
+      @media (min-width: 768px) {
+        article iframe {
+          height: 500px;
+        }
+      }
+      
+      /* Post meta */
+      .post-meta {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: var(--gray-500);
+        margin-bottom: 2rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        flex-wrap: wrap;
+      }
+      
+      .post-meta-divider {
+        width: 4px;
+        height: 4px;
+        background: var(--gray-400);
+        border-radius: 50%;
+      }
+      
+      /* Post grid */
+      .post-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: var(--space-8);
+        margin-bottom: var(--space-12);
+      }
+      
+      /* Card Component */
+      .post-card {
+        background: white;
+        border-radius: 0.75rem;
+        overflow: hidden;
+        border: 1px solid var(--gray-100);
+        transition: all 0.3s var(--ease-out);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+      
+      .post-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.1);
+        border-color: var(--gray-200);
+      }
+      
+      .post-card-image {
+        aspect-ratio: 16/9;
+        overflow: hidden;
+        background: var(--gray-100);
+      }
+      
+      .post-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+      
+      .post-card:hover .post-card-image img {
+        transform: scale(1.05);
+      }
+      
+      .post-card-content {
+        padding: 1.5rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .post-card h2 {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        line-height: 1.4;
+      }
+      
+      .post-card a {
+        color: var(--gray-900);
+        text-decoration: none;
+      }
+      
+      .post-card a:hover {
+        color: var(--primary-600);
+      }
+      
+      .post-excerpt {
+        color: var(--gray-600);
+        margin: 0.75rem 0;
+        font-size: 0.875rem;
+        line-height: 1.6;
+        flex: 1;
+      }
+      
+      .post-card-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--gray-500);
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+      
+      /* Post list fallback */
+      .post-list {
+        list-style: none;
+        padding: 0;
+      }
+      
+      .post-list-item {
+        padding: 2rem 0;
+        border-bottom: 1px solid var(--gray-100);
+      }
+      
+      .post-list-item:last-child {
+        border-bottom: none;
+      }
+      
+      /* Featured image */
+      .featured-image {
+        margin: 0 -1.5rem 3rem;
+        position: relative;
+      }
+      
+      .featured-image img {
+        width: 100%;
+        height: auto;
+        max-height: 600px;
+        object-fit: cover;
+      }
+      
+      .featured-image-caption {
+        text-align: center;
+        margin-top: 1rem;
+        font-size: 0.875rem;
+        color: var(--gray-500);
+        font-style: italic;
+      }
+      
+      @media (min-width: 768px) {
+        .featured-image {
+          margin: 0 0 3rem;
+          border-radius: 0.75rem;
+          overflow: hidden;
+        }
+      }
+      
+      /* Post navigation */
+      .post-navigation {
+        margin-top: 4rem;
+        padding-top: 3rem;
+        border-top: 1px solid var(--gray-100);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+      
+      .post-nav-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      
+      .post-nav-item.prev {
+        text-align: left;
+      }
+      
+      .post-nav-item.next {
+        text-align: right;
+        align-items: flex-end;
+      }
+      
+      .post-nav-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--gray-500);
+        font-weight: 600;
+      }
+      
+      .post-nav-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--gray-900);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      
+      .post-nav-title:hover {
+        color: var(--primary-600);
+      }
+      
+      @media (max-width: 640px) {
+        .post-navigation {
+          grid-template-columns: 1fr;
+        }
+      }
+      
+      /* Footer */
+      footer {
+        margin-top: 5rem;
+        padding: 3rem 0;
+        border-top: 1px solid var(--gray-100);
+        background: var(--gray-50);
+      }
+      
+      .footer-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 3rem;
+        margin-bottom: 2rem;
+      }
+      
+      .footer-section h3 {
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--gray-900);
+        margin-bottom: 1rem;
+      }
+      
+      .footer-section p,
+      .footer-section a {
+        font-size: 0.875rem;
+        color: var(--gray-600);
+        text-decoration: none;
+        line-height: 1.75;
+      }
+      
+      .footer-section a:hover {
+        color: var(--primary-600);
+      }
+      
+      .footer-section ul {
+        list-style: none;
+        padding: 0;
+      }
+      
+      .footer-section li {
+        margin-bottom: 0.5rem;
+      }
+      
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid var(--gray-200);
+        color: var(--gray-500);
+        font-size: 0.875rem;
+      }
+      
+      @media (max-width: 768px) {
+        .footer-content {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+      }
+      
+      /* Utility classes */
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
+      
+      /* Loading skeleton */
+      .skeleton {
+        background: linear-gradient(90deg, var(--gray-100) 25%, var(--gray-200) 50%, var(--gray-100) 75%);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+      }
+      
+      @keyframes loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+      
+      /* Component utilities */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--space-2) var(--space-4);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        line-height: var(--leading-tight);
+        border-radius: 0.375rem;
+        transition: all 0.2s var(--ease-out);
+        cursor: pointer;
+        border: 1px solid transparent;
+        text-decoration: none;
+      }
+      
+      .btn-primary {
+        background: var(--primary-600);
+        color: white;
+      }
+      
+      .btn-primary:hover {
+        background: var(--primary-700);
+        transform: translateY(-1px);
+      }
+      
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.75rem;
+        font-size: var(--text-xs);
+        font-weight: 600;
+        line-height: 1rem;
+        border-radius: 9999px;
+        text-transform: uppercase;
+        letter-spacing: var(--tracking-wide);
+      }
+      
+      .badge-primary {
+        background: var(--primary-100);
+        color: var(--primary-700);
+      }
+      
+      .badge-featured {
+        background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+        color: white;
+        box-shadow: 0 2px 4px rgba(99, 102, 241, 0.2);
+      }
+      
+      /* Animations */
+      @keyframes fade-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      
+      @keyframes slide-up {
+        from { 
+          opacity: 0;
+          transform: translateY(1rem);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .animate-fade-in {
+        animation: fade-in 0.6s var(--ease-out);
+      }
+      
+      .animate-slide-up {
+        animation: slide-up 0.6s var(--ease-out);
+      }
+      
+      /* Responsive utilities */
+      @media (max-width: 640px) {
+        article h1 { font-size: var(--text-4xl); }
+        article h2 { font-size: var(--text-2xl); }
+        article h3 { font-size: var(--text-xl); }
+        article p { font-size: var(--text-base); }
+        .hero h2 { font-size: var(--text-4xl); }
+        .hero p { font-size: var(--text-lg); }
+        .container { padding: 0 var(--space-4); }
+        .container-narrow { padding: 0 var(--space-4); }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-content">
+          <h1><a href="/">Railquill</a></h1>
+          <nav class="header-nav">
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/archive">Archive</a>
+            <a href="/feed.xml" title="RSS Feed">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 11a9 9 0 019 9M4 4a16 16 0 0116 16M5 20a1 1 0 100-2 1 1 0 000 2z"/>
+              </svg>
+            </a>
+          </nav>
+        </div>
+      </div>
+    </header>
+    
+    <main>
+      <!-- BEGIN app/views/static/post.html.erb --><div class="container-narrow">
+  <article class="animate-fade-in">
+    <!-- Article Header -->
+    <header style="text-align: center; margin-bottom: var(--space-12); padding-top: var(--space-8);">
+      <h1 style="font-size: var(--text-5xl); font-weight: 800; line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6); color: var(--gray-900); max-width: 800px; margin-left: auto; margin-right: auto;">
+        React Search Photo Demo
+      </h1>
+      <div class="post-meta" style="justify-content: center; margin-bottom: var(--space-4);">
+        <span style="color: var(--gray-600);">July 11, 2021</span>
+          <span class="post-meta-divider"></span>
+          <span style="color: var(--gray-600);">4 min read</span>
+      </div>
+        <p style="font-size: var(--text-xl); color: var(--gray-600); line-height: var(--leading-relaxed); font-style: italic; max-width: 600px; margin: 0 auto; font-family: var(--font-serif);">
+          在 Vite 使用 React，練習透過 Unsplash API 來搜尋圖片。
+        </p>
+    </header>
+    
+    <!-- Featured Image -->
+    
+    <!-- Article Content -->
+    <div class="post-content animate-slide-up" style="animation-delay: 0.4s; font-family: var(--font-serif); font-size: var(--text-lg); line-height: var(--leading-loose); color: var(--gray-800);">
+      <p>本次練習要在 Vite 上使用 React，並實作一個搜尋表單，輸入文字並透過 Unsplash API 來搜尋並顯示圖片。</p>
+
+<!-- Read Mode -->
+
+<h2 id="part-2b9362c5b74b6287">前置作業</h2>
+
+<p>使用 Vite 建立專案，並使用 Semantic UI 的 CDN 來做基本的美化：</p>
+
+<ul>
+<li>Vite 建立專案 <code>react-form-demo</code></li>
+</ul>
+
+<pre><code class="bash">$ yarn create @vitejs/app react-form-demo --template react
+$ cd react-form-demo
+$ yarn
+</code></pre>
+
+<ul>
+<li>在 index.html 貼上 Semantic UI CDN Link</li>
+</ul>
+
+<pre><code class="html">https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css
+</code></pre>
+
+<ul>
+<li>完成基本介面</li>
+</ul>
+
+<pre><code class="jsx">// App.jsx
+import React from &#39;react&#39;
+import SearchBar from &#39;./components/SearchBar&#39;
+
+function App() {
+  return (
+    &lt;div className=&#39;ui container&#39; style={{ marginTop: 20 }}&gt;
+      &lt;SearchBar /&gt;
+    &lt;/div&gt;
+  )
+}
+
+export default App
+</code></pre>
+
+<pre><code class="jsx">// .components/SearchBar.jsx
+import React from &#39;react&#39;
+
+const SearchBar = () =&gt; {
+  return (
+    &lt;div className=&#39;ui segment&#39;&gt;
+      &lt;form className=&#39;ui form&#39;&gt;
+        &lt;div className=&#39;field&#39;&gt;
+          &lt;label htmlFor=&#39;search&#39;&gt;Search&lt;/label&gt;
+          &lt;input id=&#39;search&#39; type=&#39;text&#39; /&gt;
+        &lt;/div&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+  )
+}
+
+export default SearchBar
+</code></pre>
+
+<h2 id="part-3c4d032c77ed1a87">測試輸入功能</h2>
+
+<ol>
+<li>建立一個 function，並 <code>console.log</code> 出輸入結果</li>
+</ol>
+
+<pre><code class="js">const handleInput = (e) =&gt; {
+    console.log(e.target.value)
+}
+</code></pre>
+
+<ol>
+<li>放到 <code>&lt;input&gt;</code> 中，要注意的是，是使用 <code>onChange</code></li>
+</ol>
+
+<pre><code class="jsx">&lt;input id=&#39;search&#39; type=&#39;text&#39; onChange={handleInput} /&gt;
+</code></pre>
+
+<ol>
+<li>這時候輸入的結果，就會在 <code>console.log</code> 顯示</li>
+</ol>
+
+<h2 id="state">把輸入的結果放到 state 中管理</h2>
+
+<ol>
+<li>使用 <code>useState</code> 這個 Hook，建立一個 state</li>
+</ol>
+
+<pre><code class="jsx">import React, { useState } from &#39;react&#39;
+
+const [state, setState] = useState({ inputText: &#39;&#39; })
+</code></pre>
+
+<ol>
+<li>把輸入的結果，放到 <code>inputText</code></li>
+</ol>
+
+<pre><code class="jsx">const handleInput = (e) =&gt; {
+    setState({ inputText: e.target.value })
+}
+</code></pre>
+
+<ol>
+<li>使用 React Developer Tools，就可以看到 <code>inputText</code> 顯示的是輸入的字串</li>
+</ol>
+
+<p><img src="https://i.imgur.com/rMiR8vM.png" alt=""></p>
+
+<ol>
+<li>在 <code>&lt;input&gt;</code> 加上 <code>value={state.inputText}</code></li>
+</ol>
+
+<h2 id="app-searchbar">讓 App 可以跨組件拿到 SearchBar 輸入的資料</h2>
+
+<p>這一步驟是要在 <code>App</code> 建立一個函式，並透過 <code>props</code> 來讓 <code>SearchBar</code> 回傳輸入的結果。</p>
+
+<ol>
+<li>在 <code>App</code> 建立函式</li>
+</ol>
+
+<pre><code class="jsx">const onSearchSubmit = (input) =&gt; {
+    console.log(input)
+}
+</code></pre>
+
+<ol>
+<li>在 <code>SearchBar</code> 傳入 <code>props</code></li>
+</ol>
+
+<pre><code class="jsx">&lt;SearchBar handleSubmit={onSearchSubmit} /&gt;
+</code></pre>
+
+<p>在 <code>SearchBar</code> 建立一個函式，讓輸入的結果，透過 submit 傳到 <code>App</code></p>
+
+<ol>
+<li>先透過解構從 props 取出 <code>handleSubmit</code>，以利後面操作</li>
+</ol>
+
+<pre><code class="js">const { handleSubmit } = props
+</code></pre>
+
+<ol>
+<li>在 <code>SearchBar</code> 建立函式，讓 <code>handleSubmit</code> 傳入輸入的資料，記得加入 <code>preventDefault</code> 以避免重整頁面</li>
+</ol>
+
+<pre><code class="jsx">const handleFormSubmit = (e) =&gt; {
+    e.preventDefault()
+    handleSubmit(state.inputText)
+}
+</code></pre>
+
+<ol>
+<li>在 <code>&lt;form&gt;</code> 使用 <code>onSubmit</code></li>
+</ol>
+
+<pre><code class="jsx">&lt;form className=&#39;ui form&#39; onSubmit={handleFormSubmit}&gt;
+</code></pre>
+
+<ol>
+<li>可以在 <code>console.log</code> 看到是來自 <code>App</code> 的</li>
+</ol>
+
+<p><img src="https://i.imgur.com/bjaYelB.png" alt=""></p>
+
+<h2 id="searchbar-state-app-state">將從 SearchBar 來的 State 存到 App 本身的 State</h2>
+
+<ol>
+<li>建立 state</li>
+</ol>
+
+<pre><code class="jsx=">import React, { useState } from &#39;react&#39;
+
+const [inputState, setInputState] = useState({ text: &#39;&#39; })
+</code></pre>
+
+<ol>
+<li>傳進 state 中</li>
+</ol>
+
+<pre><code class="jsx=">const onSearchSubmit = (input) =&gt; {
+    setInputState({ text: input })
+}
+</code></pre>
+
+<ol>
+<li>透過 React Developer Tools 看到確實拿到輸入的值</li>
+</ol>
+
+<p><img src="https://i.imgur.com/JiO1DJE.png" alt=""></p>
+
+<h2 id="unsplash">申請 Unsplash 金鑰</h2>
+
+<p>首先到 <a href="https://unsplash.com/developers">Unsplash Developers</a>，申請帳號並登入（這部分就不仔細講解了）。</p>
+
+<p>登入後請按上方的 Your apps，並且點擊 New Application。</p>
+
+<p><img src="https://i.imgur.com/T6lHzJk.png" alt="image-20210709231339764"></p>
+
+<p>然後會有一些使用者條款，全部勾選再按接受就對了。</p>
+
+<p><img src="https://i.imgur.com/H82FP39.png" alt="image-20210709231926292"></p>
+
+<p>接著請輸入名稱，並且簡單描述一下。</p>
+
+<p><img src="https://i.imgur.com/WQGdxEo.png" alt="image-20210709232223428"></p>
+
+<p>然後就會進來你剛剛申請的專案，接著往下拉，最重要的就是你的 Access Key，之後就可以藉由這組 Key 透過 API 找圖片。</p>
+
+<p><img src="https://i.imgur.com/9iUGAMX.png" alt="image-20210709232601364"></p>
+
+<p>接著去 Documentation 看文件，因為我要做搜尋的功能，所以按左邊的 Search photos，這邊就有待會要使用的相關功能，建議可以多看看。</p>
+
+<p><img src="https://i.imgur.com/fo5ne09.png" alt="image-20210709233718975"></p>
+
+<h2 id="api">搜尋關鍵字透過 API 拿到資料</h2>
+
+<ul>
+<li>安裝 axios</li>
+</ul>
+
+<pre><code class="bash">$ yarn add axios
+</code></pre>
+
+<ul>
+<li>使用 axios 管理 API</li>
+</ul>
+
+<p>新增一個 api 資料夾，並且新增一個 <code>unsplash.js</code> 來管理 API，在 Authorization 放上剛剛申請的 Access Key，下方範例中，<code>xxxxx</code> 那一段就是放 Key 的地方。</p>
+
+<pre><code class="js">import axios from &#39;axios&#39;
+
+export default axios.create({
+  baseURL: &#39;https://api.unsplash.com&#39;,
+  headers: {
+    Authorization: &#39;Client-ID xxxxx&#39;
+  }
+})
+</code></pre>
+
+<ul>
+<li>連結 API 測試</li>
+</ul>
+
+<p>import 剛剛建立的 unsplash，並且使用 <code>async...await</code> 連結 <code>/search/photos</code> </p>
+
+<pre><code class="jsx">// App.jsx
+import unsplash from &#39;../api/unsplash&#39;
+
+const onSearchSubmit = async (input) =&gt; {
+    const res = await unsplash.get(&#39;/search/photos&#39;, {
+        params: {
+        query: input
+    }
+  })
+  console.log(res.data) // 透過 console.log 觀察拿到哪些資料
+}
+</code></pre>
+
+<ul>
+<li>將拿到的圖片資料放入 state 中管理</li>
+</ul>
+
+<p>使用 <code>useState</code> 建立一個陣列，將拿到的資料放入</p>
+
+<pre><code class="jsx">import React, { useState } from &#39;react&#39;
+
+const [state, setState] = useState({ images: [] })
+
+const onSearchSubmit = async (input) =&gt; {
+    const res = await unsplash.get(&#39;/search/photos&#39;, {
+    params: {
+        query: input
+    }
+    })
+  setState({ images: res.data.results })
+}
+</code></pre>
+
+<p>透過 React Developer Tools 看到 images 確實有灌進資料</p>
+
+<p><img src="https://i.imgur.com/ScDVubm.png" alt="image-20210710204127741"></p>
+
+<h2 id="part-b66f2182b64bb63b">將圖片顯示出來</h2>
+
+<ul>
+<li>建立新元件 - ImageList，並且在 App 匯入</li>
+<li>利用 props 傳圖片資料給 ImageList</li>
+</ul>
+
+<pre><code class="jsx">// App..jsx
+import ImageList from &#39;./ImageList&#39;
+
+&lt;ImageList images={state.images} /&gt;
+</code></pre>
+
+<ul>
+<li>在 ImageList 拿到 props 傳來的資料，使用 map 迴圈建立一個圖片列表</li>
+</ul>
+
+<pre><code class="jsx">// ImageList.jsx
+const ImageList = (props) =&gt; {
+  const { images } = props  // 利用物件解構從 props 拿出
+
+  const renderImage = images.map((image) =&gt; {
+    return (
+      &lt;img
+        className=&#39;ui medium rounded image&#39;
+        src={image.urls.regular}
+        alt={image.description}
+        key={image.id}
+      &gt;&lt;/img&gt;
+    )
+  })
+
+  return &lt;div&gt;{renderImage}&lt;/div&gt;
+}
+
+export default ImageList
+</code></pre>
+
+<p>這樣基本上就大致完成了，可以看 <a href="https://bucky0112.github.io/search_photo_app/">Demo</a>，有興趣可以到我的<a href="https://github.com/bucky0112/search_photo_app">專案</a>。</p>
+
+    </div>
+    
+    <!-- Share Section -->
+    <div class="animate-slide-up" style="animation-delay: 0.6s; margin-top: var(--space-12); padding: var(--space-8) 0; background: linear-gradient(135deg, var(--gray-50) 0%, white 100%); border-radius: 1rem; border: 1px solid var(--gray-100);">
+      <div style="text-align: center;">
+        <h3 style="font-size: var(--text-lg); font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-2); font-family: var(--font-sans);">Enjoyed this article?</h3>
+        <p style="font-size: var(--text-sm); color: var(--gray-600); margin-bottom: var(--space-6); font-family: var(--font-sans);">Share it with your network and help others discover great content</p>
+        <div style="display: flex; justify-content: center; gap: var(--space-3); flex-wrap: wrap;">
+          <a href="https://twitter.com/intent/tweet?text=React+Search+Photo+Demo&url=http%3A%2F%2Fexample.org" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             style="background: #1DA1F2; color: white; border-color: #1DA1F2; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#1a91da'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#1DA1F2'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+            </svg>
+            Share on Twitter
+          </a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=http%3A%2F%2Fexample.org" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             style="background: #0077B5; color: white; border-color: #0077B5; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#005885'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#0077B5'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            Share on LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
+  </article>
+  
+  <!-- Post Navigation -->
+  <nav class="post-navigation animate-slide-up" style="animation-delay: 0.8s; margin-top: var(--space-16); padding-top: var(--space-12); border-top: 2px solid var(--gray-100);">
+      <div class="post-nav-item prev">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">← Previous Post</span>
+        <a href="/useeffect.html" class="post-nav-title" style="font-family: var(--font-sans);">
+          使用 useEffect 來掌管元件作用
+        </a>
+      </div>
+    
+      <div class="post-nav-item next">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">Next Post →</span>
+        <a href="/electron-react.html" class="post-nav-title" style="font-family: var(--font-sans);">
+          使用 Electron 搭配 React 建置桌面程式
+        </a>
+      </div>
+  </nav>
+  
+  <!-- Back to Home -->
+  <div style="text-align: center; margin-top: var(--space-12); padding-top: var(--space-8); border-top: 1px solid var(--gray-100);">
+    <a href="/" class="btn" style="background: var(--gray-100); color: var(--gray-700); border-color: var(--gray-200);" onmouseover="this.style.background='var(--gray-200)'; this.style.transform='translateY(-1px)';" onmouseout="this.style.background='var(--gray-100)'; this.style.transform='translateY(0)';">
+      <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+      </svg>
+      Back to Articles
+    </a>
+  </div>
+</div><!-- END app/views/static/post.html.erb -->
+    </main>
+    
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>About Railquill</h3>
+            <p>A modern blog platform built with Ruby on Rails, designed for developers who love clean code and beautiful typography.</p>
+          </div>
+          <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/archive">Archive</a></li>
+              <li><a href="/feed.xml">RSS Feed</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h3>Connect</h3>
+            <ul>
+              <li><a href="https://twitter.com/railquill" target="_blank" rel="noopener">Twitter</a></li>
+              <li><a href="https://github.com/railquill" target="_blank" rel="noopener">GitHub</a></li>
+              <li><a href="mailto:hello@railquill.com">Email</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html><!-- END app/views/layouts/static.html.erb -->

@@ -1,0 +1,1295 @@
+<!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>React 19 Beta 新武器解鎖體驗 - My Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    
+      <meta name="description" content="介紹 React 19 Beta 新 Hooks。">
+    
+      <!-- Open Graph / Facebook -->
+      <meta property="og:type" content="article">
+      <meta property="og:title" content="React 19 Beta 新武器解鎖體驗">
+      <meta property="og:description" content="介紹 React 19 Beta 新 Hooks。">
+      
+      <!-- Twitter -->
+      <meta property="twitter:card" content="summary_large_image">
+      <meta property="twitter:title" content="React 19 Beta 新武器解鎖體驗">
+      <meta property="twitter:description" content="介紹 React 19 Beta 新 Hooks。">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+      /* Design System CSS Variables */
+      :root {
+        /* Brand Colors */
+        --primary-50: #EEF2FF;
+        --primary-100: #E0E7FF;
+        --primary-200: #C7D2FE;
+        --primary-300: #A5B4FC;
+        --primary-400: #818CF8;
+        --primary-500: #6366F1;
+        --primary-600: #4F46E5;
+        --primary-700: #4338CA;
+        --primary-800: #3730A3;
+        --primary-900: #312E81;
+
+        /* Neutral Colors */
+        --gray-50: #F9FAFB;
+        --gray-100: #F3F4F6;
+        --gray-200: #E5E7EB;
+        --gray-300: #D1D5DB;
+        --gray-400: #9CA3AF;
+        --gray-500: #6B7280;
+        --gray-600: #4B5563;
+        --gray-700: #374151;
+        --gray-800: #1F2937;
+        --gray-900: #111827;
+
+        /* Semantic Colors */
+        --success: #059669;
+        --success-light: #D1FAE5;
+        --warning: #D97706;
+        --warning-light: #FEF3C7;
+        --error: #DC2626;
+        --error-light: #FEE2E2;
+        --info: #2563EB;
+        --info-light: #DBEAFE;
+        
+        /* Typography */
+        --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        --font-serif: 'Lora', Georgia, 'Times New Roman', serif;
+        --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+        
+        /* Type Scale */
+        --text-xs: 0.75rem;
+        --text-sm: 0.875rem;
+        --text-base: 1rem;
+        --text-lg: 1.125rem;
+        --text-xl: 1.25rem;
+        --text-2xl: 1.5rem;
+        --text-3xl: 1.875rem;
+        --text-4xl: 2.25rem;
+        --text-5xl: 3rem;
+        --text-6xl: 3.75rem;
+        
+        /* Line Heights */
+        --leading-none: 1;
+        --leading-tight: 1.25;
+        --leading-snug: 1.375;
+        --leading-normal: 1.5;
+        --leading-relaxed: 1.625;
+        --leading-loose: 2;
+        
+        /* Letter Spacing */
+        --tracking-tighter: -0.05em;
+        --tracking-tight: -0.025em;
+        --tracking-normal: 0;
+        --tracking-wide: 0.025em;
+        --tracking-wider: 0.05em;
+        --tracking-widest: 0.1em;
+        
+        /* Spacing */
+        --space-px: 1px;
+        --space-0: 0;
+        --space-1: 0.25rem;
+        --space-2: 0.5rem;
+        --space-3: 0.75rem;
+        --space-4: 1rem;
+        --space-5: 1.25rem;
+        --space-6: 1.5rem;
+        --space-8: 2rem;
+        --space-10: 2.5rem;
+        --space-12: 3rem;
+        --space-16: 4rem;
+        --space-20: 5rem;
+        --space-24: 6rem;
+        
+        /* Transitions */
+        --ease-linear: linear;
+        --ease-in: cubic-bezier(0.4, 0, 1, 1);
+        --ease-out: cubic-bezier(0, 0, 0.2, 1);
+        --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      
+      /* Reset and base styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: var(--font-sans);
+        line-height: 1.6;
+        color: var(--gray-900);
+        background: #fff;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      
+      /* Container */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+      
+      .container-narrow {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+      
+      /* Header */
+      header {
+        background: #fff;
+        border-bottom: 1px solid var(--gray-100);
+        padding: 1.5rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.9);
+      }
+      
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      header h1 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+      }
+      
+      header a {
+        color: var(--gray-900);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      
+      header a:hover {
+        color: var(--primary-600);
+      }
+      
+      .header-nav {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+      }
+      
+      .header-nav a {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--gray-700);
+      }
+      
+      /* Main content */
+      main {
+        min-height: calc(100vh - 200px);
+        padding: 3rem 0;
+      }
+      
+      /* Hero Section */
+      /* Hero Section */
+      .hero {
+        text-align: center;
+        padding: var(--space-16) 0;
+        margin-bottom: var(--space-16);
+        background: linear-gradient(135deg, var(--gray-50) 0%, #fff 100%);
+        border-radius: 1rem;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 30% 20%, var(--primary-100) 0%, transparent 50%), 
+                    radial-gradient(circle at 80% 80%, var(--primary-50) 0%, transparent 50%);
+        opacity: 0.5;
+        z-index: 1;
+      }
+      
+      .hero > * {
+        position: relative;
+        z-index: 2;
+      }
+      
+      .hero h2 {
+        font-size: var(--text-5xl);
+        font-weight: 700;
+        letter-spacing: var(--tracking-tight);
+        margin-bottom: var(--space-4);
+        background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-500) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: var(--leading-tight);
+      }
+      
+      .hero p {
+        font-size: var(--text-xl);
+        color: var(--gray-600);
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: var(--leading-relaxed);
+      }
+      
+      /* Article styles */
+      article {
+        margin-bottom: 3rem;
+      }
+      
+      article h1 {
+        font-size: 3rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.1;
+        letter-spacing: -0.025em;
+        font-weight: 800;
+      }
+      
+      article h2 {
+        font-size: 2rem;
+        margin: 3rem 0 1.5rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+      }
+      
+      article h3 {
+        font-size: 1.5rem;
+        margin: 2rem 0 1rem;
+        font-weight: 600;
+      }
+      
+      article p {
+        margin-bottom: 1.5rem;
+        font-family: var(--font-serif);
+        font-size: 1.125rem;
+        line-height: 1.75;
+        color: var(--gray-700);
+      }
+      
+      article a {
+        color: var(--primary-600);
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.2s;
+      }
+      
+      article a:hover {
+        border-bottom-color: var(--primary-600);
+      }
+      
+      /* Drop cap for article content */
+      .post-content > p:first-of-type::first-letter {
+        float: left;
+        font-size: 4rem;
+        line-height: 3.5rem;
+        padding-right: var(--space-2);
+        margin-top: -0.25rem;
+        font-weight: 700;
+        color: var(--primary-600);
+        font-family: var(--font-serif);
+      }
+      
+      article code {
+        background: var(--gray-100);
+        padding: 0.125em 0.375em;
+        border-radius: 0.25rem;
+        font-family: var(--font-mono);
+        font-size: 0.875em;
+        color: var(--gray-900);
+      }
+      
+      article pre {
+        background: var(--gray-900);
+        color: var(--gray-100);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+        margin: 2rem 0;
+        position: relative;
+      }
+      
+      article pre code {
+        background: none;
+        padding: 0;
+        color: inherit;
+        font-size: 0.875rem;
+        line-height: 1.7;
+      }
+      
+      /* Enhanced syntax highlighting for common languages */
+      .highlight .c { color: #6B7280; font-style: italic; } /* Comment */
+      .highlight .k { color: #7C3AED; font-weight: bold; } /* Keyword */
+      .highlight .s { color: #059669; } /* String */
+      .highlight .mi { color: #DC2626; } /* Number */
+      .highlight .nf { color: #2563EB; } /* Function */
+      .highlight .nc { color: #7C2D12; font-weight: bold; } /* Class */
+      .highlight .na { color: #B45309; } /* Attribute */
+      .highlight .nb { color: #7C3AED; } /* Built-in */
+      .highlight .err { color: #DC2626; background: var(--error-light); } /* Error */
+      
+      article blockquote {
+        border-left: 4px solid var(--primary-600);
+        padding-left: 1.5rem;
+        margin: 2rem 0;
+        font-style: italic;
+        color: var(--gray-700);
+      }
+      
+      article blockquote p {
+        font-size: 1.25rem;
+      }
+      
+      article ul, article ol {
+        margin-bottom: 1.5rem;
+        padding-left: 2rem;
+        font-family: var(--font-serif);
+      }
+      
+      article li {
+        margin-bottom: 0.5rem;
+        font-size: 1.125rem;
+        line-height: 1.75;
+        color: var(--gray-700);
+      }
+      
+      article table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 2rem 0;
+        font-size: 0.875rem;
+      }
+      
+      article th, article td {
+        padding: 0.75rem;
+        border-bottom: 1px solid var(--gray-200);
+        text-align: left;
+      }
+      
+      article th {
+        background: var(--gray-50);
+        font-weight: 600;
+        color: var(--gray-900);
+        font-family: var(--font-sans);
+      }
+      
+      article tbody tr:hover {
+        background: var(--gray-50);
+      }
+      
+      /* Article images - responsive sizing */
+      article img {
+        max-width: 100%;
+        height: auto;
+        margin: 2rem 0;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      
+      article img:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      }
+      
+      /* Center images in paragraphs */
+      article p img {
+        display: block;
+        margin: 2rem auto;
+      }
+      
+      /* Article iframes - responsive embedded content */
+      article iframe {
+        max-width: 100%;
+        width: 100%;
+        height: 400px;
+        min-height: 300px;
+        margin: 2rem 0;
+        border-radius: 0.5rem;
+        border: 1px solid var(--gray-200);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+      }
+      
+      article iframe:hover {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      }
+      
+      /* Responsive iframe heights for different screen sizes */
+      @media (min-width: 768px) {
+        article iframe {
+          height: 500px;
+        }
+      }
+      
+      /* Post meta */
+      .post-meta {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: var(--gray-500);
+        margin-bottom: 2rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        flex-wrap: wrap;
+      }
+      
+      .post-meta-divider {
+        width: 4px;
+        height: 4px;
+        background: var(--gray-400);
+        border-radius: 50%;
+      }
+      
+      /* Post grid */
+      .post-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: var(--space-8);
+        margin-bottom: var(--space-12);
+      }
+      
+      /* Card Component */
+      .post-card {
+        background: white;
+        border-radius: 0.75rem;
+        overflow: hidden;
+        border: 1px solid var(--gray-100);
+        transition: all 0.3s var(--ease-out);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+      
+      .post-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.1);
+        border-color: var(--gray-200);
+      }
+      
+      .post-card-image {
+        aspect-ratio: 16/9;
+        overflow: hidden;
+        background: var(--gray-100);
+      }
+      
+      .post-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+      
+      .post-card:hover .post-card-image img {
+        transform: scale(1.05);
+      }
+      
+      .post-card-content {
+        padding: 1.5rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .post-card h2 {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        line-height: 1.4;
+      }
+      
+      .post-card a {
+        color: var(--gray-900);
+        text-decoration: none;
+      }
+      
+      .post-card a:hover {
+        color: var(--primary-600);
+      }
+      
+      .post-excerpt {
+        color: var(--gray-600);
+        margin: 0.75rem 0;
+        font-size: 0.875rem;
+        line-height: 1.6;
+        flex: 1;
+      }
+      
+      .post-card-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--gray-500);
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+      
+      /* Post list fallback */
+      .post-list {
+        list-style: none;
+        padding: 0;
+      }
+      
+      .post-list-item {
+        padding: 2rem 0;
+        border-bottom: 1px solid var(--gray-100);
+      }
+      
+      .post-list-item:last-child {
+        border-bottom: none;
+      }
+      
+      /* Featured image */
+      .featured-image {
+        margin: 0 -1.5rem 3rem;
+        position: relative;
+      }
+      
+      .featured-image img {
+        width: 100%;
+        height: auto;
+        max-height: 600px;
+        object-fit: cover;
+      }
+      
+      .featured-image-caption {
+        text-align: center;
+        margin-top: 1rem;
+        font-size: 0.875rem;
+        color: var(--gray-500);
+        font-style: italic;
+      }
+      
+      @media (min-width: 768px) {
+        .featured-image {
+          margin: 0 0 3rem;
+          border-radius: 0.75rem;
+          overflow: hidden;
+        }
+      }
+      
+      /* Post navigation */
+      .post-navigation {
+        margin-top: 4rem;
+        padding-top: 3rem;
+        border-top: 1px solid var(--gray-100);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+      
+      .post-nav-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      
+      .post-nav-item.prev {
+        text-align: left;
+      }
+      
+      .post-nav-item.next {
+        text-align: right;
+        align-items: flex-end;
+      }
+      
+      .post-nav-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--gray-500);
+        font-weight: 600;
+      }
+      
+      .post-nav-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--gray-900);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      
+      .post-nav-title:hover {
+        color: var(--primary-600);
+      }
+      
+      @media (max-width: 640px) {
+        .post-navigation {
+          grid-template-columns: 1fr;
+        }
+      }
+      
+      /* Footer */
+      footer {
+        margin-top: 5rem;
+        padding: 3rem 0;
+        border-top: 1px solid var(--gray-100);
+        background: var(--gray-50);
+      }
+      
+      .footer-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 3rem;
+        margin-bottom: 2rem;
+      }
+      
+      .footer-section h3 {
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--gray-900);
+        margin-bottom: 1rem;
+      }
+      
+      .footer-section p,
+      .footer-section a {
+        font-size: 0.875rem;
+        color: var(--gray-600);
+        text-decoration: none;
+        line-height: 1.75;
+      }
+      
+      .footer-section a:hover {
+        color: var(--primary-600);
+      }
+      
+      .footer-section ul {
+        list-style: none;
+        padding: 0;
+      }
+      
+      .footer-section li {
+        margin-bottom: 0.5rem;
+      }
+      
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid var(--gray-200);
+        color: var(--gray-500);
+        font-size: 0.875rem;
+      }
+      
+      @media (max-width: 768px) {
+        .footer-content {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+      }
+      
+      /* Utility classes */
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
+      
+      /* Loading skeleton */
+      .skeleton {
+        background: linear-gradient(90deg, var(--gray-100) 25%, var(--gray-200) 50%, var(--gray-100) 75%);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+      }
+      
+      @keyframes loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+      
+      /* Component utilities */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--space-2) var(--space-4);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        line-height: var(--leading-tight);
+        border-radius: 0.375rem;
+        transition: all 0.2s var(--ease-out);
+        cursor: pointer;
+        border: 1px solid transparent;
+        text-decoration: none;
+      }
+      
+      .btn-primary {
+        background: var(--primary-600);
+        color: white;
+      }
+      
+      .btn-primary:hover {
+        background: var(--primary-700);
+        transform: translateY(-1px);
+      }
+      
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.75rem;
+        font-size: var(--text-xs);
+        font-weight: 600;
+        line-height: 1rem;
+        border-radius: 9999px;
+        text-transform: uppercase;
+        letter-spacing: var(--tracking-wide);
+      }
+      
+      .badge-primary {
+        background: var(--primary-100);
+        color: var(--primary-700);
+      }
+      
+      .badge-featured {
+        background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+        color: white;
+        box-shadow: 0 2px 4px rgba(99, 102, 241, 0.2);
+      }
+      
+      /* Animations */
+      @keyframes fade-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      
+      @keyframes slide-up {
+        from { 
+          opacity: 0;
+          transform: translateY(1rem);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .animate-fade-in {
+        animation: fade-in 0.6s var(--ease-out);
+      }
+      
+      .animate-slide-up {
+        animation: slide-up 0.6s var(--ease-out);
+      }
+      
+      /* Responsive utilities */
+      @media (max-width: 640px) {
+        article h1 { font-size: var(--text-4xl); }
+        article h2 { font-size: var(--text-2xl); }
+        article h3 { font-size: var(--text-xl); }
+        article p { font-size: var(--text-base); }
+        .hero h2 { font-size: var(--text-4xl); }
+        .hero p { font-size: var(--text-lg); }
+        .container { padding: 0 var(--space-4); }
+        .container-narrow { padding: 0 var(--space-4); }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-content">
+          <h1><a href="/">Railquill</a></h1>
+          <nav class="header-nav">
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/archive">Archive</a>
+            <a href="/feed.xml" title="RSS Feed">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 11a9 9 0 019 9M4 4a16 16 0 0116 16M5 20a1 1 0 100-2 1 1 0 000 2z"/>
+              </svg>
+            </a>
+          </nav>
+        </div>
+      </div>
+    </header>
+    
+    <main>
+      <!-- BEGIN app/views/static/post.html.erb --><div class="container-narrow">
+  <article class="animate-fade-in">
+    <!-- Article Header -->
+    <header style="text-align: center; margin-bottom: var(--space-12); padding-top: var(--space-8);">
+      <h1 style="font-size: var(--text-5xl); font-weight: 800; line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6); color: var(--gray-900); max-width: 800px; margin-left: auto; margin-right: auto;">
+        React 19 Beta 新武器解鎖體驗
+      </h1>
+      <div class="post-meta" style="justify-content: center; margin-bottom: var(--space-4);">
+        <span style="color: var(--gray-600);">May 08, 2024</span>
+          <span class="post-meta-divider"></span>
+          <span style="color: var(--gray-600);">5 min read</span>
+      </div>
+        <p style="font-size: var(--text-xl); color: var(--gray-600); line-height: var(--leading-relaxed); font-style: italic; max-width: 600px; margin: 0 auto; font-family: var(--font-serif);">
+          介紹 React 19 Beta 新 Hooks。
+        </p>
+    </header>
+    
+    <!-- Featured Image -->
+    
+    <!-- Article Content -->
+    <div class="post-content animate-slide-up" style="animation-delay: 0.4s; font-family: var(--font-serif); font-size: var(--text-lg); line-height: var(--leading-loose); color: var(--gray-800);">
+      <p>經過長時間的等待，自從 React 18 在 2022 年推出以來，React 19 Beta 版終於在近期與開發者見面了。作為 React 18 的下一個主要版本，React 19 帶來了許多讓開發者心動的新特性，這次我們就先來一探究竟有什麼新的功能。</p>
+
+<h2 id="usetransition">useTransition</h2>
+
+<p>在前端操作中，經常會碰到需要更新狀態的情況，例如：使用者點擊按鈕後，需要更新 UI 來響應這個操作。然而，有些狀態更新可能計算量較大或者涉及非同步操作，執行時間較長。</p>
+
+<p>以下是一個範例，當使用者輸入名字後，點擊按鈕，會呼叫 API 更新名字，並且在更新過程中，按鈕會變成不可點擊的狀態。<code>updateNameAPI</code> 這個函式會模擬 API 的行為。</p>
+
+<pre><code class="jsx!">import { useState } from &#39;react&#39;
+
+const updateNameAPI = async (newName) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      const shouldError = newName.includes(&#39;error&#39;)
+      if (shouldError) {
+        reject(`名字不能包含&quot;error&quot;`)
+      } else {
+        resolve(`你的新名字是: ${newName}`)
+      }
+    }, 1000)
+  })
+}
+
+const Pending = () =&gt; {
+  const [name, setName] = useState(&#39;&#39;)
+  const [error, setError] = useState(null)
+  const [isPending, setIsPending] = useState(false)
+
+  const handleSubmit = async () =&gt; {
+    setIsPending(true)
+    const error = await updateNameAPI(name)
+    setIsPending(false)
+    if (error) {
+      setError(error)
+      return
+    }
+  }
+
+  return (
+    &lt;div&gt;
+      &lt;input value={name} onChange={(e) =&gt; setName(e.target.value)} /&gt;
+      &lt;button onClick={handleSubmit} disabled={isPending}&gt;
+        {isPending ? &#39;更新中...&#39; : &#39;更新名字&#39;}
+      &lt;/button&gt;
+      {error &amp;&amp; &lt;p style={{ color: &#39;red&#39; }}&gt;{error}&lt;/p&gt;}
+    &lt;/div&gt;
+  )
+}
+</code></pre>
+
+<p>可以看到，這段程式碼中，我們使用了三個 <code>useState</code> 來管理狀態，並且在 <code>handleSubmit</code> 中，使用 <code>setIsPending</code> 來控制按鈕是否可點擊，以及在 API 回傳錯誤時，使用 <code>setError</code> 來顯示錯誤訊息。</p>
+
+<p><code>useTransition</code> 這個 hook 已經不是新東西了，它在 React 18 中就已經出現，但在 React 19 中，它被進一步改進，讓我們更容易地處理非同步操作。</p>
+
+<pre><code class="jsx!">import { useState, useTransition } from &#39;react&#39;
+
+const Pending = () =&gt; {
+  const [name, setName] = useState(&#39;&#39;)
+  const [error, setError] = useState(null)
+  const [isPending, startTransition] = useTransition()
+
+  const handleSubmit = () =&gt; {
+    startTransition(async () =&gt; { // 使用 startTransition 包裹非同步操作
+      const error = await updateNameAPI(name)
+      if (error) {
+        setError(error)
+        return
+      }
+    })
+  }
+
+  // startTransition 會自動處理 pending 狀態
+  // 在非同步操作期間,isPending 為 true 
+  // 操作完成後,isPending 變為 false
+
+  return (
+    &lt;div&gt;
+      &lt;input value={name} onChange={(e) =&gt; setName(e.target.value)} /&gt;
+      &lt;button onClick={handleSubmit} disabled={isPending}&gt;
+        {isPending ? &#39;更新中...&#39; : &#39;更新名字&#39;}
+      &lt;/button&gt;
+      {error &amp;&amp; &lt;p style={{ color: &#39;red&#39; }}&gt;{error}&lt;/p&gt;}
+    &lt;/div&gt;
+  )
+}
+</code></pre>
+
+<p>這裡我們簡單地使用 <code>useTransition</code> 來取代 <code>setIsPending</code>，在 <code>useTransition</code> 每次非同步操作時，會自動幫我們處理好 pending 的狀態，讓我們不需要再手動管理。</p>
+
+<h2 id="useactionstate">useActionState</h2>
+
+<p>前面展示了 <code>useTransition</code> 已經簡化了一些程式碼，接下來看到 <code>useActionState</code> 這個新 hook，可以更進一步簡化我們的程式碼：</p>
+
+<pre><code class="jsx!">import { useActionState } from &#39;react&#39;
+
+const UseActionStateExample = () =&gt; {
+  const [error, submitAction, isPending] = useActionState(
+    async (state, formData) =&gt; {
+      const newName = formData.get(&#39;name&#39;)
+      const error = await updateNameAPI(newName)
+      if (error) {
+        return error
+      }
+    }
+  )
+
+  const handleSubmit = (e) =&gt; {
+    e.preventDefault()
+    const formData = new FormData(e.target)
+    submitAction(formData) // 調用 submitAction 提交表單
+  }
+
+  // useActionState 自動管理 error 和 isPending 狀態
+  // 在非同步操作期間，isPending 為 true
+  // 操作完成後，根據返回值更新 error 狀態
+
+  return (
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;input name=&#39;name&#39; /&gt;
+      &lt;button type=&#39;submit&#39; disabled={isPending}&gt;
+        {isPending ? &#39;更新中...&#39; : &#39;更新名字&#39;}
+      &lt;/button&gt;
+      {error &amp;&amp; &lt;p style={{ color: &#39;red&#39; }}&gt;{error}&lt;/p&gt;}
+    &lt;/form&gt;
+  )
+}
+</code></pre>
+
+<p><code>useActionState</code> 分別回傳了三個值，第一個是錯誤訊息，第二個是一個函式，用來提交表單，第三個是一個布林值，用來判斷是否正在執行中。</p>
+
+<p>這個例子中，我們完全不需要 <code>useState</code>，只需要使用 <code>useActionState</code> 就可以完成前面使用 <code>useTransition</code> 所有的操作，這樣可以讓我們的程式碼更加簡潔。不過眼尖的你，可能也發現到這個例子中，使用的是 <code>form</code> 表單的操作，所以這也表示 <code>useActionState</code> 只能用在表單操作上。</p>
+
+<h2 id="useformstatus">useFormStatus</h2>
+
+<p>在以前的 React 中，如果按鈕元件獨立出來，要讓按鈕元件知道目前表單是否正在執行中，需要透過 <code>props</code> 傳遞，這樣會讓程式碼變得複雜，不過在 React 19 中，我們可以使用 <code>useFormStatus</code> 來取得表單的狀態：</p>
+
+<pre><code class="jsx!">import { useActionState } from &#39;react&#39;
+import { useFormStatus } from &#39;react-dom&#39;
+
+const SubmitButton = () =&gt; {
+  const { pending } = useFormStatus()
+  // 從 useFormStatus 獲取 pending 狀態
+  return (
+    &lt;button type=&#39;submit&#39; disabled={pending}&gt;
+      {pending ? &#39;更新中...&#39; : &#39;更新名字&#39;}
+    &lt;/button&gt;
+  )
+}
+
+// useFormStatus 讀取父 &lt;form&gt; 的 pending 狀態
+// 無需通過 props 傳遞，降低了組件耦合
+
+const UseFormStatus = () =&gt; {
+  const [error, submitAction] = useActionState(async (state, formData) =&gt; {
+    const newName = formData.get(&#39;name&#39;)
+    const error = await updateNameAPI(newName)
+    if (error) {
+      return error
+    }
+  })
+
+  const handleSubmit = async (formData) =&gt; {
+    submitAction(formData)
+  }
+
+  return (
+    &lt;form action={handleSubmit}&gt;
+      &lt;input name=&#39;name&#39; /&gt;
+      &lt;SubmitButton /&gt;
+      {error &amp;&amp; &lt;p style={{ color: &#39;red&#39; }}&gt;{error}&lt;/p&gt;}
+    &lt;/form&gt;
+  )
+}
+</code></pre>
+
+<p>在上面的例子中，示範了使用 <code>useFormStatus</code> 搭配 <code>useActionState</code> 來簡化表單的操作，前者可以不需要傳遞 <code>props</code> 就可以直接幫我們處理運作中的狀態，這樣後者也可以不需要取出 <code>isPending</code> 來判斷是否正在執行中。</p>
+
+<h2 id="useoptimistic">useOptimistic</h2>
+
+<p>在某些情境下，當使用者提交表單時，我們可以先假設使用者的操作是成功的，然後再等待 API 回傳結果，這樣可以讓使用者感受到更快的回饋，這個概念就是所謂的 <code>Optimistic UI</code>，在 React 19 中，我們可以使用 <code>useOptimistic</code> 來實現這個功能：</p>
+
+<pre><code class="jsx!">import { useState } from &#39;react&#39;
+import { useOptimistic } from &#39;react&#39;
+
+const OptimisticExample = () =&gt; {
+  const [title, setTitle] = useState(&#39;React 18&#39;)
+  const [optimisticTitle, setOptimisticTitle] = useOptimistic(title)
+
+  const submitForm = async () =&gt; {
+    const newTitle = &#39;React 19&#39;
+    setOptimisticTitle(newTitle) // 立即渲染 optimistic 狀態
+    const res = await new Promise((resolve) =&gt; {
+      setTimeout(() =&gt; {
+        resolve(`${newTitle} Beta`)
+      }, 1000)
+    })
+    setTitle(res) // 更新為最終結果
+  }
+
+  // useOptimistic 使得我們可以優雅地實現 optimistic UI
+  // 先展示期望的最終狀態，等待非同步操作完成後再更新為實際結果
+
+  return (
+    &lt;form action={submitForm}&gt;
+      &lt;h1&gt;{optimisticTitle}&lt;/h1&gt;
+      &lt;button type=&#39;submit&#39;&gt;更新&lt;/button&gt;
+    &lt;/form&gt;
+  )
+}
+</code></pre>
+
+<p>在這個例子中，我們使用 <code>useOptimistic</code> 來取代 <code>useState</code>，這樣就可以讓我們在提交表單時，先更新 UI，然後再等待 API 回傳結果，這樣可以讓使用者感受到更快的回饋。</p>
+
+<h2 id="use">use</h2>
+
+<p>在之前版本的 React 中，如果想讀取一些外部的 API 資料，一般都會使用 <code>useEffect</code> 來處理，可以先看以下的範例：</p>
+
+<pre><code class="jsx!">import { useState, useEffect } from &#39;react&#39;
+
+const Messages = ({ messages }) =&gt; {
+  return (
+    &lt;ul&gt;
+      {messages.map((message) =&gt; (
+        &lt;li key={message.id}&gt;
+          &lt;h2&gt;{message.title}&lt;/h2&gt;
+          &lt;p&gt;{message.body}&lt;/p&gt;
+        &lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  )
+}
+
+function FetchExample() {
+  const [messages, setMessages] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() =&gt; {
+    const fetchData = async () =&gt; {
+      try {
+        const res = await fetch(&#39;https://jsonplaceholder.typicode.com/posts&#39;)
+        const data = await res.json()
+        setMessages(data)
+        setLoading(false)
+      } catch (err) {
+        console.error(err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  if (loading) {
+    return &lt;p&gt;⌛Downloading message...&lt;/p&gt;
+  }
+
+  return &lt;Messages messages={messages} /&gt;
+}
+</code></pre>
+
+<p>在 React 19 中，我們可以使用 <code>use</code> 來取代 <code>useEffect</code>，這樣可以讓我們的程式碼更加簡潔：</p>
+
+<pre><code class="jsx!">import { use, Suspense } from &#39;react&#39;
+
+const fetchData = async () =&gt; {
+  const res = await fetch(&#39;https://jsonplaceholder.typicode.com/posts&#39;)
+  return res.json()
+}
+
+const Messages = () =&gt; {
+  const messages = use(fetchData())
+  // use 讀取非同步資源，並暫停渲染直到完成
+
+  return (
+    &lt;ul&gt;
+      {messages.map((message) =&gt; (
+        &lt;li key={message.id}&gt;
+          &lt;h2&gt;{message.title}&lt;/h2&gt;
+          &lt;p&gt;{message.body}&lt;/p&gt;
+        &lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  )
+}
+
+// use 簡化了非同步讀取資源的實現
+// 不需要使用 useEffect 提高可讀性
+
+function UseExample() {
+  return (
+    &lt;Suspense fallback={&lt;p&gt;⌛Downloading message...&lt;/p&gt;}&gt;
+      &lt;Messages /&gt;
+    &lt;/Suspense&gt;
+  )
+}
+</code></pre>
+
+<h2 id="context">Context</h2>
+
+<p>最後來介紹 React 19 的 Context，這個部分算是有點小變動，以往在使用 Context 的時候，需要加上一個 <code>Provider</code>，像是 <code>&lt;Context.Provider&gt;</code>。</p>
+
+<p>但在 React 19 中，我們可以直接使用 <code>Context</code> 來取代 <code>Provider</code>，這樣可以讓我們的程式碼更加簡潔：</p>
+
+<pre><code class="jsx!">import { createContext, useContext } from &#39;react&#39;
+
+// 新建 Context
+const ThemeContext = createContext(&#39;light&#39;)
+
+function ThemeProvider({ children }) {
+  const theme = &#39;light&#39;
+
+  // 使用新語法渲染 &lt;Context&gt; 作為 provider
+  return &lt;ThemeContext value={theme}&gt;{children}&lt;/ThemeContext&gt;
+}
+
+function ThemedButton() {
+  // 使用 Context
+  const theme = useContext(ThemeContext)
+
+  return (
+    &lt;button
+      style={{
+        backgroundColor: theme === &#39;light&#39; ? &#39;white&#39; : &#39;black&#39;,
+        color: theme === &#39;light&#39; ? &#39;black&#39; : &#39;white&#39;
+      }}
+    &gt;
+      I am a {theme} themed button
+    &lt;/button&gt;
+  )
+}
+
+const ContextExample = () =&gt; {
+  return (
+    &lt;ThemeProvider&gt;
+      &lt;ThemedButton /&gt;
+    &lt;/ThemeProvider&gt;
+  )
+}
+</code></pre>
+
+<p>在這個例子中，當傳遞 <code>value</code> 為 <code>light</code> 時，<code>ThemedButton</code> 會顯示一個白色的按鈕，當傳遞 <code>value</code> 為 <code>dark</code> 時，<code>ThemedButton</code> 會顯示一個黑色的按鈕。</p>
+
+<h2 id="part-6542fd4e95a">結論</h2>
+
+<p>React 19 Beta 還有其他功能，這篇文章只是挑出一些常用的情境可使用的 hook 和 API 來介紹，想了解更多的話，在 React 19 正式版推出再來做更加詳細的介紹。</p>
+
+<p>總的來說，React 19 Beta 為開發者帶來了許多改變，讓非同步渲染、數據獲取和更新的體驗獲得極大提升。雖然這只是一個 Beta 版本，但這些新功能和改進都值得我們熱烈期待 React 19 的正式到來。最後讓我們拭目以待，並為即將到來的 React 開發新紀元做好準備吧！</p>
+
+    </div>
+    
+    <!-- Share Section -->
+    <div class="animate-slide-up" style="animation-delay: 0.6s; margin-top: var(--space-12); padding: var(--space-8) 0; background: linear-gradient(135deg, var(--gray-50) 0%, white 100%); border-radius: 1rem; border: 1px solid var(--gray-100);">
+      <div style="text-align: center;">
+        <h3 style="font-size: var(--text-lg); font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-2); font-family: var(--font-sans);">Enjoyed this article?</h3>
+        <p style="font-size: var(--text-sm); color: var(--gray-600); margin-bottom: var(--space-6); font-family: var(--font-sans);">Share it with your network and help others discover great content</p>
+        <div style="display: flex; justify-content: center; gap: var(--space-3); flex-wrap: wrap;">
+          <a href="https://twitter.com/intent/tweet?text=React+19+Beta+%E6%96%B0%E6%AD%A6%E5%99%A8%E8%A7%A3%E9%8E%96%E9%AB%94%E9%A9%97&url=http%3A%2F%2Fexample.org" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             style="background: #1DA1F2; color: white; border-color: #1DA1F2; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#1a91da'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#1DA1F2'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+            </svg>
+            Share on Twitter
+          </a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=http%3A%2F%2Fexample.org" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             style="background: #0077B5; color: white; border-color: #0077B5; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#005885'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#0077B5'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            Share on LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
+  </article>
+  
+  <!-- Post Navigation -->
+  <nav class="post-navigation animate-slide-up" style="animation-delay: 0.8s; margin-top: var(--space-16); padding-top: var(--space-12); border-top: 2px solid var(--gray-100);">
+      <div class="post-nav-item prev">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">← Previous Post</span>
+        <a href="/leptos-wasm-gcp.html" class="post-nav-title" style="font-family: var(--font-sans);">
+          使用 Leptos 建立和部署 WASM 到 GCP
+        </a>
+      </div>
+    
+      <div class="post-nav-item next">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">Next Post →</span>
+        <a href="/next-js-app-router-context.html" class="post-nav-title" style="font-family: var(--font-sans);">
+          Next.js 如何在 App Router 中使用 Context？
+        </a>
+      </div>
+  </nav>
+  
+  <!-- Back to Home -->
+  <div style="text-align: center; margin-top: var(--space-12); padding-top: var(--space-8); border-top: 1px solid var(--gray-100);">
+    <a href="/" class="btn" style="background: var(--gray-100); color: var(--gray-700); border-color: var(--gray-200);" onmouseover="this.style.background='var(--gray-200)'; this.style.transform='translateY(-1px)';" onmouseout="this.style.background='var(--gray-100)'; this.style.transform='translateY(0)';">
+      <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+      </svg>
+      Back to Articles
+    </a>
+  </div>
+</div><!-- END app/views/static/post.html.erb -->
+    </main>
+    
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>About Railquill</h3>
+            <p>A modern blog platform built with Ruby on Rails, designed for developers who love clean code and beautiful typography.</p>
+          </div>
+          <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/archive">Archive</a></li>
+              <li><a href="/feed.xml">RSS Feed</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h3>Connect</h3>
+            <ul>
+              <li><a href="https://twitter.com/railquill" target="_blank" rel="noopener">Twitter</a></li>
+              <li><a href="https://github.com/railquill" target="_blank" rel="noopener">GitHub</a></li>
+              <li><a href="mailto:hello@railquill.com">Email</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html><!-- END app/views/layouts/static.html.erb -->
