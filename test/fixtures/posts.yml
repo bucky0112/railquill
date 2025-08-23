@@ -1,0 +1,112 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: "Getting Started with Ruby on Rails"
+  slug: getting-started-with-ruby-on-rails
+  body_md: |
+    # Getting Started with Ruby on Rails
+    
+    Ruby on Rails is a **powerful** web application framework written in Ruby. It follows the MVC (Model-View-Controller) pattern and emphasizes convention over configuration.
+    
+    ## Why Choose Rails?
+    
+    - **Rapid Development**: Rails provides many built-in features
+    - **Convention over Configuration**: Less boilerplate code
+    - **Active Community**: Large ecosystem of gems
+    
+    ## Getting Started
+    
+    ```ruby
+    # Create a new Rails application
+    rails new my_app
+    cd my_app
+    rails server
+    ```
+    
+    This will start your development server on [localhost:3000](http://localhost:3000).
+    
+    Happy coding!
+  status: 1
+  published_at: <%= 1.day.ago %>
+  excerpt: "Learn how to get started with Ruby on Rails framework and build your first web application."
+  meta_description: "A beginner's guide to Ruby on Rails web framework covering installation, basic concepts, and first steps."
+  featured_image_url: "https://example.com/rails-tutorial.jpg"
+
+two:
+  title: "Advanced Testing Strategies in Rails"
+  slug: advanced-testing-strategies-in-rails
+  body_md: |
+    # Advanced Testing Strategies in Rails
+    
+    Testing is a **crucial** part of Rails development. This post covers advanced testing patterns and strategies.
+    
+    ## Types of Tests
+    
+    1. **Unit Tests** - Test individual models and methods
+    2. **Integration Tests** - Test request/response cycles
+    3. **System Tests** - End-to-end browser testing
+    
+    ## Best Practices
+    
+    - Write tests first (TDD approach)
+    - Keep tests fast and focused
+    - Use factories over fixtures when possible
+    - Mock external dependencies
+    
+    ```ruby
+    # Example RSpec test
+    describe Post do
+      it "should be valid with title and body" do
+        post = build(:post)
+        expect(post).to be_valid
+      end
+    end
+    ```
+    
+    Remember: good tests make refactoring safe and deployment confident.
+  status: 0
+  excerpt: "Dive deep into Rails testing strategies including unit tests, integration tests, and system tests."
+  meta_description: "Advanced testing strategies for Ruby on Rails applications covering TDD, RSpec, and best practices."
+
+three:
+  title: "Building RESTful APIs with Rails"
+  slug: building-restful-apis-with-rails
+  body_md: |
+    # Building RESTful APIs with Rails
+    
+    Rails makes it easy to build **RESTful APIs** for mobile apps and frontend frameworks.
+    
+    ## API-Only Applications
+    
+    ```bash
+    rails new my_api --api
+    ```
+    
+    This creates a streamlined Rails app optimized for API development.
+    
+    ## JSON Responses
+    
+    ```ruby
+    class PostsController < ApplicationController
+      def index
+        posts = Post.published
+        render json: posts
+      end
+      
+      def show
+        post = Post.find(params[:id])
+        render json: post
+      end
+    end
+    ```
+    
+    ## Authentication
+    
+    Consider using JWT tokens or API keys for authentication.
+    
+    Happy API building!
+  status: 1
+  published_at: <%= 3.days.ago %>
+  excerpt: "Learn how to build robust RESTful APIs using Ruby on Rails for modern web applications."
+  meta_description: "Complete guide to building RESTful APIs with Rails including JSON responses, authentication, and best practices."
+  featured_image_url: "https://example.com/api-development.jpg"

@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  email: admin@railquill.com
+  encrypted_password: <%= Devise::Encryptor.digest(AdminUser, 'password123') %>
+  created_at: <%= 1.week.ago %>
+  updated_at: <%= 1.day.ago %>
+
+two:
+  email: editor@railquill.com
+  encrypted_password: <%= Devise::Encryptor.digest(AdminUser, 'editorpass') %>
+  created_at: <%= 5.days.ago %>
+  updated_at: <%= 2.days.ago %>
