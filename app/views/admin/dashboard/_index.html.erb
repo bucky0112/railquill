@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Railquill Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="h-full bg-gray-50">
+  <div class="flex h-full">
+    <!-- Sidebar -->
+    <div class="hidden lg:flex lg:w-64 lg:flex-col">
+      <div class="flex flex-col flex-grow bg-white border-r border-gray-200 pt-5 overflow-y-auto">
+        <div class="flex items-center flex-shrink-0 px-6">
+          <h1 class="text-xl font-bold text-gray-900">📚 Railquill</h1>
+        </div>
+        <div class="mt-8 flex-grow flex flex-col">
+          <nav class="flex-1 px-4 space-y-1">
+            <a href="/admin" class="bg-indigo-50 text-indigo-700 group flex items-center px-4 py-2 text-sm font-medium rounded-md">
+              <span class="text-lg mr-3">📊</span>
+              Dashboard
+            </a>
+            <a href="/admin/posts" class="text-gray-700 hover:bg-gray-50 group flex items-center px-4 py-2 text-sm font-medium rounded-md">
+              <span class="text-lg mr-3">📝</span>
+              Posts
+            </a>
+            <a href="/admin/admin_users" class="text-gray-700 hover:bg-gray-50 group flex items-center px-4 py-2 text-sm font-medium rounded-md">
+              <span class="text-lg mr-3">👥</span>
+              Admin Users
+            </a>
+          </nav>
+          <div class="px-4 pb-4">
+            <a href="/admin/logout" data-method="delete" class="text-gray-700 hover:bg-red-50 hover:text-red-600 group flex items-center px-4 py-2 text-sm font-medium rounded-md">
+              <span class="text-lg mr-3">🚪</span>
+              Logout
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="flex flex-col flex-1 overflow-hidden">
+      <!-- Top bar -->
+      <div class="bg-white shadow-sm border-b border-gray-200">
+        <div class="px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+            <div class="flex items-center">
+              <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+              <% if current_admin_user %>
+                <div class="flex items-center space-x-2">
+                  <div class="w-8 h-8 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-sm font-medium">
+                    <%= current_admin_user.email.first.upcase %>
+                  </div>
+                  <span class="text-sm text-gray-700">Welcome, <%= current_admin_user.email.split('@').first.capitalize %></span>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard content -->
+      <main class="flex-1 relative overflow-y-auto focus:outline-none">
+        <div class="py-6">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Welcome Section -->
+            <div class="mb-8">
+              <h2 class="text-3xl font-bold text-gray-900 mb-2">
+                Welcome back, <%= current_admin_user&.email&.split('@')&.first&.capitalize || 'Admin' %>!
+              </h2>
+              <p class="text-lg text-gray-600">Here's what's happening with your blog</p>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+              <!-- Total Posts -->
+              <div class="bg-white overflow-hidden shadow-sm rounded-lg hover:shadow-md transition-shadow">
+                <div class="p-6">
+                  <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                      <div class="text-3xl font-bold text-indigo-600">
+                        <%= Post.count %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-2">
+                    <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">Total Posts</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Published Posts -->
+              <div class="bg-white overflow-hidden shadow-sm rounded-lg hover:shadow-md transition-shadow">
+                <div class="p-6">
+                  <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                      <div class="text-3xl font-bold text-green-600">
+                        <%= Post.published.count %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-2">
+                    <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">Published</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Draft Posts -->
+              <div class="bg-white overflow-hidden shadow-sm rounded-lg hover:shadow-md transition-shadow">
+                <div class="p-6">
+                  <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                      <div class="text-3xl font-bold text-yellow-600">
+                        <%= Post.draft.count %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-2">
+                    <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">Drafts</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Reading Time -->
+              <div class="bg-white overflow-hidden shadow-sm rounded-lg hover:shadow-md transition-shadow">
+                <div class="p-6">
+                  <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                      <div class="text-3xl font-bold text-blue-600">
+                        <%= Post.published.sum(:reading_time) || 0 %> min
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-2">
+                    <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">Total Reading Time</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Main Content Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <!-- Recent Activity -->
+              <div class="lg:col-span-2">
+                <div class="bg-white shadow-sm rounded-lg">
+                  <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-medium text-gray-900">Recent Activity</h3>
+                  </div>
+                  <div class="p-6">
+                    <% posts = Post.order(updated_at: :desc).limit(5) %>
+                    <% if posts.any? %>
+                      <div class="space-y-4">
+                        <% posts.each do |post| %>
+                          <div class="flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                            <div class="flex-shrink-0">
+                              <% if post.published? %>
+                                <span class="text-xl">✅</span>
+                              <% else %>
+                                <span class="text-xl">📝</span>
+                              <% end %>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                              <p class="text-sm font-medium text-gray-900">
+                                <a href="/admin/posts/<%= post.slug %>" class="hover:text-indigo-600"><%= post.title %></a>
+                              </p>
+                              <p class="text-sm text-gray-500">
+                                <% if post.published? %>
+                                  Published <%= time_ago_in_words(post.published_at) %> ago
+                                <% else %>
+                                  Updated <%= time_ago_in_words(post.updated_at) %> ago
+                                <% end %>
+                              </p>
+                            </div>
+                          </div>
+                        <% end %>
+                      </div>
+                    <% else %>
+                      <div class="text-center py-8">
+                        <p class="text-gray-500">No posts yet. Create your first post to get started!</p>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quick Actions -->
+              <div>
+                <div class="bg-white shadow-sm rounded-lg">
+                  <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-medium text-gray-900">Quick Actions</h3>
+                  </div>
+                  <div class="p-6 space-y-4">
+                    <a href="/admin/posts/new" class="block w-full bg-indigo-600 text-white text-center px-4 py-3 rounded-lg font-medium hover:bg-indigo-500 transition-colors">
+                      ✏️ New Post
+                    </a>
+                    <a href="/admin/posts?scope=draft" class="block w-full bg-gray-100 text-gray-700 text-center px-4 py-3 rounded-lg font-medium hover:bg-gray-200 transition-colors">
+                      📋 View Drafts
+                    </a>
+                    <button onclick="alert('Publishing feature coming soon!')" class="block w-full bg-green-100 text-green-700 text-center px-4 py-3 rounded-lg font-medium hover:bg-green-200 transition-colors">
+                      🚀 Publish Site
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="mt-6 bg-white shadow-sm rounded-lg">
+                  <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-medium text-gray-900">Content Overview</h3>
+                  </div>
+                  <div class="p-6 space-y-4">
+                    <% 
+                      total_words = Post.published.sum { |p| p.body_md.to_s.split.size }
+                      avg_reading_time = Post.published.average(:reading_time).to_i
+                      posts_this_month = Post.published.where("published_at >= ?", 1.month.ago).count
+                    %>
+                    <div class="text-center p-4 bg-gray-50 rounded-lg">
+                      <div class="text-2xl font-bold text-gray-900"><%= number_with_delimiter(total_words) %></div>
+                      <div class="text-sm text-gray-600">Total Words</div>
+                    </div>
+                    <div class="text-center p-4 bg-gray-50 rounded-lg">
+                      <div class="text-2xl font-bold text-gray-900"><%= avg_reading_time %> min</div>
+                      <div class="text-sm text-gray-600">Avg Reading Time</div>
+                    </div>
+                    <div class="text-center p-4 bg-gray-50 rounded-lg">
+                      <div class="text-2xl font-bold text-gray-900"><%= posts_this_month %></div>
+                      <div class="text-sm text-gray-600">Posts This Month</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

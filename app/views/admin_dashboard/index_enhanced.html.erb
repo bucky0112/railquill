@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Railquill Admin - Dashboard</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f3f4f6;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #d1d5db;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #9ca3af;
+    }
+    
+    /* Smooth transitions */
+    * {
+      transition: color 0.2s, background-color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    
+    /* Glass morphism effect */
+    .glass {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Gradient text */
+    .gradient-text {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    /* Pulse animation */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .animate-pulse-slow {
+      animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+  </style>
+</head>
+<body class="h-full bg-gray-50">
+  <!-- Background decoration -->
+  <div class="fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-purple-100 opacity-20 blur-3xl"></div>
+    <div class="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-indigo-100 opacity-20 blur-3xl"></div>
+  </div>
+
+  <div class="flex h-full">
+    <!-- Enhanced Sidebar -->
+    <div class="hidden lg:flex lg:w-72 lg:flex-col">
+      <div class="flex flex-col flex-grow bg-white border-r border-gray-200 overflow-y-auto shadow-xl">
+        <!-- Logo & Search -->
+        <div class="p-6 border-b border-gray-100">
+          <div class="flex items-center mb-6">
+            <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-lg mr-3">
+              R
+            </div>
+            <h1 class="text-xl font-bold text-gray-900">Railquill</h1>
+          </div>
+          
+          <!-- Quick Search -->
+          <div class="relative">
+            <input type="text" placeholder="Quick search..." class="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+            <svg class="absolute left-3 top-2.5 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex-1 px-4 py-4 space-y-1">
+          <a href="/admin_dashboard" class="bg-indigo-50 text-indigo-700 group flex items-center px-4 py-3 text-sm font-medium rounded-lg border-l-4 border-indigo-600">
+            <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+            </svg>
+            Dashboard
+          </a>
+          
+          <div class="pt-4">
+            <p class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Content</p>
+          </div>
+          
+          <a href="/admin/posts" class="text-gray-700 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-4 py-3 text-sm font-medium rounded-lg">
+            <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            Posts
+            <span class="ml-auto bg-gray-100 text-gray-600 py-0.5 px-2 text-xs rounded-full"><%= @total_posts %></span>
+          </a>
+          
+          <a href="/admin/posts?scope=draft" class="text-gray-700 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-4 py-3 text-sm font-medium rounded-lg">
+            <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+            </svg>
+            Drafts
+            <span class="ml-auto bg-yellow-100 text-yellow-600 py-0.5 px-2 text-xs rounded-full"><%= @draft_posts %></span>
+          </a>
+          
+          <div class="pt-4">
+            <p class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Analytics</p>
+          </div>
+          
+          <a href="#" class="text-gray-700 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-4 py-3 text-sm font-medium rounded-lg">
+            <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+            Stats
+          </a>
+          
+          <div class="pt-4">
+            <p class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Settings</p>
+          </div>
+          
+          <a href="/admin/admin_users" class="text-gray-700 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-4 py-3 text-sm font-medium rounded-lg">
+            <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+            </svg>
+            Users
+          </a>
+        </nav>
+
+        <!-- User Menu -->
+        <div class="border-t border-gray-200 p-4">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <div class="w-10 h-10 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold">
+                <%= current_admin_user.email.first.upcase %>
+              </div>
+            </div>
+            <div class="ml-3 flex-1">
+              <p class="text-sm font-medium text-gray-900"><%= current_admin_user.email.split('@').first.capitalize %></p>
+              <p class="text-xs text-gray-500">Administrator</p>
+            </div>
+            <%= link_to destroy_admin_user_session_path, method: :delete, class: "ml-3 p-2 text-gray-400 hover:text-gray-500 hover:bg-gray-100 rounded-lg" do %>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+              </svg>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex flex-col flex-1 overflow-hidden">
+      <!-- Top Header -->
+      <header class="bg-white shadow-sm border-b border-gray-200 z-10">
+        <div class="px-4 sm:px-6 lg:px-8 py-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
+              <p class="text-sm text-gray-500 mt-1">Welcome back, <%= current_admin_user&.email&.split('@')&.first&.capitalize %>! Here's what's happening.</p>
+            </div>
+            <div class="flex items-center space-x-4">
+              <!-- Quick Actions -->
+              <button class="p-2 text-gray-400 hover:text-gray-500 hover:bg-gray-100 rounded-lg">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                </svg>
+              </button>
+              <a href="/admin/posts/new" class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                New Post
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard Content -->
+      <main class="flex-1 overflow-y-auto bg-gray-50">
+        <div class="py-8">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Enhanced Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+              <!-- Total Posts Card -->
+              <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transform hover:-translate-y-1">
+                <div class="p-6">
+                  <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
+                      <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                      </svg>
+                    </div>
+                    <span class="text-xs font-medium text-green-600 bg-green-100 px-2 py-1 rounded-full">+12%</span>
+                  </div>
+                  <h3 class="text-3xl font-bold text-gray-900 mb-1"><%= @total_posts %></h3>
+                  <p class="text-sm font-medium text-gray-500">Total Posts</p>
+                  <!-- Mini chart -->
+                  <div class="mt-4 h-12 flex items-end space-x-1">
+                    <div class="flex-1 bg-indigo-200 rounded-t" style="height: 40%"></div>
+                    <div class="flex-1 bg-indigo-200 rounded-t" style="height: 70%"></div>
+                    <div class="flex-1 bg-indigo-200 rounded-t" style="height: 50%"></div>
+                    <div class="flex-1 bg-indigo-200 rounded-t" style="height: 90%"></div>
+                    <div class="flex-1 bg-indigo-300 rounded-t" style="height: 100%"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Published Posts Card -->
+              <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transform hover:-translate-y-1">
+                <div class="p-6">
+                  <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                      <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      </svg>
+                    </div>
+                    <span class="text-xs font-medium text-gray-500">This month</span>
+                  </div>
+                  <h3 class="text-3xl font-bold text-gray-900 mb-1"><%= @published_posts %></h3>
+                  <p class="text-sm font-medium text-gray-500">Published</p>
+                  <div class="mt-4">
+                    <div class="flex items-center text-xs text-gray-500">
+                      <span class="font-medium text-green-600"><%= @posts_this_month %></span>
+                      <span class="ml-1">posts this month</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Draft Posts Card -->
+              <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transform hover:-translate-y-1">
+                <div class="p-6">
+                  <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                      <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                      </svg>
+                    </div>
+                    <% if @draft_posts > 0 %>
+                      <span class="animate-pulse-slow text-xs font-medium text-yellow-600">Pending</span>
+                    <% end %>
+                  </div>
+                  <h3 class="text-3xl font-bold text-gray-900 mb-1"><%= @draft_posts %></h3>
+                  <p class="text-sm font-medium text-gray-500">Drafts</p>
+                  <div class="mt-4">
+                    <a href="/admin/posts?scope=draft" class="text-xs font-medium text-indigo-600 hover:text-indigo-500">
+                      View all drafts →
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Reading Time Card -->
+              <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transform hover:-translate-y-1">
+                <div class="p-6">
+                  <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      </svg>
+                    </div>
+                    <span class="text-xs font-medium text-gray-500">Avg <%= @avg_reading_time %> min</span>
+                  </div>
+                  <h3 class="text-3xl font-bold text-gray-900 mb-1"><%= @total_reading_time %></h3>
+                  <p class="text-sm font-medium text-gray-500">Total Minutes</p>
+                  <div class="mt-4">
+                    <p class="text-xs text-gray-500">
+                      <%= number_with_delimiter(@total_words) %> total words written
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Main Content Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <!-- Activity Timeline -->
+              <div class="lg:col-span-2">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+                  <div class="px-6 py-4 border-b border-gray-100">
+                    <div class="flex items-center justify-between">
+                      <h3 class="text-lg font-semibold text-gray-900">Recent Activity</h3>
+                      <button class="text-sm text-indigo-600 hover:text-indigo-500 font-medium">View all</button>
+                    </div>
+                  </div>
+                  <div class="p-6">
+                    <% if @recent_posts.any? %>
+                      <div class="space-y-6">
+                        <% @recent_posts.each_with_index do |post, index| %>
+                          <div class="relative">
+                            <% if index < @recent_posts.length - 1 %>
+                              <span class="absolute top-8 left-6 -ml-px h-full w-0.5 bg-gray-200"></span>
+                            <% end %>
+                            <div class="relative flex items-start space-x-4">
+                              <div class="flex-shrink-0">
+                                <% if post.published? %>
+                                  <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                  </div>
+                                <% else %>
+                                  <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                    </svg>
+                                  </div>
+                                <% end %>
+                              </div>
+                              <div class="flex-1">
+                                <div class="bg-gray-50 rounded-lg p-4 hover:bg-gray-100">
+                                  <h4 class="text-sm font-semibold text-gray-900 mb-1">
+                                    <a href="/admin/posts/<%= post.slug %>" class="hover:text-indigo-600"><%= post.title %></a>
+                                  </h4>
+                                  <p class="text-sm text-gray-600 mb-2">
+                                    <%= truncate(post.excerpt || strip_tags(post.body_md || ""), length: 100) %>
+                                  </p>
+                                  <div class="flex items-center justify-between">
+                                    <p class="text-xs text-gray-500">
+                                      <% if post.published? %>
+                                        Published <%= time_ago_in_words(post.published_at) %> ago
+                                      <% else %>
+                                        Updated <%= time_ago_in_words(post.updated_at) %> ago
+                                      <% end %>
+                                    </p>
+                                    <div class="flex items-center space-x-2">
+                                      <a href="/admin/posts/<%= post.slug %>/edit" class="text-xs text-gray-500 hover:text-gray-700">Edit</a>
+                                      <span class="text-gray-300">•</span>
+                                      <a href="/preview/<%= post.slug %>" target="_blank" class="text-xs text-gray-500 hover:text-gray-700">Preview</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        <% end %>
+                      </div>
+                    <% else %>
+                      <div class="text-center py-12">
+                        <svg class="mx-auto h-12 w-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                        </svg>
+                        <p class="mt-4 text-sm text-gray-500">No activity yet. Create your first post!</p>
+                        <a href="/admin/posts/new" class="mt-4 inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700">
+                          Create First Post
+                        </a>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Sidebar -->
+              <div class="space-y-6">
+                <!-- Quick Compose Widget -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+                  <div class="px-6 py-4 border-b border-gray-100">
+                    <h3 class="text-lg font-semibold text-gray-900 flex items-center">
+                      <svg class="w-5 h-5 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                      </svg>
+                      Quick Compose
+                    </h3>
+                  </div>
+                  <div class="p-6">
+                    <form action="/admin/posts" method="post" class="space-y-4">
+                      <%= csrf_meta_tags %>
+                      <div>
+                        <input type="text" name="post[title]" placeholder="Post title..." class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required>
+                      </div>
+                      <div>
+                        <textarea name="post[body_md]" rows="4" placeholder="Start writing..." class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required></textarea>
+                      </div>
+                      <div class="flex items-center justify-between pt-2">
+                        <div class="flex items-center space-x-2">
+                          <button type="button" class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                          </button>
+                          <button type="button" class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                            </svg>
+                          </button>
+                        </div>
+                        <button type="submit" class="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700">
+                          Create Draft
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+
+                <!-- Writing Stats -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+                  <div class="px-6 py-4 border-b border-gray-100">
+                    <h3 class="text-lg font-semibold text-gray-900">Writing Stats</h3>
+                  </div>
+                  <div class="p-6 space-y-4">
+                    <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-4">
+                      <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-medium text-gray-700">Words Written</span>
+                        <span class="text-2xl font-bold gradient-text"><%= number_with_delimiter(@total_words) %></span>
+                      </div>
+                      <div class="text-xs text-gray-500">Across all <%= @total_posts %> posts</div>
+                    </div>
+                    
+                    <div class="space-y-3">
+                      <div>
+                        <div class="flex items-center justify-between text-sm mb-1">
+                          <span class="text-gray-600">Avg Post Length</span>
+                          <span class="font-medium text-gray-900"><%= @total_posts > 0 ? number_with_delimiter(@total_words / @total_posts) : 0 %> words</span>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="flex items-center justify-between text-sm mb-1">
+                          <span class="text-gray-600">Longest Post</span>
+                          <span class="font-medium text-gray-900">2,341 words</span>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="flex items-center justify-between text-sm mb-1">
+                          <span class="text-gray-600">Writing Streak</span>
+                          <span class="font-medium text-green-600">3 days 🔥</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+                  <div class="px-6 py-4 border-b border-gray-100">
+                    <h3 class="text-lg font-semibold text-gray-900">Quick Actions</h3>
+                  </div>
+                  <div class="p-6 space-y-3">
+                    <button onclick="if(confirm('This will generate and publish the static site. Continue?')) { fetch('/admin/publish', { method: 'POST', headers: { 'X-CSRF-Token': document.querySelector('[name=csrf-token]').content }}).then(() => alert('Site published successfully!')); }" class="w-full flex items-center justify-center px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium rounded-lg hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all">
+                      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                      </svg>
+                      Publish Site
+                    </button>
+                    <a href="/" target="_blank" class="w-full flex items-center justify-center px-4 py-3 bg-white text-gray-700 border border-gray-300 font-medium rounded-lg hover:bg-gray-50">
+                      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                      </svg>
+                      View Site
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
