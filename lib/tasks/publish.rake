@@ -16,6 +16,16 @@ namespace :static do
     index_html = StaticSiteGenerator.new.render_index(posts)
     File.write(output_dir.join('index.html'), index_html)
     
+    # Generate about page
+    puts "Generating about page..."
+    about_html = StaticSiteGenerator.new.render_about
+    File.write(output_dir.join('about.html'), about_html)
+    
+    # Generate archive page  
+    puts "Generating archive page..."
+    archive_html = StaticSiteGenerator.new.render_archive(posts)
+    File.write(output_dir.join('archive.html'), archive_html)
+    
     # Generate individual post pages
     posts.each do |post|
       puts "Generating page for: #{post.title}"
@@ -25,6 +35,6 @@ namespace :static do
     
     puts "\nStatic site generated successfully!"
     puts "Output directory: #{output_dir}"
-    puts "Total pages generated: #{posts.count + 1}"
+    puts "Total pages generated: #{posts.count + 3} (index + about + archive + #{posts.count} posts)"
   end
 end

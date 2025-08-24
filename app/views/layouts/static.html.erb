@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title><%= @page_title || "Railquill - Modern Rails Blog" %></title>
+    <title><%= @page_title || "#{@site_config.site_name} - Modern Rails Blog" %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -10,7 +10,7 @@
     <% elsif @post && @post.excerpt.present? %>
       <meta name="description" content="<%= @post.excerpt %>">
     <% else %>
-      <meta name="description" content="A modern blog built with Ruby on Rails, featuring clean design and excellent reading experience.">
+      <meta name="description" content="<%= @site_config.welcome_text %>">
     <% end %>
     
     <% if @post %>
@@ -823,7 +823,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-          <h1><a href="/">Railquill</a></h1>
+          <h1><a href="/"><%= @site_config.site_name %></a></h1>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -846,8 +846,8 @@
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>A modern blog platform built with Ruby on Rails, designed for developers who love clean code and beautiful typography.</p>
+            <h3>About <%= @site_config.site_name %></h3>
+            <p><%= truncate(@site_config.welcome_text, length: 120) %></p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -868,7 +868,7 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; <%= Date.current.year %> Railquill. Built with Rails and love.</p>
+          <p>&copy; <%= Date.current.year %> <%= @site_config.site_name %>. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

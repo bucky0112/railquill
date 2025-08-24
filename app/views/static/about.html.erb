@@ -1,59 +1,14 @@
 <div class="container-narrow">
   <article>
     <header>
-      <h1>About Railquill</h1>
+      <h1>About <%= @site_config.site_name %></h1>
       <div class="post-meta">
         <span>Learn more about this blog</span>
       </div>
     </header>
 
     <div class="post-content">
-      <p>Welcome to <strong>Railquill</strong>, a modern blog platform built with Ruby on Rails, designed for developers who appreciate clean code and beautiful typography.</p>
-
-      <h2>What is Railquill?</h2>
-      <p>Railquill is a full-featured blog application that combines the power of Ruby on Rails with modern web technologies. It features a dual admin interface system, static site generation capabilities, and a focus on excellent reading experience.</p>
-
-      <h2>Key Features</h2>
-      <ul>
-        <li><strong>Markdown-based Writing</strong>: Write your posts in Markdown with live preview capabilities</li>
-        <li><strong>Dual Admin Interface</strong>: Modern custom dashboard alongside traditional ActiveAdmin interface</li>
-        <li><strong>Static Site Generation</strong>: Generate static HTML files for optimal performance and SEO</li>
-        <li><strong>Preview System</strong>: Preview draft posts before publishing</li>
-        <li><strong>Responsive Design</strong>: Beautiful typography and responsive layout that works on all devices</li>
-        <li><strong>SEO Optimized</strong>: Built-in meta tags, structured data, and search engine optimization</li>
-      </ul>
-
-      <h2>Technology Stack</h2>
-      <ul>
-        <li><strong>Framework</strong>: Ruby on Rails 8.0.2</li>
-        <li><strong>Database</strong>: PostgreSQL</li>
-        <li><strong>Frontend</strong>: Hotwire (Turbo + Stimulus), Tailwind CSS</li>
-        <li><strong>JavaScript</strong>: Import maps for ESM modules</li>
-        <li><strong>Asset Pipeline</strong>: Propshaft</li>
-        <li><strong>Background Jobs</strong>: Solid Queue, Solid Cache, Solid Cable</li>
-        <li><strong>Deployment</strong>: Kamal (Docker-based)</li>
-        <li><strong>Admin</strong>: ActiveAdmin with Devise authentication</li>
-        <li><strong>Markdown</strong>: Redcarpet renderer with Rouge syntax highlighting</li>
-      </ul>
-
-      <h2>Design Philosophy</h2>
-      <p>Railquill is built with a focus on:</p>
-      <ul>
-        <li><strong>Performance</strong>: Fast loading times through static generation and optimized assets</li>
-        <li><strong>Accessibility</strong>: Semantic HTML and proper contrast ratios for all users</li>
-        <li><strong>Typography</strong>: Beautiful reading experience with carefully chosen fonts and spacing</li>
-        <li><strong>Developer Experience</strong>: Clean code architecture and comprehensive documentation</li>
-      </ul>
-
-      <h2>Contact</h2>
-      <p>Have questions or feedback about Railquill? We'd love to hear from you!</p>
-      <ul>
-        <li><strong>Email</strong>: <a href="mailto:hello@railquill.com">hello@railquill.com</a></li>
-        <li><strong>GitHub</strong>: <a href="https://github.com/railquill" target="_blank" rel="noopener">github.com/railquill</a></li>
-        <li><strong>Twitter</strong>: <a href="https://twitter.com/railquill" target="_blank" rel="noopener">@railquill</a></li>
-      </ul>
-
-      <p><em>Thank you for reading and supporting open-source development!</em></p>
+      <%= raw markdown_to_html(@site_config.about_content) %>
     </div>
   </article>
 </div>

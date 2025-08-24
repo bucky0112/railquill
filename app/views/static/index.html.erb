@@ -1,8 +1,8 @@
 <div class="container">
   <!-- Hero Section -->
   <section class="hero animate-fade-in">
-    <h2>Welcome to Railquill</h2>
-    <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.</p>
+    <h2><%= @site_config.welcome_title %></h2>
+    <p><%= @site_config.welcome_text %></p>
   </section>
 
   <% if @posts.any? %>
