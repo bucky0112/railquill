@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_26_123512) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_23_185650) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -55,5 +55,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_26_123512) do
     t.index ["published_at"], name: "index_posts_on_published_at"
     t.index ["slug"], name: "index_posts_on_slug"
     t.index ["status", "published_at"], name: "index_posts_on_status_and_published_at"
+  end
+
+  create_table "site_configs", force: :cascade do |t|
+    t.string "site_name", limit: 100, null: false
+    t.string "welcome_title", limit: 200, null: false
+    t.text "welcome_text", null: false
+    t.text "about_content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["id"], name: "index_site_configs_on_id", unique: true
   end
 end

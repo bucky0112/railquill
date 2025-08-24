@@ -13,3 +13,7 @@ AdminUser.find_or_create_by!(email: 'admin@example.com') do |admin|
   admin.password = 'password'
   admin.password_confirmation = 'password'
 end
+
+# Create default site configuration
+SiteConfig.instance
+puts "Created default site configuration"
