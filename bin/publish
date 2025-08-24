@@ -1,8 +1,9 @@
 #!/usr/bin/env ruby
 require_relative '../config/boot'
+require_relative '../config/environment'
 require 'rake'
 
-# Load Rails environment
+# Load Rails environment and tasks
 Rails.application.load_tasks
 
 # Run the publish task
