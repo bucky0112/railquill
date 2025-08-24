@@ -1,0 +1,2251 @@
+<!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Archive - Railquill</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    
+      <meta name="description" content="Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.">
+    
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+      /* Design System CSS Variables */
+      :root {
+        /* Brand Colors */
+        --primary-50: #EEF2FF;
+        --primary-100: #E0E7FF;
+        --primary-200: #C7D2FE;
+        --primary-300: #A5B4FC;
+        --primary-400: #818CF8;
+        --primary-500: #6366F1;
+        --primary-600: #4F46E5;
+        --primary-700: #4338CA;
+        --primary-800: #3730A3;
+        --primary-900: #312E81;
+
+        /* Neutral Colors */
+        --gray-50: #F9FAFB;
+        --gray-100: #F3F4F6;
+        --gray-200: #E5E7EB;
+        --gray-300: #D1D5DB;
+        --gray-400: #9CA3AF;
+        --gray-500: #6B7280;
+        --gray-600: #4B5563;
+        --gray-700: #374151;
+        --gray-800: #1F2937;
+        --gray-900: #111827;
+
+        /* Semantic Colors */
+        --success: #059669;
+        --success-light: #D1FAE5;
+        --warning: #D97706;
+        --warning-light: #FEF3C7;
+        --error: #DC2626;
+        --error-light: #FEE2E2;
+        --info: #2563EB;
+        --info-light: #DBEAFE;
+        
+        /* Typography */
+        --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        --font-serif: 'Lora', Georgia, 'Times New Roman', serif;
+        --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+        
+        /* Type Scale */
+        --text-xs: 0.75rem;
+        --text-sm: 0.875rem;
+        --text-base: 1rem;
+        --text-lg: 1.125rem;
+        --text-xl: 1.25rem;
+        --text-2xl: 1.5rem;
+        --text-3xl: 1.875rem;
+        --text-4xl: 2.25rem;
+        --text-5xl: 3rem;
+        --text-6xl: 3.75rem;
+        
+        /* Line Heights */
+        --leading-none: 1;
+        --leading-tight: 1.25;
+        --leading-snug: 1.375;
+        --leading-normal: 1.5;
+        --leading-relaxed: 1.625;
+        --leading-loose: 2;
+        
+        /* Letter Spacing */
+        --tracking-tighter: -0.05em;
+        --tracking-tight: -0.025em;
+        --tracking-normal: 0;
+        --tracking-wide: 0.025em;
+        --tracking-wider: 0.05em;
+        --tracking-widest: 0.1em;
+        
+        /* Spacing */
+        --space-px: 1px;
+        --space-0: 0;
+        --space-1: 0.25rem;
+        --space-2: 0.5rem;
+        --space-3: 0.75rem;
+        --space-4: 1rem;
+        --space-5: 1.25rem;
+        --space-6: 1.5rem;
+        --space-8: 2rem;
+        --space-10: 2.5rem;
+        --space-12: 3rem;
+        --space-16: 4rem;
+        --space-20: 5rem;
+        --space-24: 6rem;
+        
+        /* Transitions */
+        --ease-linear: linear;
+        --ease-in: cubic-bezier(0.4, 0, 1, 1);
+        --ease-out: cubic-bezier(0, 0, 0.2, 1);
+        --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      
+      /* Reset and base styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: var(--font-sans);
+        line-height: 1.6;
+        color: var(--gray-900);
+        background: #fff;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      
+      /* Container */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+      
+      .container-narrow {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+      
+      /* Header */
+      header {
+        background: #fff;
+        border-bottom: 1px solid var(--gray-100);
+        padding: 1.5rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.9);
+      }
+      
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      header h1 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+      }
+      
+      header a {
+        color: var(--gray-900);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      
+      header a:hover {
+        color: var(--primary-600);
+      }
+      
+      .header-nav {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+      }
+      
+      .header-nav a {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--gray-700);
+      }
+      
+      /* Main content */
+      main {
+        min-height: calc(100vh - 200px);
+        padding: 3rem 0;
+      }
+      
+      /* Hero Section */
+      /* Hero Section */
+      .hero {
+        text-align: center;
+        padding: var(--space-16) 0;
+        margin-bottom: var(--space-16);
+        background: linear-gradient(135deg, var(--gray-50) 0%, #fff 100%);
+        border-radius: 1rem;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 30% 20%, var(--primary-100) 0%, transparent 50%), 
+                    radial-gradient(circle at 80% 80%, var(--primary-50) 0%, transparent 50%);
+        opacity: 0.5;
+        z-index: 1;
+      }
+      
+      .hero > * {
+        position: relative;
+        z-index: 2;
+      }
+      
+      .hero h2 {
+        font-size: var(--text-5xl);
+        font-weight: 700;
+        letter-spacing: var(--tracking-tight);
+        margin-bottom: var(--space-4);
+        background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-500) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: var(--leading-tight);
+      }
+      
+      .hero p {
+        font-size: var(--text-xl);
+        color: var(--gray-600);
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: var(--leading-relaxed);
+      }
+      
+      /* Article styles */
+      article {
+        margin-bottom: 3rem;
+      }
+      
+      article h1 {
+        font-size: 3rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.1;
+        letter-spacing: -0.025em;
+        font-weight: 800;
+      }
+      
+      article h2 {
+        font-size: 2rem;
+        margin: 3rem 0 1.5rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+      }
+      
+      article h3 {
+        font-size: 1.5rem;
+        margin: 2rem 0 1rem;
+        font-weight: 600;
+      }
+      
+      article p {
+        margin-bottom: 1.5rem;
+        font-family: var(--font-serif);
+        font-size: 1.125rem;
+        line-height: 1.75;
+        color: var(--gray-700);
+      }
+      
+      article a {
+        color: var(--primary-600);
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.2s;
+      }
+      
+      article a:hover {
+        border-bottom-color: var(--primary-600);
+      }
+      
+      /* Drop cap for article content */
+      .post-content > p:first-of-type::first-letter {
+        float: left;
+        font-size: 4rem;
+        line-height: 3.5rem;
+        padding-right: var(--space-2);
+        margin-top: -0.25rem;
+        font-weight: 700;
+        color: var(--primary-600);
+        font-family: var(--font-serif);
+      }
+      
+      article code {
+        background: var(--gray-100);
+        padding: 0.125em 0.375em;
+        border-radius: 0.25rem;
+        font-family: var(--font-mono);
+        font-size: 0.875em;
+        color: var(--gray-900);
+      }
+      
+      article pre {
+        background: var(--gray-900);
+        color: var(--gray-100);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+        margin: 2rem 0;
+        position: relative;
+      }
+      
+      article pre code {
+        background: none;
+        padding: 0;
+        color: inherit;
+        font-size: 0.875rem;
+        line-height: 1.7;
+      }
+      
+      /* Enhanced syntax highlighting for common languages */
+      .highlight .c { color: #6B7280; font-style: italic; } /* Comment */
+      .highlight .k { color: #7C3AED; font-weight: bold; } /* Keyword */
+      .highlight .s { color: #059669; } /* String */
+      .highlight .mi { color: #DC2626; } /* Number */
+      .highlight .nf { color: #2563EB; } /* Function */
+      .highlight .nc { color: #7C2D12; font-weight: bold; } /* Class */
+      .highlight .na { color: #B45309; } /* Attribute */
+      .highlight .nb { color: #7C3AED; } /* Built-in */
+      .highlight .err { color: #DC2626; background: var(--error-light); } /* Error */
+      
+      article blockquote {
+        border-left: 4px solid var(--primary-600);
+        padding-left: 1.5rem;
+        margin: 2rem 0;
+        font-style: italic;
+        color: var(--gray-700);
+      }
+      
+      article blockquote p {
+        font-size: 1.25rem;
+      }
+      
+      article ul, article ol {
+        margin-bottom: 1.5rem;
+        padding-left: 2rem;
+        font-family: var(--font-serif);
+      }
+      
+      article li {
+        margin-bottom: 0.5rem;
+        font-size: 1.125rem;
+        line-height: 1.75;
+        color: var(--gray-700);
+      }
+      
+      article table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 2rem 0;
+        font-size: 0.875rem;
+      }
+      
+      article th, article td {
+        padding: 0.75rem;
+        border-bottom: 1px solid var(--gray-200);
+        text-align: left;
+      }
+      
+      article th {
+        background: var(--gray-50);
+        font-weight: 600;
+        color: var(--gray-900);
+        font-family: var(--font-sans);
+      }
+      
+      article tbody tr:hover {
+        background: var(--gray-50);
+      }
+      
+      /* Article images - responsive sizing */
+      article img {
+        max-width: 100%;
+        height: auto;
+        margin: 2rem 0;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      
+      article img:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      }
+      
+      /* Center images in paragraphs */
+      article p img {
+        display: block;
+        margin: 2rem auto;
+      }
+      
+      /* Article iframes - responsive embedded content */
+      article iframe {
+        max-width: 100%;
+        width: 100%;
+        height: 400px;
+        min-height: 300px;
+        margin: 2rem 0;
+        border-radius: 0.5rem;
+        border: 1px solid var(--gray-200);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+      }
+      
+      article iframe:hover {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      }
+      
+      /* Responsive iframe heights for different screen sizes */
+      @media (min-width: 768px) {
+        article iframe {
+          height: 500px;
+        }
+      }
+      
+      /* Post meta */
+      .post-meta {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: var(--gray-500);
+        margin-bottom: 2rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        flex-wrap: wrap;
+      }
+      
+      .post-meta-divider {
+        width: 4px;
+        height: 4px;
+        background: var(--gray-400);
+        border-radius: 50%;
+      }
+      
+      /* Post grid */
+      .post-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: var(--space-8);
+        margin-bottom: var(--space-12);
+      }
+      
+      /* Card Component */
+      .post-card {
+        background: white;
+        border-radius: 0.75rem;
+        overflow: hidden;
+        border: 1px solid var(--gray-100);
+        transition: all 0.3s var(--ease-out);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+      
+      .post-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.1);
+        border-color: var(--gray-200);
+      }
+      
+      .post-card-image {
+        aspect-ratio: 16/9;
+        overflow: hidden;
+        background: var(--gray-100);
+      }
+      
+      .post-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+      
+      .post-card:hover .post-card-image img {
+        transform: scale(1.05);
+      }
+      
+      .post-card-content {
+        padding: 1.5rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .post-card h2 {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        line-height: 1.4;
+      }
+      
+      .post-card a {
+        color: var(--gray-900);
+        text-decoration: none;
+      }
+      
+      .post-card a:hover {
+        color: var(--primary-600);
+      }
+      
+      .post-excerpt {
+        color: var(--gray-600);
+        margin: 0.75rem 0;
+        font-size: 0.875rem;
+        line-height: 1.6;
+        flex: 1;
+      }
+      
+      .post-card-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--gray-500);
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+      
+      /* Post list fallback */
+      .post-list {
+        list-style: none;
+        padding: 0;
+      }
+      
+      .post-list-item {
+        padding: 2rem 0;
+        border-bottom: 1px solid var(--gray-100);
+      }
+      
+      .post-list-item:last-child {
+        border-bottom: none;
+      }
+      
+      /* Featured image */
+      .featured-image {
+        margin: 0 -1.5rem 3rem;
+        position: relative;
+      }
+      
+      .featured-image img {
+        width: 100%;
+        height: auto;
+        max-height: 600px;
+        object-fit: cover;
+      }
+      
+      .featured-image-caption {
+        text-align: center;
+        margin-top: 1rem;
+        font-size: 0.875rem;
+        color: var(--gray-500);
+        font-style: italic;
+      }
+      
+      @media (min-width: 768px) {
+        .featured-image {
+          margin: 0 0 3rem;
+          border-radius: 0.75rem;
+          overflow: hidden;
+        }
+      }
+      
+      /* Post navigation */
+      .post-navigation {
+        margin-top: 4rem;
+        padding-top: 3rem;
+        border-top: 1px solid var(--gray-100);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+      
+      .post-nav-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      
+      .post-nav-item.prev {
+        text-align: left;
+      }
+      
+      .post-nav-item.next {
+        text-align: right;
+        align-items: flex-end;
+      }
+      
+      .post-nav-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--gray-500);
+        font-weight: 600;
+      }
+      
+      .post-nav-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--gray-900);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      
+      .post-nav-title:hover {
+        color: var(--primary-600);
+      }
+      
+      @media (max-width: 640px) {
+        .post-navigation {
+          grid-template-columns: 1fr;
+        }
+      }
+      
+      /* Footer */
+      footer {
+        margin-top: 5rem;
+        padding: 3rem 0;
+        border-top: 1px solid var(--gray-100);
+        background: var(--gray-50);
+      }
+      
+      .footer-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 3rem;
+        margin-bottom: 2rem;
+      }
+      
+      .footer-section h3 {
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--gray-900);
+        margin-bottom: 1rem;
+      }
+      
+      .footer-section p,
+      .footer-section a {
+        font-size: 0.875rem;
+        color: var(--gray-600);
+        text-decoration: none;
+        line-height: 1.75;
+      }
+      
+      .footer-section a:hover {
+        color: var(--primary-600);
+      }
+      
+      .footer-section ul {
+        list-style: none;
+        padding: 0;
+      }
+      
+      .footer-section li {
+        margin-bottom: 0.5rem;
+      }
+      
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid var(--gray-200);
+        color: var(--gray-500);
+        font-size: 0.875rem;
+      }
+      
+      @media (max-width: 768px) {
+        .footer-content {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+      }
+      
+      /* Utility classes */
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
+      
+      /* Loading skeleton */
+      .skeleton {
+        background: linear-gradient(90deg, var(--gray-100) 25%, var(--gray-200) 50%, var(--gray-100) 75%);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+      }
+      
+      @keyframes loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+      
+      /* Component utilities */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--space-2) var(--space-4);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        line-height: var(--leading-tight);
+        border-radius: 0.375rem;
+        transition: all 0.2s var(--ease-out);
+        cursor: pointer;
+        border: 1px solid transparent;
+        text-decoration: none;
+      }
+      
+      .btn-primary {
+        background: var(--primary-600);
+        color: white;
+      }
+      
+      .btn-primary:hover {
+        background: var(--primary-700);
+        transform: translateY(-1px);
+      }
+      
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.75rem;
+        font-size: var(--text-xs);
+        font-weight: 600;
+        line-height: 1rem;
+        border-radius: 9999px;
+        text-transform: uppercase;
+        letter-spacing: var(--tracking-wide);
+      }
+      
+      .badge-primary {
+        background: var(--primary-100);
+        color: var(--primary-700);
+      }
+      
+      .badge-featured {
+        background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+        color: white;
+        box-shadow: 0 2px 4px rgba(99, 102, 241, 0.2);
+      }
+      
+      /* Animations */
+      @keyframes fade-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      
+      @keyframes slide-up {
+        from { 
+          opacity: 0;
+          transform: translateY(1rem);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .animate-fade-in {
+        animation: fade-in 0.6s var(--ease-out);
+      }
+      
+      .animate-slide-up {
+        animation: slide-up 0.6s var(--ease-out);
+      }
+      
+      /* Responsive utilities */
+      @media (max-width: 640px) {
+        article h1 { font-size: var(--text-4xl); }
+        article h2 { font-size: var(--text-2xl); }
+        article h3 { font-size: var(--text-xl); }
+        article p { font-size: var(--text-base); }
+        .hero h2 { font-size: var(--text-4xl); }
+        .hero p { font-size: var(--text-lg); }
+        .container { padding: 0 var(--space-4); }
+        .container-narrow { padding: 0 var(--space-4); }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-content">
+          <h1><a href="/">Railquill</a></h1>
+          <nav class="header-nav">
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/archive">Archive</a>
+            <a href="/feed.xml" title="RSS Feed">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 11a9 9 0 019 9M4 4a16 16 0 0116 16M5 20a1 1 0 100-2 1 1 0 000 2z"/>
+              </svg>
+            </a>
+          </nav>
+        </div>
+      </div>
+    </header>
+    
+    <main>
+      <!-- BEGIN app/views/static/archive.html.erb --><div class="container-narrow">
+  <header>
+    <h1>Archive</h1>
+    <p>All published articles on Railquill, organized chronologically.</p>
+  </header>
+
+    <div class="archive-list">
+          <h2 class="archive-year">2020</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-03-30">
+              March 30
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/vue-js">基礎 Vue.js(上)</a>
+            </h3>
+              <p class="archive-excerpt">身為目前 3 大前端應用框架之一的 Vue.js，截至目前為止在 GitHub 已經累積 160k 的星星數，以下是個人的學習筆記。</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-03-28">
+              March 28
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/hexo-github-blog">使用 Hexo 在 GitHub 部署 Blog</a>
+            </h3>
+              <p class="archive-excerpt">本來一直不是很想用 Hexo，因為覺得很多人使用，所以有使用另一種 Hugo 來架設 Blog，但是用完一直覺得不合口味，原本打算就將就著用。
+
+剛好看到 Hexo 最多人使用的主題 - Next，感覺還不錯，真香，就來裝裝看吧！</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-10-10">
+              October 10
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/vuex-state">用 Vuex 來管理 State 資料狀態</a>
+            </h3>
+              <p class="archive-excerpt">在之前的專案中，如果碰到要資料傳遞的部份，例如是父子層關係的話，只要用 `props` 跟 `emit` 就可以解決了，而遇到同階層的關係，就用 `$eventbus` 來處理，不過這個方法只能處理比較簡單的資料，而且在 Vue 3 也不支援了。不怕，總是有技術可以解決問題，所以就從 state 開始來學學 Vu...</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2021</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2021-03-18">
+              March 18
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/vuex-computed-getters">Vuex 中的 Computed 用法 - Getters</a>
+            </h3>
+              <p class="archive-excerpt">在公司專案中，有多筆資料是從 `actions` 的回傳結果再透過 `mutations` 來更改資料狀態。這時候想要透過 computed 來處理這些資料，但是還要再把資料傳入 components 中再做處理，感覺總是沒那麼即時，如果在 Vuex 裡面也可以做 computed 就好了...咦？還真的有嗎！？...</p>
+            <div class="archive-meta">
+                <span>1 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2020</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-10-12">
+              October 12
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/actions-mutations">使用 Actions 跟 Mutations 來改變資料狀態</a>
+            </h3>
+              <p class="archive-excerpt">上一篇已經初步了解 State，這篇繼續試著了解怎麼透過 Actions 跟 Mutations 來改變 State。</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-12-27">
+              December 27
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/vue">讓 Vue 每次換頁都能在最上方的方法</a>
+            </h3>
+              <p class="archive-excerpt">在 Vue 開發的 SPA 上，每次換頁總是會有一個問題，那就是換到其他頁面，畫面總是不會在最頂端，而是在上一頁的位置，這個問題以前覺得還好，但客戶要求修正這個問題，那就來修正吧！</p>
+            <div class="archive-meta">
+                <span>1 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2021</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2021-01-24">
+              January 24
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/vue-cropper">圖片剪裁套件的使用 - Vue-Cropper</a>
+            </h3>
+              <p class="archive-excerpt">Vue Cropper 這個套件使用起來非常方便，而且剛好符合我的需求，只需要看著文件設置一些設定就可以做出變化了。</p>
+            <div class="archive-meta">
+                <span>1 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2020</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-06-01">
+              June 01
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/vue-js-component">Vue.js 的 component 是什麼？</a>
+            </h3>
+              <p class="archive-excerpt">當做完一個專案時，每當想要修改某樣東西時，都要再重新審視程式碼，這時候就會非常痛苦。
+而 Vue.js 中有一個 component 的概念，就不用再害怕維護專案啦。</p>
+            <div class="archive-meta">
+                <span>4 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-05-18">
+              May 18
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/vue-cli">如何使用 Vue CLI 建置專案</a>
+            </h3>
+              <p class="archive-excerpt">Vue CLI 介紹與環境建置，以及建置專案。</p>
+            <div class="archive-meta">
+                <span>1 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2024</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2024-07-14">
+              July 14
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/next-js-app-router-context">Next.js 如何在 App Router 中使用 Context？</a>
+            </h3>
+              <p class="archive-excerpt">介紹如何在 Next.js 中使用 Context。</p>
+            <div class="archive-meta">
+                <span>3 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2024-07-28">
+              July 28
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/type-or-interface">Type or Interface?</a>
+            </h3>
+              <p class="archive-excerpt">TypeScript 的 type 和 interface 有什麼不同？</p>
+            <div class="archive-meta">
+                <span>3 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2021</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2021-06-03">
+              June 03
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/tailwind-react">Tailwind 安裝 React 篇</a>
+            </h3>
+              <p class="archive-excerpt">React 專案如何安裝 Tailwind</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2023</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2023-05-20">
+              May 20
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/2023-react-redux">淺談在 2023 年的 React 還需要 Redux 嗎？</a>
+            </h3>
+              <p class="archive-excerpt">淺談在 2023 年的 React 還需要 Redux 嗎？</p>
+            <div class="archive-meta">
+                <span>1 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2021</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2021-02-10">
+              February 10
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/vue-3">開始我的 Vue 3</a>
+            </h3>
+              <p class="archive-excerpt">Vue 3 正式版問世也一段時間了，也是時候來認識一下新朋友了，前端就是要不停地追技術啊0.0</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2024</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2024-09-14">
+              September 14
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/flutter">從手把手環境設定到建立第一個 Flutter 專案</a>
+            </h3>
+              <p class="archive-excerpt">帶你手把手把 Flutter 的環境設定弄好！</p>
+            <div class="archive-meta">
+                <span>4 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2020</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-09-20">
+              September 20
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/scss">SCSS 變數運用</a>
+            </h3>
+              <p class="archive-excerpt">說來慚愧，立志成為一名前端工程師的我，只會純 CSS 跟框架來幫網頁做樣式，對於 SASS 這個好用的語言工具卻是知道的不多，所以想趁有時間來學一下 SASS，就開了這個學習筆記系列。</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-09-24">
+              September 24
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/mixin-scss">學會 Mixin，讓你 SCSS 開發更快速</a>
+            </h3>
+              <p class="archive-excerpt">以往自己在寫 CSS 時，多少會遇到想要寫某一個效果卻忘記怎麼開始，然後就需要上網找怎麼解決問題。當下雖然問題解決了，不過可能過沒多久，當遇到同樣問題時，又需要再去找解法，這時候 Mixin 就派上用場了。</p>
+            <div class="archive-meta">
+                <span>1 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-09-22">
+              September 22
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/scss-import">SCSS import 切分檔案管理</a>
+            </h3>
+              <p class="archive-excerpt">在以往單純使用 CSS 的開發經驗中，總是會使用一支 CSS 檔案來設計所有的樣式，但是這樣的缺點是之後的維護相當困難，要找一個樣式的 code 可能要找很久。之前在寫 Vue 專案的時候，覺得元件式的管理很棒，所有元件分離讓之後的管理變得容易很多，現在才發現原來 SCSS 也可以做類似的事情，感覺好用很多啊～</p>
+            <div class="archive-meta">
+                <span>1 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2022</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2022-10-14">
+              October 14
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/rust-yew">用 Rust 來寫前端 - Yew</a>
+            </h3>
+              <p class="archive-excerpt">Rust 的框架 Rocket</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2022-10-15">
+              October 15
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/rust-x-react">Rust x React</a>
+            </h3>
+              <p class="archive-excerpt">Rust x React 夢幻共演</p>
+            <div class="archive-meta">
+                <span>3 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2022-10-13">
+              October 13
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/rust-rocket-part-iii">來玩 Rust 的框架吧！ - Rocket - Part III</a>
+            </h3>
+              <p class="archive-excerpt">Rust 的框架 Rocket</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2022-10-12">
+              October 12
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/rust-rocket-part-ii">來玩 Rust 的框架吧！ - Rocket - Part II</a>
+            </h3>
+              <p class="archive-excerpt">Rust 的框架 Rocket</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2022-10-11">
+              October 11
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/rust-rocket-part-i">來玩 Rust 的框架吧！ - Rocket - Part I</a>
+            </h3>
+              <p class="archive-excerpt">Rust 的框架 Rocket</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2022-09-25">
+              September 25
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/if-else">控制流程 if…else</a>
+            </h3>
+              <p class="archive-excerpt">Rust 的 如果可以...</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2022-09-17">
+              September 17
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/hello-world">先從意料中的 Hello World 開始</a>
+            </h3>
+              <p class="archive-excerpt">BJ4，就只是 Hello World</p>
+            <div class="archive-meta">
+                <span>1 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2023</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2023-12-16">
+              December 16
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/leptos-wasm-gcp">使用 Leptos 建立和部署 WASM 到 GCP</a>
+            </h3>
+              <p class="archive-excerpt">2023 DevFest Taipei 議程之一，介紹如何使用 Leptos 建立和部署 WASM 到 GCP。</p>
+            <div class="archive-meta">
+                <span>3 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2022</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2022-10-04">
+              October 04
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/rust">Rust 的閉包</a>
+            </h3>
+              <p class="archive-excerpt">Rust 的閉包</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2022-10-10">
+              October 10
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/rust-part-iv">來用 Rust 建立一個伺服器吧！Part IV</a>
+            </h3>
+              <p class="archive-excerpt">用 Rust 建立一個伺服器</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2022-10-09">
+              October 09
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/rust-part-iii">來用 Rust 建立一個伺服器吧！Part III</a>
+            </h3>
+              <p class="archive-excerpt">用 Rust 建立一個伺服器</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2022-10-08">
+              October 08
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/rust-part-ii">來用 Rust 建立一個伺服器吧！Part II</a>
+            </h3>
+              <p class="archive-excerpt">用 Rust 建立一個伺服器</p>
+            <div class="archive-meta">
+                <span>3 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2022-10-07">
+              October 07
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/rust-part-i">來用 Rust 建立一個伺服器吧！Part I</a>
+            </h3>
+              <p class="archive-excerpt">用 Rust 建立一個伺服器</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2023</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2023-08-06">
+              August 06
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/rust-web">Rust Web 之旅：新時代的後端開發</a>
+            </h3>
+              <p class="archive-excerpt">2023 COSCUP Rust 議程軌之一，介紹 Rust 在後端開發的應用，以 Tide 為例。</p>
+            <div class="archive-meta">
+                <span>7 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2020</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-10-21">
+              October 21
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/react">React 的表單輸入運用</a>
+            </h3>
+              <p class="archive-excerpt">在 Vue 中使用 v-model 來做表單輸入時非常好用，那麼在 React 中可以怎麼運用呢？本篇文章將會介紹該怎麼利用 Hook 來做類似的效果。</p>
+            <div class="archive-meta">
+                <span>1 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-09-23">
+              September 23
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/react-jsx-hello-world">React 從 JSX 開始 Hello World</a>
+            </h3>
+              <p class="archive-excerpt">相信每個使用 React 的前端工程師都會聽過並學習使用 JSX 這個語法，雖然官方是說不一定要求使用 JSX，不過先來看一下它如何寫，也許就不會這麼排斥它了...吧？</p>
+            <div class="archive-meta">
+                <span>1 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-11-23">
+              November 23
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/cra-components">在 CRA 專案中管理 components</a>
+            </h3>
+              <p class="archive-excerpt">在一個專案中，通常不會在一個頁面放入太多的 HTML 結構，這樣會變得難以維護。前面也有提到如何拆分成 component，本篇文章則是講解如何在透過 creat-react-app 的專案中，管理各個 components。</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2021</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2021-07-11">
+              July 11
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/react-search-photo-demo">React Search Photo Demo</a>
+            </h3>
+              <p class="archive-excerpt">在 Vite 使用 React，練習透過 Unsplash API 來搜尋圖片。</p>
+            <div class="archive-meta">
+                <span>4 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2020</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-11-26">
+              November 26
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/react-props">React 的 props 運用</a>
+            </h3>
+              <p class="archive-excerpt">在 React 中，元件之間資料的傳遞都是由父元件傳給子元件的單向數據流，本篇文章將會講到如何使用 props 來傳遞資料。</p>
+            <div class="archive-meta">
+                <span>1 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2023</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2023-02-24">
+              February 24
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/react-native-x-expo-x-typescript">React Native x Expo x TypeScript 實作計算機</a>
+            </h3>
+              <p class="archive-excerpt">讓我們來用 React Native 和 Expo，還有 TypeScript 來寫一個計算機手機 App 吧！</p>
+            <div class="archive-meta">
+                <span>6 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2020</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-10-08">
+              October 08
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/react-css">React 動態加入 CSS</a>
+            </h3>
+              <p class="archive-excerpt">前面提到如何使用邏輯運算子來判斷顯示加號減號，這篇則是介紹其他方式，也就是使用 CSS 來動態將 HTML 元素隱藏起來。</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-10-01">
+              October 01
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/react-jsx">React 運用邏輯運算子解決 JSX 問題</a>
+            </h3>
+              <p class="archive-excerpt">在 React 前一個筆記中，有試著做出一個 Counter，並且有加入判斷條件：如果數字為 0 的話，就沒辦法繼續按減號。還有另一種作法是：如果數字為 0 的話，減號按鈕就消失不能按，不過實做的話，會出現一些問題，這篇來看看需要解決什麼問題。</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-09-26">
+              September 26
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/jsx">JSX 變數與表達式使用</a>
+            </h3>
+              <p class="archive-excerpt">經過上一回的 JSX 超入門，這一次一樣入門，不過從變數以及表達式開始。</p>
+            <div class="archive-meta">
+                <span>1 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-09-27">
+              September 27
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/jsx-css">如何在 JSX 中加入 CSS 樣式？</a>
+            </h3>
+              <p class="archive-excerpt">在 React 中，什麼東西都可以直接寫在 JavaScript 裡面，就連 CSS 樣式也可以，雖然有點奇怪，不過我在 Vue 也是會這樣寫 inline-style 的，只是 Vue 還會寫在 template 中，而 React 則是寫在 JSX 裡面。</p>
+            <div class="archive-meta">
+                <span>1 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-09-30">
+              September 30
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/usestate">使用 useState 來管理狀態</a>
+            </h3>
+              <p class="archive-excerpt">前面提到當變數更新時，React 還不知道資料有更新。所以 React 提供了一個方法來監控而且管理資料，而這就是 React 的 Hooks 之一 - useState。</p>
+            <div class="archive-meta">
+                <span>1 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2022</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2022-03-03">
+              March 03
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/usestate-usereducer">除了 useState，你可以選擇更好管理狀態的 useReducer</a>
+            </h3>
+              <p class="archive-excerpt">標題有點引戰，但是如果想要跨元件處理狀態，並且狀態非常複雜的話，那麼 useState 可能就不是那麼好管理，也許可以試試看 useReducer。</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2021</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2021-06-14">
+              June 14
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/useeffect">使用 useEffect 來掌管元件作用</a>
+            </h3>
+              <p class="archive-excerpt">可以取代 Class Component 的神兵利器之一，無疑是 useState 還有本篇介紹的 useEffect。</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2022</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2022-03-02">
+              March 02
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/usecontext">使用 useContext 處理跨元件狀態</a>
+            </h3>
+              <p class="archive-excerpt">寫了這麼久 React，發現我的筆記都沒整理過，趁最近比較不忙來清理一下筆記 XD
+這次要分享的是跨元件處理狀態的 hook -- useContext。</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2020</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-10-16">
+              October 16
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/react-fragment">React Fragment 的標籤好適合懶人工程師啊～</a>
+            </h3>
+              <p class="archive-excerpt">在使用 Vue 的 template 模板時，如果有多個 HTML 標籤的話，就必定需要一個 `&lt;div&gt;` 包起來才能運行。而 React 在 JSX 中也是一樣的，只是它多了一個選擇可以用，而且更精簡，看起來就跟沒有一樣呢～</p>
+            <div class="archive-meta">
+                <span>1 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-09-28">
+              September 28
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/react-component">建立並使用 React Component</a>
+            </h3>
+              <p class="archive-excerpt">在前端框架中，將原本 UI 拆分成獨立而且可以重複使用的程式碼，就是 Component（Angular 我不確定是不是，不過我在 Vue 蠻常用的）。
+拆成 Component 的好處是，方便日後維護以及可以專注在個別程式碼的開發，還有最棒的是可以當作是一個樂高積木一樣重複使用組合。</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2023</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2023-02-15">
+              February 15
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/react-js">React.js 全攻略班推薦給想要精進自我的前端工程師</a>
+            </h3>
+              <p class="archive-excerpt">這門課程是由五倍紅寶石舉辦，並由奶綠茶老師教導，這門課程對於想要精進自我的前端工程師來說，是一個非常好的選擇。</p>
+            <div class="archive-meta">
+                <span>1 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2022</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2022-02-24">
+              February 24
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/electron-react">使用 Electron 搭配 React 建置桌面程式</a>
+            </h3>
+              <p class="archive-excerpt">這次公司打算把專案製作的網頁打包成桌面程式，之前就已經知道有 Electron 這個工具可以用，剛好趁這個機會來紀錄一下過程。</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2024</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2024-05-08">
+              May 08
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/react-19-beta">React 19 Beta 新武器解鎖體驗</a>
+            </h3>
+              <p class="archive-excerpt">介紹 React 19 Beta 新 Hooks。</p>
+            <div class="archive-meta">
+                <span>5 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2020</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-10-22">
+              October 22
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/nth-child-nth-of-type">偽類選取器之 :nth-child() 和 :nth-of-type()</a>
+            </h3>
+              <p class="archive-excerpt">最近都在忙著面試，有些面試官人很好，如果有不懂的地方，他們會試著教你，所以我也藉由面試學到了蠻多東西（真的謝謝面試官大大）。 像是學到了 `:nth-child` 跟 `:nth-of-type` 這兩個的用法，回家也試著玩了一下，蠻有趣的，之後可以運用在 side-project 看看，這篇文章先來介紹這兩者的...</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-05-09">
+              May 09
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/vue-js-todolist">用 Vue.js 做一個 TodoList</a>
+            </h3>
+              <p class="archive-excerpt">很多教學都會試著做出 TodoList 來驗收自己學習的成果，這篇文章也不免俗的將會運用目前學到的 Vue 技術，做出一個簡易的 TodoList。</p>
+            <div class="archive-meta">
+                <span>3 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2022</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2022-03-10">
+              March 10
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/redux">了解 Redux 並實作一個範例</a>
+            </h3>
+              <p class="archive-excerpt">了解 Redux 並實作一個範例</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2020</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-05-20">
+              May 20
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/js-dom">JS 基礎回顧 - DOM</a>
+            </h3>
+              <p class="archive-excerpt">想像一下在夾娃娃機中，我們操作著爪子，在機台中抓取我們想要的東西。
+而這樣的概念，有點像是我們要怎麼樣來藉由 JavaScript 操作網頁畫面的 HTML 元素，文件物件模型（Document Object Model, DOM）就可以幫助我們來做這件事。</p>
+            <div class="archive-meta">
+                <span>3 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2023</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2023-02-11">
+              February 11
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/jest-react-testing-library">使用 Jest 和 React Testing Library 進行測試的方法 - 測試列表</a>
+            </h3>
+              <p class="archive-excerpt">介紹如何使用 Jest 和 React Testing Library 進行測試列表</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2021</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2021-05-16">
+              May 16
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/ruby">Ruby 的邏輯判斷與流程控制</a>
+            </h3>
+              <p class="archive-excerpt">Ruby 的邏輯判斷與流程控制</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2020</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-09-23">
+              September 23
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/hexo">如何刪除 Hexo 已發佈的文章</a>
+            </h3>
+              <p class="archive-excerpt">不小心在 Hexo 發佈一篇不要的文章，本來以為直接刪除 posts 裡面的文章再重新發佈一次就可以了，結果沒用，在 stack overflow 找了一下就解開了，紀錄一下該怎麼解決。</p>
+            <div class="archive-meta">
+                <span>1 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-08-28">
+              August 28
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/javascript">JavaScript 作品實戰班之課程心得</a>
+            </h3>
+              <p class="archive-excerpt">在經歷了為期 8 週的課程之後，回顧當時的猶豫，現在覺得上到這個課程真的是太好了，感覺對使用 JavaScript 的信心提升了不少，對於 Vue.js 的掌握度也越來越熟悉，甚至還用 Vue CLI 做了一個電商網站呢！</p>
+            <div class="archive-meta">
+                <span>1 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2024</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2024-09-13">
+              September 13
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/rust-2024-hello-world">Rust 從零開始網頁爬蟲(2024 Hello World)</a>
+            </h3>
+              <p class="archive-excerpt">本篇文章是 2024 Hello World Dev Conference 工作坊的實作流程，可以搭配 Github repohttps://github.com/bucky0112/scrapingrust 一起使用。
+
+ Rust 簡介
+Rust 是一個近年來引起非常多討論的程式語言，因為效能出色，並且安全性...</p>
+            <div class="archive-meta">
+                <span>7 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2021</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2021-05-06">
+              May 06
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/ruby-0-hello-world">Ruby[0] - 從安裝環境到 Hello World</a>
+            </h3>
+              <p class="archive-excerpt">從安裝 Ruby 環境到寫出 Hello World</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2020</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-10-03">
+              October 03
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/gulp">安裝 Gulp</a>
+            </h3>
+              <p class="archive-excerpt">Gulp 是一種前端自動化工具，可以幫助開發者將 SASS 跟 ES6 編譯成一般瀏覽器看得懂的版本，也可以把圖片跟 .css 還有 .js 壓縮成更小的檔案，是一個很方便的開發工具，這篇文章將介紹如何安裝 Gulp 並引入專案中。</p>
+            <div class="archive-meta">
+                <span>1 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2024</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2024-12-19">
+              December 19
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/drizzle-v-s-prisma">Drizzle v.s Prisma</a>
+            </h3>
+              <p class="archive-excerpt">比較 Prisma 跟 Drizzle 兩個 ORM 的一些差異。</p>
+            <div class="archive-meta">
+                <span>5 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2020</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-10-16">
+              October 16
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/create-react-app">用 Create React App 來建立專案吧～</a>
+            </h3>
+              <p class="archive-excerpt">在逛 GitHub 看別人的 React 專案時，似乎都是使用 Create React App 來開發居多，比較少見使用 CDN 的模式，所以本篇文章將會講解如何入門使用 Create React App 來建立一個專案，並會簡單跟 Vue CLI 做一下比較。</p>
+            <div class="archive-meta">
+                <span>1 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-09-30">
+              September 30
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/react-v-s-vue-component">React v.s Vue 之 Component 比較心得</a>
+            </h3>
+              <p class="archive-excerpt">目前學 React 學了一點皮毛，而 Vue 也使用了一陣子，想寫一篇來比較一下兩者對於我這個小碼農有什麼不一樣。</p>
+            <div class="archive-meta">
+                <span>1 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-09-26">
+              September 26
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/city-weather-app">City Weather App 開發筆記</a>
+            </h3>
+              <p class="archive-excerpt">這次單純使用 JavaScript 來串接 API 開發一個天氣小程式，也練習一下我的 SCSS，寫了一下英文文件發在 GitHub 上可以練習我的英文，這篇就稍微介紹一下我的開發過程吧～</p>
+            <div class="archive-meta">
+                <span>1 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2022</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2022-09-18">
+              September 18
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/cargo">用 Cargo 管理專案好棒棒</a>
+            </h3>
+              <p class="archive-excerpt">專案太大怎麼管理？用 Cargo 就搞定！</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+          <h2 class="archive-year">2020</h2>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-09-19">
+              September 19
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/es6">ES6 好用語法 - 箭頭函式</a>
+            </h3>
+              <p class="archive-excerpt">在 ES6 中，有許多好用的語法可以使用，這篇就來介紹箭頭函式。</p>
+            <div class="archive-meta">
+                <span>3 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-04-03">
+              April 03
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/think-first-code-later">Think first, code later</a>
+            </h3>
+              <p class="archive-excerpt">以前看過一篇文章，是用拉麵店販賣機講解關於 api 的概念，我覺得作者很厲害，可以用淺顯易懂的方式讓當時還是前端麻瓜的我看得懂，那篇文章很推薦新手去看 -&gt; 從拉麵店的販賣機理解什麼是 APIhttps://medium.com/@hulitw/ramen-and-api-6238437dc544
+
+最近作者開了...</p>
+            <div class="archive-meta">
+                <span>1 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-04-11">
+              April 11
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/js-function">JS 基礎回顧 - function</a>
+            </h3>
+              <p class="archive-excerpt">在看 kuro 大神寫的 0 陷阱！0 誤解！8 天重新認識 JavaScript！https://www.tenlong.com.tw/products/9789864344130（不是業配，這本書很棒）中提到，JavaScript 最核心也最容易被誤用的部份非函式（function）莫屬。我一開始在學 JS ...</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-05-12">
+              May 12
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/js">JS 基礎回顧 - 迴圈</a>
+            </h3>
+              <p class="archive-excerpt">迴圈 Loop 在 JavaScript 中，當遇到需要重複做某件事時，是個非常好用的方法。而迴圈又分為幾種不同的方式，本篇將會介紹如何使用比較常見的作法。</p>
+            <div class="archive-meta">
+                <span>3 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-05-11">
+              May 11
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/js-notice-javascript-undefined">JS notice： JavaScript 與 undefined</a>
+            </h3>
+              <p class="archive-excerpt">本篇文章會稍微講解 undefined 與 not defined 的差異。</p>
+            <div class="archive-meta">
+                <span>1 min read</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="archive-item">
+          <div class="archive-date">
+            <time datetime="2020-05-07">
+              May 07
+            </time>
+          </div>
+          <div class="archive-content">
+            <h3>
+              <a href="/posts/codewar-1">挑戰 Codewar - 1</a>
+            </h3>
+              <p class="archive-excerpt">這是在胡立的程式導師實驗計畫第四期中的 Codewar 練習題https://github.com/bucky0112/mentor-program-4th/blob/master/codewar.md，裡面的題目都是出自 Codewarshttps://www.codewars.com/dashboard，之後...</p>
+            <div class="archive-meta">
+                <span>2 min read</span>
+            </div>
+          </div>
+        </article>
+    </div>
+</div>
+
+<style>
+.archive-list {
+  margin-top: 3rem;
+}
+
+.archive-year {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 3rem 0 1.5rem;
+  color: var(--primary-600);
+  border-bottom: 2px solid var(--primary-100);
+  padding-bottom: 0.5rem;
+}
+
+.archive-item {
+  display: flex;
+  gap: 2rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--gray-100);
+  transition: background-color 0.2s ease;
+}
+
+.archive-item:hover {
+  background-color: var(--gray-50);
+  margin: 0 -1rem;
+  padding: 1.5rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.archive-date {
+  flex-shrink: 0;
+  width: 120px;
+  color: var(--gray-500);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.archive-content {
+  flex: 1;
+}
+
+.archive-content h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.archive-content h3 a {
+  color: var(--gray-900);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.archive-content h3 a:hover {
+  color: var(--primary-600);
+}
+
+.archive-excerpt {
+  color: var(--gray-600);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0.5rem 0;
+}
+
+.archive-meta {
+  font-size: 0.75rem;
+  color: var(--gray-500);
+  font-weight: 500;
+}
+
+@media (max-width: 640px) {
+  .archive-item {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .archive-date {
+    width: auto;
+  }
+  
+  .archive-year {
+    font-size: 1.5rem;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 0;
+  color: var(--gray-600);
+}
+
+.empty-state h2 {
+  color: var(--gray-700);
+  margin-bottom: 0.5rem;
+}
+</style><!-- END app/views/static/archive.html.erb -->
+    </main>
+    
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>About Railquill</h3>
+            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+          </div>
+          <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/archive">Archive</a></li>
+              <li><a href="/feed.xml">RSS Feed</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h3>Connect</h3>
+            <ul>
+              <li><a href="https://twitter.com/railquill" target="_blank" rel="noopener">Twitter</a></li>
+              <li><a href="https://github.com/railquill" target="_blank" rel="noopener">GitHub</a></li>
+              <li><a href="mailto:hello@railquill.com">Email</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html><!-- END app/views/layouts/static.html.erb -->
