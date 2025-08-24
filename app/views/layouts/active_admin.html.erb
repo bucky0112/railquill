@@ -212,6 +212,12 @@
             <% end %>
           </li>
           <li>
+            <%= link_to admin_site_configs_path, class: "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors #{controller_name == 'site_configs' ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-gray-700 hover:bg-gray-100'}" do %>
+              <span class="text-xl">⚙️</span>
+              <span>Site Settings</span>
+            <% end %>
+          </li>
+          <li>
             <%= link_to admin_admin_users_path, class: "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors #{controller_name == 'admin_users' ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-gray-700 hover:bg-gray-100'}" do %>
               <span class="text-xl">👥</span>
               <span>Admin Users</span>

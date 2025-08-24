@@ -15,7 +15,8 @@ ActiveAdmin.setup do |config|
     admin.default_per_page = 30
     
     admin.build_menu do |menu|
-      # Customize menu items if needed
+      # Let individual resources define their own menu items
+      # This ensures proper ActiveAdmin integration
     end
   end
 

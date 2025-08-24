@@ -31,9 +31,18 @@ if defined?(ActiveAdmin) && defined?(Propshaft)
                 end
               end
               
-              # Include our custom ActiveAdmin CSS
-              if controller.respond_to?(:stylesheet_link_tag)
-                text_node(controller.stylesheet_link_tag("active_admin", "data-turbo-track": "reload").html_safe)
+              # Include our custom ActiveAdmin CSS - force load with correct path
+              begin
+                if controller.respond_to?(:stylesheet_link_tag)
+                  text_node(controller.stylesheet_link_tag("active_admin", "data-turbo-track": "reload").html_safe)
+                else
+                  # Direct fallback if helper not available
+                  text_node('<link rel="stylesheet" href="/assets/active_admin-456fb2dc.css" data-turbo-track="reload">'.html_safe)
+                end
+              rescue => e
+                Rails.logger.error "Failed to load active_admin stylesheet: #{e.message}"
+                # Direct fallback with exact filename
+                text_node('<link rel="stylesheet" href="/assets/active_admin-456fb2dc.css" data-turbo-track="reload">'.html_safe)
               end
               
               active_admin_application.javascripts.each do |src|
@@ -81,11 +90,17 @@ if defined?(ActiveAdmin) && defined?(Propshaft)
   
   # Ensure ActiveAdmin doesn't try to use Sprockets
   ActiveAdmin.setup do |config|
-    # Clear default assets since we handle them manually
-    config.clear_stylesheets!
+    # Don't clear default stylesheets - let ActiveAdmin handle them
     config.clear_javascripts!
     
-    # Register our custom assets
-    config.register_stylesheet 'active_admin'
+    # Register our custom assets - make sure they're loaded
+    config.register_stylesheet 'active_admin', media: :all
+    config.register_javascript 'active_admin'
+    
+    # Add Formtastic stylesheets for proper form styling  
+    config.register_stylesheet 'formtastic'
+    
+    # Force stylesheets to be included  
+    # config.stylesheets is a Hash, not Array
   end
 end

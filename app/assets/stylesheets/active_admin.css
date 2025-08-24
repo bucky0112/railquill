@@ -1391,6 +1391,128 @@ form textarea {
   font-style: italic;
 }
 
+/* ===========================
+   Panel Components (Site Config Page)
+   =========================== */
+.panel {
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+  margin-bottom: var(--spacing-6);
+  overflow: hidden;
+}
+
+.panel h3 {
+  background: var(--gray-50);
+  border-bottom: 1px solid var(--gray-200);
+  padding: var(--spacing-4) var(--spacing-6);
+  margin: 0;
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.panel_contents {
+  padding: var(--spacing-6);
+}
+
+/* Attributes Table */
+.attributes_table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.attributes_table th,
+.attributes_table td {
+  padding: var(--spacing-4);
+  text-align: left;
+  border-bottom: 1px solid var(--gray-100);
+  vertical-align: top;
+}
+
+.attributes_table th {
+  font-weight: 600;
+  color: var(--gray-900);
+  background: var(--gray-50);
+  width: 180px;
+  font-size: var(--text-sm);
+}
+
+.attributes_table td {
+  color: var(--gray-700);
+}
+
+.attributes_table tr:last-child th,
+.attributes_table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Whitespace pre-wrap utility */
+.whitespace-pre-wrap {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Background colors for preview sections */
+.bg-gray-50 {
+  background-color: var(--gray-50);
+}
+
+.bg-white {
+  background-color: white;
+}
+
+/* Border and padding utilities */
+.p-4 {
+  padding: var(--spacing-4);
+}
+
+.p-6 {
+  padding: var(--spacing-6);
+}
+
+.rounded-lg {
+  border-radius: var(--radius-lg);
+}
+
+.rounded {
+  border-radius: var(--radius-base);
+}
+
+.border {
+  border: 1px solid var(--gray-200);
+}
+
+.shadow-sm {
+  box-shadow: var(--shadow-sm);
+}
+
+/* Typography utilities for preview */
+.text-lg {
+  font-size: var(--text-lg);
+}
+
+.text-2xl {
+  font-size: var(--text-2xl);
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.mb-4 {
+  margin-bottom: var(--spacing-4);
+}
+
+.text-gray-600 {
+  color: var(--gray-600);
+}
+
 /* Mobile Sidebar Toggle */
 .sidebar-toggle {
   display: none;
