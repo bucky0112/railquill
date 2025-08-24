@@ -1,16 +1,21 @@
 class StaticController < ApplicationController
   layout 'static'
+  before_action :load_site_config
   
   def index
     @posts = Post.published_ordered
   end
   
   def about
-    # Static about page
+    # Site config loaded by before_action
   end
   
   def archive
     @posts = Post.published_ordered
+  end
+  
+  def post
+    @post = Post.published.find_by!(slug: params[:slug])
   end
   
   def feed
@@ -18,10 +23,6 @@ class StaticController < ApplicationController
     respond_to do |format|
       format.xml { render content_type: 'application/rss+xml' }
     end
-  end
-  
-  def post
-    @post = Post.published.find_by!(slug: params[:slug])
   end
   
   def static_file
@@ -32,5 +33,11 @@ class StaticController < ApplicationController
     else
       raise ActionController::RoutingError, "Static file not found"
     end
+  end
+  
+  private
+  
+  def load_site_config
+    @site_config = SiteConfig.instance
   end
 end
