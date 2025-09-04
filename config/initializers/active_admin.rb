@@ -5,15 +5,15 @@ ActiveAdmin.setup do |config|
   # for each of the active admin pages.
   #
   config.site_title = "Railquill"
-  
+
   # Use custom application controller
   config.default_namespace = :admin
-  
+
   # Configure namespace to use custom controller
   config.namespace :admin do |admin|
     # Use custom layout for all admin pages
     admin.default_per_page = 30
-    
+
     admin.build_menu do |menu|
       # Let individual resources define their own menu items
       # This ensures proper ActiveAdmin integration
@@ -188,7 +188,7 @@ ActiveAdmin.setup do |config|
   # You can exclude possibly sensitive model attributes from being displayed,
   # added to forms, or exported by default by ActiveAdmin
   #
-  config.filter_attributes = [:encrypted_password, :password, :password_confirmation]
+  config.filter_attributes = [ :encrypted_password, :password, :password_confirmation ]
 
   # == Localize Date/Time Format
   #
@@ -362,7 +362,7 @@ ActiveAdmin.setup do |config|
   # Clear all assets - we'll use our own via Propshaft
   config.clear_stylesheets!
   config.clear_javascripts!
-  
+
   # == Webpacker
   #
   # By default, Active Admin uses Sprocket's asset pipeline.
