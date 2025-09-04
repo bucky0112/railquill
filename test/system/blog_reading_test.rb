@@ -36,7 +36,7 @@ class BlogReadingTest < ApplicationSystemTestCase
     # Should see published posts
     assert_text "Welcome to My Blog"
     assert_text "Getting Started with Ruby"
-    
+
     # Should not see draft posts
     assert_no_text "Unpublished Draft"
 
@@ -119,7 +119,7 @@ class BlogReadingTest < ApplicationSystemTestCase
 
     # Should see the code block with syntax highlighting
     assert_selector "pre code", text: "puts 'Hello, World!'"
-    
+
     # Code should be in a proper code block structure
     within "pre" do
       assert_selector "code"
@@ -139,7 +139,7 @@ class BlogReadingTest < ApplicationSystemTestCase
     assert_text "Special Characters & HTML Test"
     # The <test> brackets are being filtered out by markdown rendering
     assert_text "Content with & ampersands and brackets."
-    
+
     # Should not execute any HTML/script content
     assert_no_selector "script"
   end
@@ -152,7 +152,7 @@ class BlogReadingTest < ApplicationSystemTestCase
 
     # Test basic accessibility - headers should be properly structured
     assert_selector "h2", text: "Welcome to Railquill"  # Hero section heading
-    
+
     # Links should be accessible
     assert_link @published_post.title
     assert_link @older_post.title
@@ -164,14 +164,14 @@ class BlogReadingTest < ApplicationSystemTestCase
     # Should have Twitter share button with correct URL
     twitter_link = find_link("Share on Twitter")
     twitter_href = twitter_link[:href]
-    
+
     assert_includes twitter_href, "twitter.com/intent/tweet"
     assert_includes twitter_href, CGI.escape(@published_post.title)
 
     # Should have LinkedIn share button with correct URL
     linkedin_link = find_link("Share on LinkedIn")
     linkedin_href = linkedin_link[:href]
-    
+
     assert_includes linkedin_href, "linkedin.com/sharing/share-offsite"
     # Note: We can't easily test that the buttons actually work without external services
   end
@@ -197,7 +197,7 @@ class BlogReadingTest < ApplicationSystemTestCase
 
     # Should still load successfully
     assert_title "Railquill"
-    
+
     # Should handle empty state gracefully (exact content depends on implementation)
     # At minimum, should not crash
     assert_current_path root_path
@@ -219,7 +219,7 @@ class BlogReadingTest < ApplicationSystemTestCase
     assert_text "Welcome to My Blog"  # Should be back at homepage
 
     # Use browser forward
-    page.go_forward  
+    page.go_forward
     assert_current_path post_path(@published_post.slug)
     assert_text "This is my first blog post"  # Should be back at post
   end

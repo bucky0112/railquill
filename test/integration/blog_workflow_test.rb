@@ -192,7 +192,7 @@ class BlogWorkflowTest < ActionDispatch::IntegrationTest
 
     # Check for featured image (this will be in application layout)
     assert_includes response.body, "https://example.com/featured.jpg"
-    
+
     # Note: SEO meta tags would be in static layout, not application layout
     # This test verifies the application can handle posts with SEO data
   end

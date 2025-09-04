@@ -35,7 +35,7 @@ class PostTest < ActiveSupport::TestCase
   test "should require unique slug" do
     # Clear all posts to ensure clean test
     Post.delete_all
-    
+
     existing_post = Post.create!(title: "Same Title", body_md: "Content")
     duplicate_post = Post.new(title: "Same Title", body_md: "Different content")
     # Both posts will have same slug due to same title
@@ -135,7 +135,7 @@ class PostTest < ActiveSupport::TestCase
     # Create posts with different published_at times
     old_post = Post.create!(title: "Old", body_md: "Content", status: :published, published_at: 2.days.ago)
     new_post = Post.create!(title: "New", body_md: "Content", status: :published, published_at: 1.day.ago)
-    
+
     ordered_posts = Post.published_ordered
     assert_equal new_post, ordered_posts.first
     assert ordered_posts.index(new_post) < ordered_posts.index(old_post)
@@ -173,11 +173,11 @@ class PostTest < ActiveSupport::TestCase
   test "next_post should return next published post chronologically" do
     # Clear existing data that might interfere
     Post.delete_all
-    
+
     old_post = Post.create!(title: "Old", body_md: "Content", status: :published, published_at: 2.days.ago)
     middle_post = Post.create!(title: "Middle", body_md: "Content", status: :published, published_at: 1.day.ago)
     new_post = Post.create!(title: "New", body_md: "Content", status: :published, published_at: Time.current)
-    
+
     assert_equal middle_post, old_post.next_post
     assert_equal new_post, middle_post.next_post
     assert_nil new_post.next_post
@@ -186,11 +186,11 @@ class PostTest < ActiveSupport::TestCase
   test "previous_post should return previous published post chronologically" do
     # Clear existing data that might interfere
     Post.delete_all
-    
+
     old_post = Post.create!(title: "Old", body_md: "Content", status: :published, published_at: 2.days.ago)
     middle_post = Post.create!(title: "Middle", body_md: "Content", status: :published, published_at: 1.day.ago)
     new_post = Post.create!(title: "New", body_md: "Content", status: :published, published_at: Time.current)
-    
+
     assert_nil old_post.previous_post
     assert_equal old_post, middle_post.previous_post
     assert_equal middle_post, new_post.previous_post
@@ -199,11 +199,11 @@ class PostTest < ActiveSupport::TestCase
   test "next_post and previous_post should only consider published posts" do
     # Clear existing data that might interfere
     Post.delete_all
-    
+
     old_published = Post.create!(title: "Old Published", body_md: "Content", status: :published, published_at: 2.days.ago)
     draft_middle = Post.create!(title: "Draft Middle", body_md: "Content", status: :draft, published_at: 1.day.ago)
     new_published = Post.create!(title: "New Published", body_md: "Content", status: :published, published_at: Time.current)
-    
+
     assert_equal new_published, old_published.next_post
     assert_equal old_published, new_published.previous_post
   end
@@ -233,7 +233,7 @@ class PostTest < ActiveSupport::TestCase
     # Empty title results in nil slug
     assert_nil post.slug
   end
-  
+
   test "should handle nil title for slug generation" do
     post = Post.new(title: nil)
     post.send(:generate_slug)
@@ -243,7 +243,7 @@ class PostTest < ActiveSupport::TestCase
 
   # Ransack configuration tests
   test "should define ransackable attributes" do
-    expected_attributes = ["body_md", "created_at", "excerpt", "featured_image_url", "id", "meta_description", "published_at", "reading_time", "slug", "status", "title", "updated_at"]
+    expected_attributes = [ "body_md", "created_at", "excerpt", "featured_image_url", "id", "meta_description", "published_at", "reading_time", "slug", "status", "title", "updated_at" ]
     assert_equal expected_attributes, Post.ransackable_attributes
   end
 

@@ -89,7 +89,7 @@ class AdminUserTest < ActiveSupport::TestCase
 
   # Ransack configuration tests
   test "should define ransackable attributes" do
-    expected_attributes = ["created_at", "email", "id", "updated_at", "reset_password_sent_at", "remember_created_at"]
+    expected_attributes = [ "created_at", "email", "id", "updated_at", "reset_password_sent_at", "remember_created_at" ]
     assert_equal expected_attributes, AdminUser.ransackable_attributes
   end
 

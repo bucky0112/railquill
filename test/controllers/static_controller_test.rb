@@ -14,8 +14,8 @@ class StaticControllerTest < ActionDispatch::IntegrationTest
 
   test "should render index template" do
     get root_path
-    assert_template 'static/index'
-    assert_template layout: 'layouts/application'
+    assert_template "static/index"
+    assert_template layout: "layouts/application"
   end
 
   test "should assign published posts ordered by published_at" do
@@ -28,14 +28,14 @@ class StaticControllerTest < ActionDispatch::IntegrationTest
       published_at: 2.days.ago
     )
     new_post = Post.create!(
-      title: "New Post", 
+      title: "New Post",
       body_md: "Content",
       status: :published,
       published_at: 1.day.ago
     )
     draft_post = Post.create!(
       title: "Draft Post",
-      body_md: "Content", 
+      body_md: "Content",
       status: :draft
     )
 
@@ -54,7 +54,7 @@ class StaticControllerTest < ActionDispatch::IntegrationTest
     Post.delete_all
     get root_path
     assert_response :success
-    
+
     assigned_posts = assigns(:posts)
     assert_not_nil assigned_posts
     assert_empty assigned_posts
@@ -68,14 +68,14 @@ class StaticControllerTest < ActionDispatch::IntegrationTest
 
   test "should render post template for published post" do
     get post_path(@published_post.slug)
-    assert_template 'static/post'
-    assert_template layout: 'layouts/application'
+    assert_template "static/post"
+    assert_template layout: "layouts/application"
   end
 
   test "should assign correct post" do
     get post_path(@published_post.slug)
     assert_response :success
-    
+
     assigned_post = assigns(:post)
     assert_not_nil assigned_post
     assert_equal @published_post, assigned_post
@@ -111,7 +111,7 @@ class StaticControllerTest < ActionDispatch::IntegrationTest
   test "should only show published posts in index" do
     get root_path
     assigned_posts = assigns(:posts)
-    
+
     assigned_posts.each do |post|
       assert post.published?, "Index should only contain published posts"
     end
@@ -144,7 +144,7 @@ class StaticControllerTest < ActionDispatch::IntegrationTest
 
   test "should handle large number of published posts" do
     Post.delete_all
-    
+
     # Create many published posts
     25.times do |i|
       Post.create!(
@@ -157,7 +157,7 @@ class StaticControllerTest < ActionDispatch::IntegrationTest
 
     get root_path
     assert_response :success
-    
+
     assigned_posts = assigns(:posts)
     assert_equal 25, assigned_posts.count
     # Should be ordered by published_at desc (newest first)
