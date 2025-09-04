@@ -8,7 +8,7 @@ class CreateSiteConfigs < ActiveRecord::Migration[8.0]
 
       t.timestamps
     end
-    
+
     # Add unique constraint to ensure singleton pattern
     add_index :site_configs, :id, unique: true
   end
