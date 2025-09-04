@@ -1,38 +1,38 @@
 ActiveAdmin.register SiteConfig do
   permit_params :site_name, :welcome_title, :welcome_text, :about_content
-  
+
   # Disable new, delete actions since this is a singleton
-  actions :all, except: [:new, :create, :destroy]
-  
+  actions :all, except: [ :new, :create, :destroy ]
+
   menu priority: 2, label: "Site Settings"
-  
+
   controller do
-    layout 'active_admin'
-    
+    layout "active_admin"
+
     def index
       # Redirect to show page for singleton
       redirect_to admin_site_config_path(SiteConfig.instance)
     end
-    
+
     def show
       @site_config = SiteConfig.instance
     end
-    
-    def edit  
+
+    def edit
       @site_config = SiteConfig.instance
     end
-    
+
     def update
       @site_config = SiteConfig.instance
-      
+
       if @site_config.update(permitted_params[:site_config])
-        redirect_to admin_site_config_path(@site_config), notice: 'Site configuration updated successfully.'
+        redirect_to admin_site_config_path(@site_config), notice: "Site configuration updated successfully."
       else
         render :edit
       end
     end
   end
-  
+
   # Custom show page with preview capability
   show do
     panel "Site Configuration" do
@@ -69,7 +69,7 @@ ActiveAdmin.register SiteConfig do
         row :updated_at
       end
     end
-    
+
     panel "Live Preview" do
       div class: "bg-gray-50 p-4 rounded-lg" do
         h4 "Homepage Hero Section Preview:", class: "text-lg font-semibold mb-4"
@@ -80,29 +80,29 @@ ActiveAdmin.register SiteConfig do
       end
     end
   end
-  
+
   form do |f|
     f.inputs "Basic Site Information" do
-      f.input :site_name, 
+      f.input :site_name,
               hint: "The name of your site (appears in navigation and titles)"
       f.input :welcome_title,
               hint: "Main heading shown on the homepage"
     end
-    
+
     f.inputs "Homepage Content" do
       f.input :welcome_text, as: :text, input_html: { rows: 4 },
               hint: "Welcome message displayed on the homepage hero section"
     end
-    
+
     f.inputs "About Page Content" do
-      f.input :about_content, as: :text, input_html: { rows: 20, class: 'markdown-editor' },
+      f.input :about_content, as: :text, input_html: { rows: 20, class: "markdown-editor" },
               label: "About Page Content (Markdown)",
               hint: "Full content for the about page. Supports Markdown formatting."
     end
-    
+
     f.actions
   end
-  
+
   # Override the resource path to always use the singleton instance
   def resource
     @resource ||= SiteConfig.instance

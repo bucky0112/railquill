@@ -25,7 +25,7 @@ xml.rss version: "2.0", "xmlns:atom" => "http://www.w3.org/2005/Atom" do
         xml.guid post_url(post.slug), isPermaLink: true
         xml.pubDate post.published_at&.rfc822 || post.created_at.rfc822
         xml.author "hello@railquill.com (Railquill Team)"
-        
+
         if post.featured_image_url.present?
           xml.enclosure url: post.featured_image_url, type: "image/jpeg"
         end

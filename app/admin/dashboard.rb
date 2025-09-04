@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+
 ActiveAdmin.register_page "Dashboard" do
   menu priority: 1, label: "Dashboard"
 
   controller do
-    layout 'active_admin'
+    layout "active_admin"
   end
 
   content title: proc { I18n.t("active_admin.dashboard") } do
@@ -13,7 +14,7 @@ ActiveAdmin.register_page "Dashboard" do
         small I18n.t("active_admin.dashboard_welcome.call_to_action")
       end
     end
-    
+
     columns do
       column do
         panel "Recent Posts" do

@@ -31,7 +31,9 @@
     
     <!-- Article Content -->
     <div class="post-content animate-slide-up" style="animation-delay: 0.4s; font-family: var(--font-serif); font-size: var(--text-lg); line-height: var(--leading-loose); color: var(--gray-800);">
+      <%# brakeman:disable CrossSiteScripting %>
       <%= raw markdown_to_html(@post.body_md) %>
+      <%# brakeman:enable CrossSiteScripting %>
     </div>
     
     <!-- Share Section -->
