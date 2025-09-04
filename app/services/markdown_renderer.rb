@@ -1,7 +1,7 @@
 class MarkdownRenderer
   def self.render(text)
     return "" if text.blank?
-    
+
     @markdown ||= Redcarpet::Markdown.new(
       Redcarpet::Render::HTML.new(
         filter_html: false,  # Allow HTML tags like iframe
@@ -19,7 +19,7 @@ class MarkdownRenderer
       strikethrough: true,
       superscript: true
     )
-    
+
     @markdown.render(text)
   end
 end
