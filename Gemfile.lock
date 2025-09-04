@@ -140,6 +140,9 @@ GEM
     has_scope (0.8.2)
       actionpack (>= 5.2)
       activesupport (>= 5.2)
+    heroicons-rails (1.2.0)
+      actionpack (>= 6.0.0)
+      railties (>= 6.0.0)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     importmap-rails (2.1.0)
@@ -437,6 +440,7 @@ DEPENDENCIES
   capybara
   debug
   devise
+  heroicons-rails
   importmap-rails
   jbuilder
   kamal

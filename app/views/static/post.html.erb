@@ -99,9 +99,9 @@
   <!-- Back to Home -->
   <div style="text-align: center; margin-top: var(--space-12); padding-top: var(--space-8); border-top: 1px solid var(--gray-100);">
     <a href="/" class="btn" style="background: var(--gray-100); color: var(--gray-700); border-color: var(--gray-200);" onmouseover="this.style.background='var(--gray-200)'; this.style.transform='translateY(-1px)';" onmouseout="this.style.background='var(--gray-100)'; this.style.transform='translateY(0)';">
-      <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-      </svg>
+      <div style="width: 1rem; height: 1rem; margin-right: var(--space-2);">
+        <%= heroicon_tag "arrow-left", size: 20 %>
+      </div>
       Back to Articles
     </a>
   </div>

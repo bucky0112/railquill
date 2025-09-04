@@ -136,9 +136,7 @@
             <input type="text" placeholder="Quick search..." 
                    class="w-full pl-10 pr-4 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white/50">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center">
-              <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-              </svg>
+              <%= heroicon_tag "magnifying-glass", size: 20, class: "text-gray-400" %>
             </div>
           </div>
         </div>
@@ -146,30 +144,22 @@
         <div class="mt-2 flex-grow flex flex-col">
           <nav class="flex-1 px-4 space-y-2">
             <a href="/admin_dashboard" class="bg-white/60 text-indigo-700 group flex items-center px-4 py-3 text-sm font-medium rounded-xl border-l-4 border-indigo-500 shadow-sm">
-              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-              </svg>
+              <%= heroicon_tag "squares-2x2", size: 20, class: "mr-3" %>
               Dashboard
             </a>
             <a href="/admin/posts" class="text-gray-700 hover:bg-white/40 hover:text-indigo-600 group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200">
-              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.828 2.828 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
-              </svg>
+              <%= heroicon_tag "pencil-square", size: 20, class: "mr-3" %>
               Posts
               <% if @draft_posts > 0 %>
                 <span class="ml-auto bg-yellow-100 text-yellow-600 text-xs font-medium px-2 py-1 rounded-full"><%= @draft_posts %></span>
               <% end %>
             </a>
             <a href="/admin/admin_users" class="text-gray-700 hover:bg-white/40 hover:text-indigo-600 group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200">
-              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
-              </svg>
+              <%= heroicon_tag "user-group", size: 20, class: "mr-3" %>
               Admin Users
             </a>
             <a href="/" target="_blank" class="text-gray-700 hover:bg-white/40 hover:text-indigo-600 group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200">
-              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-              </svg>
+              <%= heroicon_tag "arrow-top-right-on-square", size: 20, class: "mr-3" %>
               View Site
             </a>
           </nav>
@@ -190,9 +180,7 @@
             
             <%= link_to destroy_admin_user_session_path, method: :delete, 
                         class: "mt-3 w-full text-gray-700 hover:bg-red-50 hover:text-red-600 group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200" do %>
-              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-              </svg>
+              <%= heroicon_tag "arrow-right-on-rectangle", size: 20, class: "mr-3" %>
               Logout
             <% end %>
           </div>
@@ -203,9 +191,7 @@
     <!-- Mobile menu button -->
     <div class="lg:hidden fixed top-4 left-4 z-50">
       <button @click="sidebarOpen = true" class="glass p-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200">
-        <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
+        <%= heroicon_tag "bars-3", size: 24, class: "text-gray-700" %>
       </button>
     </div>
 
@@ -226,9 +212,7 @@
               <!-- Quick Actions -->
               <div class="hidden md:flex items-center space-x-2">
                 <a href="/admin/posts/new" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-sm font-medium rounded-lg hover:from-indigo-600 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                  </svg>
+                  <%= heroicon_tag "plus", size: 20, class: "mr-2" %>
                   New Post
                 </a>
               </div>
@@ -272,14 +256,10 @@
                       <% if @posts_growth != 0 %>
                         <p class="text-sm mt-2 flex items-center">
                           <% if @posts_growth > 0 %>
-                            <svg class="w-4 h-4 text-green-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17l9.2-9.2M17 17V7H7"></path>
-                            </svg>
+                            <%= heroicon_tag "arrow-trending-up", size: 20, class: "text-green-500 mr-1" %>
                             <span class="text-green-600 font-medium">+<%= @posts_growth %>%</span>
                           <% else %>
-                            <svg class="w-4 h-4 text-red-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 7l-9.2 9.2M7 7v10h10"></path>
-                            </svg>
+                            <%= heroicon_tag "arrow-trending-down", size: 20, class: "text-red-500 mr-1" %>
                             <span class="text-red-600 font-medium"><%= @posts_growth %>%</span>
                           <% end %>
                           <span class="text-gray-500 ml-1">vs last month</span>
@@ -287,9 +267,7 @@
                       <% end %>
                     </div>
                     <div class="w-16 h-16 gradient-primary rounded-2xl flex items-center justify-center shadow-lg">
-                      <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                      </svg>
+                      <%= heroicon_tag "document-text", size: 24, class: "text-white" %>
                     </div>
                   </div>
                 </div>
@@ -307,9 +285,7 @@
                       </p>
                     </div>
                     <div class="w-16 h-16 gradient-success rounded-2xl flex items-center justify-center shadow-lg">
-                      <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                      </svg>
+                      <%= heroicon_tag "check-circle", size: 24, class: "text-white" %>
                     </div>
                   </div>
                 </div>
@@ -331,9 +307,7 @@
                       <% end %>
                     </div>
                     <div class="w-16 h-16 gradient-warning rounded-2xl flex items-center justify-center shadow-lg">
-                      <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.828 2.828 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
-                      </svg>
+                      <%= heroicon_tag "pencil-square", size: 24, class: "text-white" %>
                     </div>
                   </div>
                 </div>
@@ -351,10 +325,7 @@
                       </p>
                     </div>
                     <div class="w-16 h-16 gradient-info rounded-2xl flex items-center justify-center shadow-lg">
-                      <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                      </svg>
+                      <%= heroicon_tag "eye", size: 24, class: "text-white" %>
                     </div>
                   </div>
                 </div>
@@ -369,9 +340,7 @@
                   <div class="px-6 py-5 border-b border-gray-100/50">
                     <div class="flex items-center justify-between">
                       <h3 class="text-lg font-semibold text-gray-900 flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
+                        <%= heroicon_tag "bolt", size: 20, class: "mr-2 text-indigo-500" %>
                         Recent Activity
                       </h3>
                       <a href="/admin/posts" class="text-sm text-indigo-600 hover:text-indigo-700 font-medium">View all</a>
@@ -385,13 +354,9 @@
                             <div class="absolute left-0 top-0 w-8 h-8 rounded-full flex items-center justify-center
                                         <%= activity[:type] == 'published' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600' %> shadow-md">
                               <% if activity[:type] == 'published' %>
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
+                                <%= heroicon_tag "check-circle", size: 20 %>
                               <% else %>
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.828 2.828 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
-                                </svg>
+                                <%= heroicon_tag "pencil-square", size: 20 %>
                               <% end %>
                             </div>
                             <div class="bg-white/50 rounded-xl p-4 hover:bg-white/70 transition-all duration-200 border border-gray-100/50">
@@ -408,9 +373,7 @@
                                       <%= time_ago_in_words(activity[:time]) %> ago
                                     </span>
                                     <span class="flex items-center">
-                                      <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                      </svg>
+                                      <%= heroicon_tag "clock", size: 20, class: "mr-1" %>
                                       <%= activity[:reading_time] %> min read
                                     </span>
                                   </div>
@@ -429,17 +392,13 @@
                     <% else %>
                       <div class="text-center py-16">
                         <div class="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
-                          <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                          </svg>
+                          <%= heroicon_tag "document-text", size: 24, class: "text-gray-400" %>
                         </div>
                         <h3 class="text-lg font-medium text-gray-900 mb-2">No posts yet</h3>
                         <p class="text-gray-500 mb-6">Create your first post to get started with your blog!</p>
                         <a href="/admin/posts/new" 
                            class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-medium rounded-xl hover:from-indigo-600 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-                          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                          </svg>
+                          <%= heroicon_tag "plus", size: 20, class: "mr-2" %>
                           Create Your First Post
                         </a>
                       </div>
@@ -454,27 +413,21 @@
                 <div class="glass shadow-lg rounded-2xl border border-white/20 overflow-hidden">
                   <div class="px-6 py-5 border-b border-gray-100/50">
                     <h3 class="text-lg font-semibold text-gray-900 flex items-center">
-                      <svg class="w-5 h-5 mr-2 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                      </svg>
+                      <%= heroicon_tag "bolt", size: 20, class: "mr-2 text-indigo-500" %>
                       Quick Actions
                     </h3>
                   </div>
                   <div class="p-6 space-y-3">
                     <a href="/admin/posts/new" 
                        class="flex items-center justify-center w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-3 rounded-xl font-medium hover:from-indigo-600 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-                      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                      </svg>
+                      <%= heroicon_tag "plus", size: 20, class: "mr-2" %>
                       New Post
                     </a>
                     
                     <a href="/admin/posts?scope=draft" 
                        class="flex items-center justify-between w-full bg-amber-50 hover:bg-amber-100 text-amber-800 px-4 py-3 rounded-xl font-medium transition-all duration-200 border border-amber-200">
                       <div class="flex items-center">
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.828 2.828 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
-                        </svg>
+                        <%= heroicon_tag "pencil-square", size: 20, class: "mr-2" %>
                         View Drafts
                       </div>
                       <span class="bg-amber-200 text-amber-800 text-xs font-bold px-2 py-1 rounded-full"><%= @draft_posts %></span>
@@ -482,17 +435,13 @@
                     
                     <a href="/admin/posts" 
                        class="flex items-center justify-center w-full bg-green-50 hover:bg-green-100 text-green-800 px-4 py-3 rounded-xl font-medium transition-all duration-200 border border-green-200">
-                      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                      </svg>
+                      <%= heroicon_tag "document-text", size: 20, class: "mr-2" %>
                       All Posts
                     </a>
                     
                     <button onclick="publishSite()" 
                             class="flex items-center justify-center w-full bg-blue-50 hover:bg-blue-100 text-blue-800 px-4 py-3 rounded-xl font-medium transition-all duration-200 border border-blue-200">
-                      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
-                      </svg>
+                      <%= heroicon_tag "cloud-arrow-down", size: 20, class: "mr-2" %>
                       Publish Site
                     </button>
                   </div>
@@ -502,9 +451,7 @@
                 <div class="glass shadow-lg rounded-2xl border border-white/20 overflow-hidden">
                   <div class="px-6 py-5 border-b border-gray-100/50">
                     <h3 class="text-lg font-semibold text-gray-900 flex items-center">
-                      <svg class="w-5 h-5 mr-2 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                      </svg>
+                      <%= heroicon_tag "chart-bar", size: 20, class: "mr-2 text-indigo-500" %>
                       Content Overview
                     </h3>
                   </div>
@@ -574,15 +521,11 @@
       
       <nav class="flex-1 px-4 space-y-2">
         <a href="/admin_dashboard" @click="sidebarOpen = false" class="bg-white/60 text-indigo-700 group flex items-center px-4 py-3 text-sm font-medium rounded-xl border-l-4 border-indigo-500 shadow-sm">
-          <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-          </svg>
+          <%= heroicon_tag "squares-2x2", size: 20, class: "mr-3" %>
           Dashboard
         </a>
         <a href="/admin/posts" @click="sidebarOpen = false" class="text-gray-700 hover:bg-white/40 hover:text-indigo-600 group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200">
-          <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.828 2.828 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
-          </svg>
+          <%= heroicon_tag "pencil-square", size: 20, class: "mr-3" %>
           Posts
         </a>
       </nav>
@@ -595,9 +538,7 @@
       const button = event.target;
       const originalContent = button.innerHTML;
       button.innerHTML = `
-        <svg class="w-5 h-5 mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-        </svg>
+        <div class="w-5 h-5 mr-2 animate-spin border-2 border-white border-t-transparent rounded-full"></div>
         Publishing...
       `;
       button.disabled = true;
@@ -605,9 +546,7 @@
       // Simulate publish process (replace with actual implementation)
       setTimeout(() => {
         button.innerHTML = `
-          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
+          <div class="w-5 h-5 mr-2 text-white rounded-full bg-green-500 flex items-center justify-center">✓</div>
           Published!
         `;
         

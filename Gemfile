@@ -29,6 +29,9 @@ gem "solid_cable"
 # Use Tailwind CSS for styling [https://github.com/rails/tailwindcss-rails]
 gem "tailwindcss-rails"
 
+# Beautiful hand-crafted SVG icons [https://github.com/bharget/heroicons-rails]
+gem "heroicons-rails"
+
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
