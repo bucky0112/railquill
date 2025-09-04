@@ -46,6 +46,19 @@
 # Ignore development files
 /.devcontainer
 
-# Ignore Docker-related files
+# Ignore Docker-related files (but keep development ones)
 /.dockerignore
-/Dockerfile*
+/Dockerfile
+# Keep development docker files
+# !/Dockerfile.dev
+# !/docker-compose.yml
+
+# Ignore development specific files  
+/static_site/*
+/.vscode/
+/.idea/
+
+# Ignore test and coverage files
+/coverage/
+/test/tmp/
+/spec/tmp/
