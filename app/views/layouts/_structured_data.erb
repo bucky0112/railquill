@@ -1,0 +1,133 @@
+<%
+  # Generate JSON-LD structured data for different page types
+  structured_data = {
+    "@context" => "https://schema.org"
+  }
+  
+  # Base site information
+  site_info = {
+    "@type" => "WebSite",
+    "name" => @site_config.site_name,
+    "url" => request.base_url,
+    "description" => @site_config.welcome_text,
+    "publisher" => {
+      "@type" => "Organization",
+      "name" => @site_config.site_name,
+      "url" => request.base_url,
+      "logo" => {
+        "@type" => "ImageObject",
+        "url" => "#{request.base_url}/favicon.ico"
+      },
+      "contactPoint" => {
+        "@type" => "ContactPoint",
+        "email" => "bucky0112@gmail.com",
+        "contactType" => "customer support"
+      },
+      "sameAs" => [
+        "https://github.com/bucky0112/railquill",
+        "https://x.com/bucky0112"
+      ]
+    }
+  }
+  
+  if defined?(@post) && @post
+    # Article page - combine website and article data
+    article_data = {
+      "@type" => "Article",
+      "headline" => @post.title,
+      "description" => @post.meta_description || @post.excerpt,
+      "url" => request.original_url,
+      "datePublished" => (@post.published_at || @post.created_at).iso8601,
+      "dateModified" => @post.updated_at.iso8601,
+      "author" => {
+        "@type" => "Person",
+        "name" => "Bucky Chu",
+        "url" => "https://github.com/bucky0112"
+      },
+      "publisher" => site_info["publisher"],
+      "mainEntityOfPage" => {
+        "@type" => "WebPage",
+        "@id" => request.original_url
+      },
+      "articleBody" => strip_tags(@post.body_md),
+      "wordCount" => @post.word_count || 0,
+      "timeRequired" => "PT#{@post.reading_time || 1}M"
+    }
+    
+    # Add image if present
+    if @post.featured_image_url.present?
+      article_data["image"] = {
+        "@type" => "ImageObject",
+        "url" => @post.featured_image_url,
+        "caption" => @post.title
+      }
+    end
+    
+    # For articles, use structured data graph with both website and article
+    structured_data = {
+      "@context" => "https://schema.org",
+      "@graph" => [
+        site_info,
+        article_data
+      ]
+    }
+  else
+    # Non-article pages (home, about, archive)
+    page_type = case request.path
+    when "/"
+      "Blog"
+    when "/about"
+      "AboutPage"
+    when "/archive"
+      "CollectionPage"
+    else
+      "WebPage"
+    end
+    
+    page_data = site_info.merge({
+      "@type" => [site_info["@type"], page_type].compact.uniq
+    })
+    
+    # Add breadcrumbs for non-home pages
+    if request.path != "/"
+      breadcrumbs = [
+        {
+          "@type" => "ListItem",
+          "position" => 1,
+          "name" => "Home",
+          "item" => request.base_url
+        }
+      ]
+      
+      case request.path
+      when "/about"
+        breadcrumbs << {
+          "@type" => "ListItem",
+          "position" => 2,
+          "name" => "About",
+          "item" => "#{request.base_url}/about"
+        }
+      when "/archive"
+        breadcrumbs << {
+          "@type" => "ListItem",
+          "position" => 2,
+          "name" => "Archive",
+          "item" => "#{request.base_url}/archive"
+        }
+      end
+      
+      structured_data = {
+        "@context" => "https://schema.org",
+        "@graph" => [
+          page_data,
+          {
+            "@type" => "BreadcrumbList",
+            "itemListElement" => breadcrumbs
+          }
+        ]
+      }
+    else
+      structured_data = page_data
+    end
+  end
+%><%= raw structured_data.to_json %>

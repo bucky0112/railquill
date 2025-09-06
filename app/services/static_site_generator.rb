@@ -74,6 +74,22 @@ class StaticSiteGenerator
     )
   end
 
+  def render_sitemap(posts)
+    @site_config = SiteConfig.instance
+    @posts = posts
+    @last_modified = [posts.maximum(:updated_at), @site_config.updated_at].compact.max
+    
+    ApplicationController.render(
+      template: "sitemap/index",
+      layout: false,
+      assigns: {
+        posts: @posts,
+        site_config: @site_config,
+        last_modified: @last_modified
+      }
+    )
+  end
+
   private
 
   def markdown_to_html(text)

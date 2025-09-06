@@ -29,7 +29,21 @@
       <% if @post.featured_image_url.present? %>
         <meta property="twitter:image" content="<%= @post.featured_image_url %>">
       <% end %>
+      
+      <!-- Article specific meta tags -->
+      <meta property="article:published_time" content="<%= (@post.published_at || @post.created_at).iso8601 %>">
+      <meta property="article:modified_time" content="<%= @post.updated_at.iso8601 %>">
+      <meta property="article:author" content="Bucky Chu">
+      <meta name="author" content="Bucky Chu">
     <% end %>
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+      <%= render 'layouts/structured_data' %>
+    </script>
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="<%= request.original_url %>">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

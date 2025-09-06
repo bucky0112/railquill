@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get "about", to: "static#about"
   get "archive", to: "static#archive"
   get "feed.xml", to: "static#feed", defaults: { format: "xml" }
+  get "sitemap.xml", to: "sitemap#index", defaults: { format: "xml" }
   get "posts/:slug", to: "static#post", as: :post
   root to: "static#index"
 

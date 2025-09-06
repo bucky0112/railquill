@@ -33,8 +33,13 @@ namespace :static do
       File.write(output_dir.join("#{post.slug}.html"), post_html)
     end
 
+    # Generate sitemap
+    puts "Generating sitemap..."
+    sitemap_xml = StaticSiteGenerator.new.render_sitemap(posts)
+    File.write(output_dir.join("sitemap.xml"), sitemap_xml)
+
     puts "\nStatic site generated successfully!"
     puts "Output directory: #{output_dir}"
-    puts "Total pages generated: #{posts.count + 3} (index + about + archive + #{posts.count} posts)"
+    puts "Total pages generated: #{posts.count + 4} (index + about + archive + sitemap + #{posts.count} posts)"
   end
 end
