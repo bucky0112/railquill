@@ -31,12 +31,12 @@ class StaticController < ApplicationController
     unless slug.match?(/\A[a-zA-Z0-9\-_]+\z/)
       raise ActionController::RoutingError, "Invalid file name"
     end
-    
+
     # Build path component by component to avoid path traversal issues
     static_site_dir = Rails.root.join("static_site")
     filename = "#{slug}.html"
     static_file_path = static_site_dir.join(filename)
-    
+
     # Double-check that the resolved path is within the static_site directory
     unless static_file_path.to_s.start_with?(static_site_dir.to_s)
       raise ActionController::RoutingError, "Invalid file path"

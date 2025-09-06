@@ -2,10 +2,10 @@
 
 class SecurityMonitor
   # Service class for monitoring and analyzing security events from rack-attack
-  
+
   def self.setup_monitoring
     # Subscribe to rack-attack events for detailed logging and alerting
-    ActiveSupport::Notifications.subscribe('rack.attack') do |name, start, finish, request_id, payload|
+    ActiveSupport::Notifications.subscribe("rack.attack") do |name, start, finish, request_id, payload|
       new(payload).handle_security_event
     end
   end
@@ -29,10 +29,10 @@ class SecurityMonitor
     else
       handle_general_rate_limit
     end
-    
+
     # Log to security log file in production
     log_security_event if Rails.env.production?
-    
+
     # Send alerts for critical events
     send_alert if critical_event?
   end
@@ -54,7 +54,7 @@ class SecurityMonitor
 
   def handle_password_reset_abuse
     Rails.logger.warn security_log_message(
-      "PASSWORD_RESET_ABUSE", 
+      "PASSWORD_RESET_ABUSE",
       "Password reset abuse detected",
       {
         ip: @request.ip,
@@ -113,7 +113,7 @@ class SecurityMonitor
   end
 
   def extract_email
-    @request.params.dig('admin_user', 'email') || 'unknown'
+    @request.params.dig("admin_user", "email") || "unknown"
   end
 
   def cache_count_for_ip
@@ -153,9 +153,9 @@ class SecurityMonitor
     # - Slack/Discord webhooks
     # - PagerDuty integration
     # - Security monitoring service alerts
-    
+
     Rails.logger.error "[SECURITY ALERT] #{@matched_rule}: #{@request.ip} #{@request.path}"
-    
+
     # Example: Slack webhook (implement if needed)
     # SlackNotifier.new.send_security_alert(
     #   event: @matched_rule,
@@ -165,7 +165,7 @@ class SecurityMonitor
   end
 
   def security_logger
-    @security_logger ||= Logger.new(Rails.root.join('log', 'security.log')).tap do |logger|
+    @security_logger ||= Logger.new(Rails.root.join("log", "security.log")).tap do |logger|
       logger.formatter = proc do |severity, datetime, progname, msg|
         "[#{datetime}] #{severity} #{msg}\n"
       end
@@ -176,7 +176,7 @@ class SecurityMonitor
   def self.get_security_stats(timeframe = 1.hour)
     # This would be more sophisticated in production with proper analytics
     # For now, return basic info that could be shown on admin dashboard
-    
+
     {
       timeframe: timeframe,
       generated_at: Time.current.iso8601,
@@ -192,7 +192,7 @@ class SecurityMonitor
   def self.emergency_block_ip(ip_address, duration = 1.hour, reason = "Manual block")
     Rack::Attack.cache.write("manual_block:#{ip_address}", reason, duration)
     Rails.logger.error "[MANUAL_BLOCK] IP #{ip_address} blocked for #{duration} seconds. Reason: #{reason}"
-    
+
     # Add to rack-attack blocklist temporarily
     Rack::Attack.blocklist("manual_block_#{ip_address}") do |req|
       req.ip == ip_address && Rack::Attack.cache.read("manual_block:#{ip_address}")

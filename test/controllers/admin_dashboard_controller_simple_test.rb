@@ -60,7 +60,7 @@ class AdminDashboardControllerSimpleTest < ActionDispatch::IntegrationTest
     # Test optimized word count calculation (database-level)
     total_words = Post.published.sum(:word_count) || 0
     assert total_words > 0
-    
+
     # Verify word count is properly stored for each post
     Post.published.each do |post|
       assert post.word_count > 0, "Post #{post.title} should have word_count calculated"
@@ -99,7 +99,7 @@ class AdminDashboardControllerSimpleTest < ActionDispatch::IntegrationTest
 
     # Should be very fast - under 100ms for 50 queries even with extra data
     assert time_taken < 0.1, "Word count calculation should be fast: #{time_taken}s"
-    
+
     # Verify we get the correct result
     total_words = Post.published.sum(:word_count) || 0
     assert total_words > 0, "Should have calculated total words"

@@ -1,4 +1,4 @@
-require 'sanitize'
+require "sanitize"
 
 class MarkdownRenderer
   def self.render(text)
@@ -23,10 +23,10 @@ class MarkdownRenderer
     )
 
     html = @markdown.render(text)
-    
+
     # Apply proper HTML sanitization to prevent XSS while allowing safe blog content
     sanitized_html = Sanitize.fragment(html, sanitization_config)
-    
+
     sanitized_html
   end
 
@@ -34,7 +34,7 @@ class MarkdownRenderer
 
   def self.sanitization_config
     {
-      :elements => %w[
+      elements: %w[
         h1 h2 h3 h4 h5 h6
         p br
         strong b em i u s del ins mark
@@ -48,35 +48,35 @@ class MarkdownRenderer
         div span
         sup sub
       ],
-      
-      :attributes => {
-        'a' => %w[href title],
-        'img' => %w[src alt title width height],
-        'code' => %w[class],  # Allow class for syntax highlighting
-        'pre' => %w[class],   # Allow class for syntax highlighting
-        'h1' => %w[id],       # Allow id for TOC links
-        'h2' => %w[id],       # Allow id for TOC links
-        'h3' => %w[id],       # Allow id for TOC links
-        'h4' => %w[id],       # Allow id for TOC links
-        'h5' => %w[id],       # Allow id for TOC links
-        'h6' => %w[id],       # Allow id for TOC links
-        'th' => %w[align],    # Allow table alignment
-        'td' => %w[align],    # Allow table alignment
-        'div' => %w[class],   # Allow div classes for styling
-        'span' => %w[class]   # Allow span classes for styling
+
+      attributes: {
+        "a" => %w[href title],
+        "img" => %w[src alt title width height],
+        "code" => %w[class],  # Allow class for syntax highlighting
+        "pre" => %w[class],   # Allow class for syntax highlighting
+        "h1" => %w[id],       # Allow id for TOC links
+        "h2" => %w[id],       # Allow id for TOC links
+        "h3" => %w[id],       # Allow id for TOC links
+        "h4" => %w[id],       # Allow id for TOC links
+        "h5" => %w[id],       # Allow id for TOC links
+        "h6" => %w[id],       # Allow id for TOC links
+        "th" => %w[align],    # Allow table alignment
+        "td" => %w[align],    # Allow table alignment
+        "div" => %w[class],   # Allow div classes for styling
+        "span" => %w[class]   # Allow span classes for styling
       },
-      
-      :protocols => {
-        'a' => { 'href' => %w[http https mailto] },
-        'img' => { 'src' => %w[http https data] }  # Allow data URIs for small images
+
+      protocols: {
+        "a" => { "href" => %w[http https mailto] },
+        "img" => { "src" => %w[http https data] }  # Allow data URIs for small images
       },
-      
-      :remove_contents => %w[script style],
-      :remove_empty_elements => false,
-      :whitespace_elements => {
-        'div' => :remove,
-        'p' => :remove,
-        'pre' => :keep
+
+      remove_contents: %w[script style],
+      remove_empty_elements: false,
+      whitespace_elements: {
+        "div" => :remove,
+        "p" => :remove,
+        "pre" => :keep
       }
     }
   end

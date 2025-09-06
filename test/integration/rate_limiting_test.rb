@@ -6,15 +6,15 @@ class RateLimitingTest < ActionDispatch::IntegrationTest
   setup do
     # Skip tests if rack-attack is not properly loaded (in test env it's disabled)
     skip "Rack::Attack is disabled in test environment" unless defined?(Rack::Attack) && Rails.env.development?
-    
+
     # Reset rack-attack cache
     Rack::Attack.cache.store.clear
-    
+
     # Create a test admin user
     @admin_user = AdminUser.create!(
-      email: 'test@example.com',
-      password: 'password123',
-      password_confirmation: 'password123'
+      email: "test@example.com",
+      password: "password123",
+      password_confirmation: "password123"
     )
   end
 
@@ -29,12 +29,12 @@ class RateLimitingTest < ActionDispatch::IntegrationTest
       post "/admin_users/sign_in", params: {
         admin_user: { email: @admin_user.email, password: "wrongpassword" }
       }
-      
+
       if i < 4  # First 4 attempts
         assert_not_equal 429, response.status, "Should not be rate limited yet on attempt #{i + 1}"
       end
     end
-    
+
     # 6th attempt should be rate limited
     post "/admin_users/sign_in", params: {
       admin_user: { email: @admin_user.email, password: "wrongpassword" }
@@ -50,7 +50,7 @@ class RateLimitingTest < ActionDispatch::IntegrationTest
         admin_user: { email: "test#{i}@example.com", password: "wrongpassword" }
       }
     end
-    
+
     # 11th request should be rate limited by IP
     post "/admin_users/sign_in", params: {
       admin_user: { email: "new@example.com", password: "wrongpassword" }
@@ -64,12 +64,12 @@ class RateLimitingTest < ActionDispatch::IntegrationTest
       post "/admin_users/password", params: {
         admin_user: { email: @admin_user.email }
       }
-      
+
       if i < 2  # First 2 attempts
         assert_not_equal 429, response.status, "Should not be rate limited yet on attempt #{i + 1}"
       end
     end
-    
+
     # 4th attempt should be rate limited
     post "/admin_users/password", params: {
       admin_user: { email: @admin_user.email }
@@ -84,12 +84,12 @@ class RateLimitingTest < ActionDispatch::IntegrationTest
       get "/admin_dashboard"
       assert_not_equal 429, response.status, "Normal admin dashboard usage should not be rate limited"
     end
-    
+
     # Simulate excessive requests - should eventually be blocked
     # We need to make a lot of requests quickly to trigger the rate limit
     # Skip this in regular test runs as it's slow - uncomment for manual testing
     skip "Skipping admin dashboard abuse test - too slow for regular test runs"
-    
+
     # 200.times do
     #   get "/admin_dashboard"
     # end
@@ -142,12 +142,12 @@ class RateLimitingTest < ActionDispatch::IntegrationTest
         admin_user: { email: @admin_user.email, password: "wrongpassword" }
       }
     end
-    
+
     # Successful login should work
     post "/admin_users/sign_in", params: {
       admin_user: { email: @admin_user.email, password: "password123" }
     }
-    
+
     # Should be redirected (successful login) or at least not rate limited
     assert_not_equal 429, response.status, "Successful login should not be rate limited"
   end
@@ -172,10 +172,10 @@ class RateLimitingTest < ActionDispatch::IntegrationTest
     # For now, we'll just verify the configuration exists
     throttle = Rack::Attack.throttles[key]
     return false unless throttle
-    
+
     throttle_limit = throttle.instance_variable_get(:@limit)
     throttle_period = throttle.instance_variable_get(:@period)
-    
+
     throttle_limit <= limit && throttle_period >= period
   end
 end

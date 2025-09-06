@@ -2,12 +2,12 @@
 
 class SitemapController < ApplicationController
   before_action :set_format
-  
+
   def index
     @site_config = SiteConfig.instance
     @posts = Post.published.published_ordered
-    @last_modified = [@posts.maximum(:updated_at), @site_config.updated_at].compact.max
-    
+    @last_modified = [ @posts.maximum(:updated_at), @site_config.updated_at ].compact.max
+
     respond_to do |format|
       format.xml { render layout: false }
     end
