@@ -14,7 +14,7 @@ class AdminDashboardController < ApplicationController
                   ELSE created_at
                 END DESC NULLS LAST")
     ).limit(8)
-    @total_words = Post.published.sum { |p| p.body_md.to_s.split.size }
+    @total_words = Post.published.sum(:word_count) || 0
     @avg_reading_time = Post.published.average(:reading_time).to_i
     @posts_this_month = Post.published.where("published_at >= ?", 1.month.ago).count
     @posts_last_month = Post.published.where("published_at >= ? AND published_at < ?", 2.months.ago, 1.month.ago).count
@@ -26,6 +26,9 @@ class AdminDashboardController < ApplicationController
 
     # Recent activity timeline
     @recent_activity = generate_activity_timeline
+    
+    # Security & Rate Limiting Statistics
+    @security_stats = get_security_statistics
   end
 
   private
@@ -51,5 +54,48 @@ class AdminDashboardController < ApplicationController
 
     # Sort by time desc and return recent 10
     activities.sort_by { |a| a[:time] || Time.current }.reverse.first(10)
+  end
+  
+  def get_security_statistics
+    return nil unless defined?(Rack::Attack)
+    
+    {
+      rack_attack_enabled: true,
+      cache_store: Rack::Attack.cache.store.class.name,
+      active_throttles: Rack::Attack.throttles.count,
+      active_blocklists: Rack::Attack.blocklists.count,
+      active_safelists: Rack::Attack.safelists.count,
+      recent_events: get_recent_security_events
+    }
+  rescue => e
+    Rails.logger.warn "Failed to get security statistics: #{e.message}"
+    { rack_attack_enabled: false, error: e.message }
+  end
+  
+  def get_recent_security_events
+    security_log_path = Rails.root.join('log', 'security.log')
+    return [] unless File.exist?(security_log_path)
+    
+    # Get last 5 lines from security log
+    recent_lines = `tail -5 #{security_log_path}`.split("\n")
+    recent_lines.map do |line|
+      # Parse log line - this is a simplified parser
+      if line.match(/\[(\d{4}-\d{2}-\d{2}.*?)\]\s+(\w+)\s+(.*)$/)
+        {
+          timestamp: $1,
+          severity: $2, 
+          message: $3.truncate(100)
+        }
+      else
+        {
+          timestamp: Time.current.strftime('%Y-%m-%d %H:%M:%S'),
+          severity: 'INFO',
+          message: line.truncate(100)
+        }
+      end
+    end
+  rescue => e
+    Rails.logger.warn "Failed to parse security log: #{e.message}"
+    []
   end
 end

@@ -50,9 +50,13 @@ gem "activeadmin"
 # Note: sassc-rails removed as it brings in Sprockets dependencies
 # ActiveAdmin styles are handled via custom CSS in app/assets/stylesheets/active_admin.css
 
+# Security & Rate Limiting
+gem "rack-attack"
+
 # Markdown processing
 gem "redcarpet"
 gem "rouge" # For syntax highlighting
+gem "sanitize" # For secure HTML sanitization
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

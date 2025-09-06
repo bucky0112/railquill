@@ -16,12 +16,16 @@ class AdminDashboardControllerSimpleTest < ActionDispatch::IntegrationTest
       status: :published,
       published_at: 1.day.ago
     )
+    # Ensure word count is calculated (should happen automatically via callback)
+    @published_post.reload
 
     @draft_post = Post.create!(
       title: "Draft Post",
       body_md: draft_content,
       status: :draft
     )
+    # Ensure word count is calculated (should happen automatically via callback)
+    @draft_post.reload
   end
 
   test "controller instance variables are set correctly when accessed directly" do
@@ -53,9 +57,17 @@ class AdminDashboardControllerSimpleTest < ActionDispatch::IntegrationTest
     published_reading_time = Post.published.sum(:reading_time)
     assert published_reading_time > 0
 
-    # Test word count calculation
-    total_words = Post.published.sum { |p| p.body_md.to_s.split.size }
+    # Test optimized word count calculation (database-level)
+    total_words = Post.published.sum(:word_count) || 0
     assert total_words > 0
+    
+    # Verify word count is properly stored for each post
+    Post.published.each do |post|
+      assert post.word_count > 0, "Post #{post.title} should have word_count calculated"
+      # Verify stored word count matches calculated value
+      expected_word_count = post.body_md.to_s.split.size
+      assert_equal expected_word_count, post.word_count, "Word count should match calculated value"
+    end
 
     # Test average reading time
     avg_reading_time = Post.published.average(:reading_time).to_i
@@ -64,5 +76,32 @@ class AdminDashboardControllerSimpleTest < ActionDispatch::IntegrationTest
     # Test posts this month count
     posts_this_month = Post.published.where("published_at >= ?", 1.month.ago).count
     assert_equal 1, posts_this_month
+  end
+
+  test "word count calculation is performant" do
+    # Create additional posts to test performance
+    10.times do |i|
+      Post.create!(
+        title: "Performance Test #{i}",
+        body_md: "Content with multiple words for testing. " * 50,
+        status: :published,
+        published_at: 1.day.ago
+      )
+    end
+
+    # Measure performance of the optimized query
+    require "benchmark"
+    time_taken = Benchmark.realtime do
+      50.times do
+        Post.published.sum(:word_count) || 0
+      end
+    end
+
+    # Should be very fast - under 50ms for 50 queries even with extra data
+    assert time_taken < 0.05, "Word count calculation should be fast: #{time_taken}s"
+    
+    # Verify we get the correct result
+    total_words = Post.published.sum(:word_count) || 0
+    assert total_words > 0, "Should have calculated total words"
   end
 end

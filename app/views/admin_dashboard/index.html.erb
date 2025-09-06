@@ -475,6 +475,85 @@
                     </div>
                   </div>
                 </div>
+
+                <!-- Security & Rate Limiting Status -->
+                <% if @security_stats %>
+                  <div class="glass shadow-lg rounded-2xl border border-white/20 overflow-hidden">
+                    <div class="px-6 py-5 border-b border-gray-100/50">
+                      <h3 class="text-lg font-semibold text-gray-900 flex items-center">
+                        <%= heroicon_tag "shield-check", size: 20, class: "mr-2 text-indigo-500" %>
+                        Security Status
+                      </h3>
+                    </div>
+                    <div class="p-6">
+                      <% if @security_stats[:rack_attack_enabled] %>
+                        <div class="space-y-4">
+                          <!-- Rate Limiting Status -->
+                          <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-100">
+                            <div class="flex items-center">
+                              <%= heroicon_tag "check-circle", size: 16, class: "mr-2 text-green-600" %>
+                              <span class="text-sm font-medium text-green-800">Rate Limiting Active</span>
+                            </div>
+                            <div class="text-xs text-green-600 font-medium">
+                              <%= @security_stats[:active_throttles] %> rules
+                            </div>
+                          </div>
+                          
+                          <!-- Cache Store Info -->
+                          <div class="text-center p-3 bg-blue-50 rounded-lg border border-blue-100">
+                            <div class="text-sm font-medium text-blue-800 mb-1">Cache Store</div>
+                            <div class="text-xs text-blue-600"><%= @security_stats[:cache_store].split('::').last %></div>
+                          </div>
+                          
+                          <!-- Protection Summary -->
+                          <div class="grid grid-cols-3 gap-2 text-center">
+                            <div class="p-2 bg-purple-50 rounded border border-purple-100">
+                              <div class="text-sm font-bold text-purple-900"><%= @security_stats[:active_throttles] %></div>
+                              <div class="text-xs text-purple-600">Throttles</div>
+                            </div>
+                            <div class="p-2 bg-red-50 rounded border border-red-100">
+                              <div class="text-sm font-bold text-red-900"><%= @security_stats[:active_blocklists] %></div>
+                              <div class="text-xs text-red-600">Blocklists</div>
+                            </div>
+                            <div class="p-2 bg-green-50 rounded border border-green-100">
+                              <div class="text-sm font-bold text-green-900"><%= @security_stats[:active_safelists] %></div>
+                              <div class="text-xs text-green-600">Safelists</div>
+                            </div>
+                          </div>
+                          
+                          <!-- Recent Security Events -->
+                          <% if @security_stats[:recent_events]&.any? %>
+                            <div class="border-t border-gray-100/50 pt-4">
+                              <div class="text-sm font-medium text-gray-700 mb-3">Recent Events</div>
+                              <div class="space-y-2 max-h-32 overflow-y-auto custom-scrollbar">
+                                <% @security_stats[:recent_events].first(3).each do |event| %>
+                                  <div class="text-xs p-2 bg-gray-50 rounded border border-gray-100">
+                                    <div class="flex items-center justify-between mb-1">
+                                      <span class="font-medium text-gray-700"><%= event[:severity] %></span>
+                                      <span class="text-gray-500"><%= event[:timestamp] %></span>
+                                    </div>
+                                    <div class="text-gray-600 truncate"><%= event[:message] %></div>
+                                  </div>
+                                <% end %>
+                              </div>
+                            </div>
+                          <% end %>
+                        </div>
+                      <% else %>
+                        <div class="text-center p-4 bg-yellow-50 rounded-lg border border-yellow-100">
+                          <div class="flex items-center justify-center mb-2">
+                            <%= heroicon_tag "exclamation-triangle", size: 20, class: "text-yellow-600" %>
+                          </div>
+                          <div class="text-sm font-medium text-yellow-800 mb-1">Rate Limiting Disabled</div>
+                          <div class="text-xs text-yellow-700">Security protection inactive</div>
+                          <% if @security_stats[:error] %>
+                            <div class="text-xs text-red-600 mt-2 font-mono"><%= @security_stats[:error] %></div>
+                          <% end %>
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+                <% end %>
               </div>
             </div>
           </div>

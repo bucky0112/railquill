@@ -243,7 +243,7 @@ class PostTest < ActiveSupport::TestCase
 
   # Ransack configuration tests
   test "should define ransackable attributes" do
-    expected_attributes = [ "body_md", "created_at", "excerpt", "featured_image_url", "id", "meta_description", "published_at", "reading_time", "slug", "status", "title", "updated_at" ]
+    expected_attributes = [ "body_md", "created_at", "excerpt", "featured_image_url", "id", "meta_description", "published_at", "reading_time", "slug", "status", "title", "updated_at", "word_count" ]
     assert_equal expected_attributes, Post.ransackable_attributes
   end
 

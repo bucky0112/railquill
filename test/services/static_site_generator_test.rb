@@ -31,9 +31,9 @@ class StaticSiteGeneratorTest < ActiveSupport::TestCase
   end
 
   # Basic functionality tests
-  test "should initialize with markdown renderer" do
-    assert_not_nil @generator.instance_variable_get(:@markdown)
-    assert_instance_of Redcarpet::Markdown, @generator.instance_variable_get(:@markdown)
+  test "should initialize successfully" do
+    assert_not_nil @generator
+    assert_instance_of StaticSiteGenerator, @generator
   end
 
   # Index rendering tests

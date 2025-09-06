@@ -6,6 +6,7 @@ class Post < ApplicationRecord
   validates :body_md, presence: true
 
   before_validation :generate_slug, if: :title_changed?
+  before_save :calculate_word_count
   before_save :calculate_reading_time
   before_save :generate_excerpt
 
@@ -38,7 +39,7 @@ class Post < ApplicationRecord
 
   # Ransack configuration for ActiveAdmin
   def self.ransackable_attributes(auth_object = nil)
-    [ "body_md", "created_at", "excerpt", "featured_image_url", "id", "meta_description", "published_at", "reading_time", "slug", "status", "title", "updated_at" ]
+    [ "body_md", "created_at", "excerpt", "featured_image_url", "id", "meta_description", "published_at", "reading_time", "slug", "status", "title", "updated_at", "word_count" ]
   end
 
   def self.ransackable_associations(auth_object = nil)
@@ -51,11 +52,15 @@ class Post < ApplicationRecord
     self.slug = title.parameterize if title.present?
   end
 
-  def calculate_reading_time
+  def calculate_word_count
     return unless body_md.present?
+    self.word_count = body_md.split.size
+  end
+
+  def calculate_reading_time
+    return unless word_count.present? && word_count > 0
 
     words_per_minute = 200
-    word_count = body_md.split.size
     self.reading_time = (word_count.to_f / words_per_minute).ceil
   end
 
