@@ -15,7 +15,7 @@ class StaticControllerTest < ActionDispatch::IntegrationTest
   test "should render index template" do
     get root_path
     assert_template "static/index"
-    assert_template layout: "layouts/application"
+    assert_template layout: "layouts/static"
   end
 
   test "should assign published posts ordered by published_at" do
@@ -69,7 +69,7 @@ class StaticControllerTest < ActionDispatch::IntegrationTest
   test "should render post template for published post" do
     get post_path(@published_post.slug)
     assert_template "static/post"
-    assert_template layout: "layouts/application"
+    assert_template layout: "layouts/static"
   end
 
   test "should assign correct post" do

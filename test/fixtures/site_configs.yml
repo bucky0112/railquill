@@ -1,13 +1,16 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  site_name: MyString
-  welcome_title: MyString
-  welcome_text: MyText
-  about_content: MyText
-
-two:
-  site_name: MyString
-  welcome_title: MyString
-  welcome_text: MyText
-  about_content: MyText
+  site_name: "Railquill Test Site"
+  welcome_title: "Welcome to Railquill Test"
+  welcome_text: "A test site for Rails blogging platform with clean code and beautiful typography."
+  about_content: |
+    ## About Railquill Test
+    
+    This is a test instance of Railquill, a modern blog platform built with Ruby on Rails.
+    
+    ### Features
+    - Markdown-based writing
+    - Clean typography
+    - Modern admin interface
+    - Static site generation

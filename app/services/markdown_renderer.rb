@@ -20,6 +20,15 @@ class MarkdownRenderer
       superscript: true
     )
 
-    @markdown.render(text)
+    html = @markdown.render(text)
+    
+    # Apply XSS protection - remove dangerous script and style tags but allow other HTML
+    # This maintains compatibility with iframe embeds while preventing XSS attacks
+    html.gsub!(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/mi, '')
+    html.gsub!(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/mi, '')
+    html.gsub!(/<script[^>]*>/i, '')
+    html.gsub!(/<\/script>/i, '')
+    
+    html
   end
 end

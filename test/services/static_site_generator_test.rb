@@ -59,9 +59,17 @@ class StaticSiteGeneratorTest < ActiveSupport::TestCase
     published_posts = Post.published_ordered
     html = @generator.render_index(published_posts)
 
-    # Check that post metadata is included
-    assert_includes html, @published_post1.published_at.strftime("%B %d, %Y")
-    assert_includes html, @published_post2.published_at.strftime("%B %d, %Y")
+    # Check that post metadata is included (either full or abbreviated format)
+    # Featured posts use full format ("%B %d, %Y"), grid posts use abbreviated ("%b %d, %Y")
+    post1_full_date = @published_post1.published_at.strftime("%B %d, %Y")
+    post1_abbrev_date = @published_post1.published_at.strftime("%b %d, %Y")
+    post2_full_date = @published_post2.published_at.strftime("%B %d, %Y") 
+    post2_abbrev_date = @published_post2.published_at.strftime("%b %d, %Y")
+    
+    assert(html.include?(post1_full_date) || html.include?(post1_abbrev_date),
+           "Expected to find either '#{post1_full_date}' or '#{post1_abbrev_date}' in rendered HTML")
+    assert(html.include?(post2_full_date) || html.include?(post2_abbrev_date),
+           "Expected to find either '#{post2_full_date}' or '#{post2_abbrev_date}' in rendered HTML")
 
     # Check reading time if present
     if @published_post1.reading_time.present?
@@ -136,7 +144,8 @@ class StaticSiteGeneratorTest < ActiveSupport::TestCase
     html = @generator.render_post(@published_post1)
 
     # Should include page title in the rendered HTML
-    expected_title = "#{@published_post1.title} - My Blog"
+    site_config = SiteConfig.instance
+    expected_title = "#{@published_post1.title} - #{site_config.site_name}"
     assert_includes html, expected_title
   end
 
