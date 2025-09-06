@@ -75,9 +75,9 @@ class SiteConfig < ApplicationRecord
 
       Have questions or feedback about Railquill? We'd love to hear from you!
 
-      - **Email**: [hello@railquill.com](mailto:hello@railquill.com)
-      - **GitHub**: [github.com/railquill](https://github.com/railquill)
-      - **Twitter**: [@railquill](https://twitter.com/railquill)
+      - **Email**: [bucky0112@gmail.com](mailto:bucky0112@gmail.com)
+      - **GitHub**: [github.com/bucky0112/railquill](https://github.com/bucky0112/railquill)
+      - **Twitter**: [x.com/bucky0112](https://x.com/bucky0112)
 
       *Thank you for reading and supporting open-source development!*
     MARKDOWN

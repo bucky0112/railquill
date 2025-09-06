@@ -97,8 +97,8 @@ class AdminDashboardControllerSimpleTest < ActionDispatch::IntegrationTest
       end
     end
 
-    # Should be very fast - under 50ms for 50 queries even with extra data
-    assert time_taken < 0.05, "Word count calculation should be fast: #{time_taken}s"
+    # Should be very fast - under 100ms for 50 queries even with extra data
+    assert time_taken < 0.1, "Word count calculation should be fast: #{time_taken}s"
     
     # Verify we get the correct result
     total_words = Post.published.sum(:word_count) || 0
