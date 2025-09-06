@@ -234,7 +234,7 @@ nav {
    =========================== */
 #active_admin_content {
   flex: 1;
-  margin-left: 16rem;
+  /* margin-left: 16rem; */
   background: var(--gray-50);
   min-height: 100vh;
 }
