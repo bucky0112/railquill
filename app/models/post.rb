@@ -9,6 +9,8 @@ class Post < ApplicationRecord
   before_save :calculate_word_count
   before_save :calculate_reading_time
   before_save :generate_excerpt
+  before_save :ensure_published_at
+  after_update :regenerate_static_site, if: :should_regenerate_static_site?
 
   scope :published, -> { where(status: :published) }
   scope :published_ordered, -> { published.order(published_at: :desc) }
@@ -31,6 +33,13 @@ class Post < ApplicationRecord
 
   def publish!
     update!(status: :published, published_at: published_at || Time.current)
+  end
+  
+  # Ensure published_at is always set when status changes to published
+  def ensure_published_at
+    if published? && published_at.blank?
+      self.published_at = Time.current
+    end
   end
 
   def unpublish!
@@ -71,5 +80,39 @@ class Post < ApplicationRecord
     # Strip markdown and take first 160 characters
     plain_text = body_md.gsub(/[#*_\[\]()]/, "").strip
     self.excerpt = plain_text.truncate(160)
+  end
+
+  def should_regenerate_static_site?
+    # Regenerate if:
+    # 1. Status changed (draft -> published or published -> draft)
+    # 2. Content changed for published posts
+    # 3. Title, slug, or other important fields changed for published posts
+    return false unless saved_changes.any?
+
+    status_changed = saved_changes.key?('status')
+    content_fields_changed = (saved_changes.keys & ['title', 'body_md', 'excerpt', 'published_at', 'slug']).any?
+    
+    # Regenerate if status changed OR if important fields changed on a published post
+    status_changed || (published? && content_fields_changed)
+  end
+
+  def regenerate_static_site
+    Rails.logger.info "🚀 Queuing static site regeneration due to post changes: #{title}"
+    
+    begin
+      if Rails.env.test?
+        # Don't regenerate in test environment
+        return
+      elsif Rails.env.development?
+        # In development, use immediate background process for faster feedback
+        pid = spawn("bin/rails static:publish", chdir: Rails.root, out: '/dev/null', err: '/dev/null')
+        Process.detach(pid)  # Don't wait for it to finish
+      else
+        # In production, use proper background job system
+        StaticSiteGenerationJob.perform_later(reason: "post_changed:#{slug}")
+      end
+    rescue => e
+      Rails.logger.error "❌ Failed to queue static site regeneration: #{e.message}"
+    end
   end
 end

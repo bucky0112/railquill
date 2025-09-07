@@ -45,7 +45,11 @@ ActiveAdmin.register Post do
       div class: "flex flex-wrap gap-4 text-sm text-gray-500 mb-4" do
         if post.published?
           span do
-            "Published #{time_ago_in_words(post.published_at)} ago"
+            if post.published_at.present?
+              "Published #{time_ago_in_words(post.published_at)} ago"
+            else
+              "Published recently"
+            end
           end
         else
           span do

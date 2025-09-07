@@ -40,7 +40,7 @@
       <loc><%= request.base_url %>/<%= post.slug %>.html</loc>
       <lastmod><%= post.updated_at.strftime('%Y-%m-%d') %></lastmod>
       <changefreq>monthly</changefreq>
-      <priority><%= post.published_at > 3.months.ago ? '0.8' : '0.6' %></priority>
+      <priority><%= (post.published_at && post.published_at > 3.months.ago) ? '0.8' : '0.6' %></priority>
       
       <% if post.featured_image_url.present? %>
         <image:image>

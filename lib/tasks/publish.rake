@@ -42,4 +42,18 @@ namespace :static do
     puts "Output directory: #{output_dir}"
     puts "Total pages generated: #{posts.count + 4} (index + about + archive + sitemap + #{posts.count} posts)"
   end
+
+  desc "Queue static site generation as background job"
+  task queue: :environment do
+    puts "🚀 Queuing static site generation job..."
+    StaticSiteGenerationJob.perform_later(reason: "manual_queue")
+    puts "✅ Job queued successfully!"
+    puts "Monitor with: bin/rails solid_queue:status"
+  end
+
+  desc "Force regenerate static site (bypass cache)"
+  task force: :environment do
+    puts "🔄 Force regenerating static site..."
+    Rake::Task["static:publish"].invoke
+  end
 end
