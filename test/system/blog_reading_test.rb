@@ -81,8 +81,8 @@ class BlogReadingTest < ApplicationSystemTestCase
   test "visitor can navigate between posts" do
     visit post_path(@older_post.slug)
 
-    # Should see navigation to next post
-    assert_text "Next Post"
+    # Should see navigation to next post (case-insensitive check)
+    assert_text "NEXT POST →"
     # Note: The navigation links point to .html files which don't work in Rails app
     # This is part of the static site generation design
   end
