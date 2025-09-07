@@ -1,0 +1,31 @@
+{
+  "version": 2,
+  "name": "railquill-blog",
+  "outputDirectory": "static_site",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/(.*).html",
+      "headers": [
+        {
+          "key": "Cache-Control", 
+          "value": "public, max-age=3600"
+        }
+      ]
+    },
+    {
+      "source": "/sitemap.xml",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/xml"
+        }
+      ]
+    }
+  ]
+}

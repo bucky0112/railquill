@@ -1,0 +1,26 @@
+# Rails application files
+app/
+bin/
+config/
+db/
+lib/
+log/
+tmp/
+vendor/
+public/
+storage/
+test/
+
+# Dependencies
+node_modules/
+Gemfile*
+package*.json
+
+# Development files
+.env*
+.claude/
+*.log
+.git/
+
+# Only deploy static_site directory
+# Everything else is excluded by default with this approach
