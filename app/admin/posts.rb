@@ -1,6 +1,6 @@
 ActiveAdmin.register Post do
   permit_params :title, :slug, :body_md, :status, :published_at, :excerpt,
-                :meta_description, :featured_image_url
+                :meta_description, :featured_image_url, :featured_image_alt
 
   # Order posts by published_at for published posts, created_at for drafts
   config.sort_order = "published_at_desc"
@@ -122,6 +122,8 @@ ActiveAdmin.register Post do
               hint: "SEO meta description. Recommended: 155-160 characters"
       f.input :featured_image_url,
               hint: "URL to the featured image for this post"
+      f.input :featured_image_alt, as: :text, input_html: { rows: 2 },
+              hint: "Alt text for the featured image (important for accessibility)"
     end
 
     f.inputs "Content" do
@@ -149,6 +151,7 @@ ActiveAdmin.register Post do
       row :featured_image_url do |post|
         link_to(post.featured_image_url, post.featured_image_url, target: "_blank") if post.featured_image_url.present?
       end
+      row :featured_image_alt
       row :created_at
       row :updated_at
     end

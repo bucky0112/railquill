@@ -23,7 +23,7 @@
     <% if @post.featured_image_url.present? %>
       <div class="featured-image animate-slide-up" style="animation-delay: 0.2s; margin-bottom: var(--space-12);">
         <figure style="margin: 0; position: relative; overflow: hidden; border-radius: 0.75rem; box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.15);">
-          <img src="<%= @post.featured_image_url %>" alt="<%= @post.title %>" style="width: 100%; height: auto; max-height: 600px; object-fit: cover; transition: transform 0.5s var(--ease-out);" />
+          <img src="<%= @post.featured_image_url %>" alt="<%= @post.featured_image_alt.presence || @post.title %>" style="width: 100%; height: auto; max-height: 600px; object-fit: cover; transition: transform 0.5s var(--ease-out);" />
           <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.05) 100%);"></div>
         </figure>
       </div>
@@ -46,6 +46,7 @@
              target="_blank" 
              rel="noopener" 
              class="btn"
+             aria-label="Share this article on Twitter"
              style="background: #1DA1F2; color: white; border-color: #1DA1F2; transition: all 0.2s var(--ease-out);"
              onmouseover="this.style.background='#1a91da'; this.style.transform='translateY(-1px)';" 
              onmouseout="this.style.background='#1DA1F2'; this.style.transform='translateY(0)';">
@@ -58,6 +59,7 @@
              target="_blank" 
              rel="noopener" 
              class="btn"
+             aria-label="Share this article on LinkedIn"
              style="background: #0077B5; color: white; border-color: #0077B5; transition: all 0.2s var(--ease-out);"
              onmouseover="this.style.background='#005885'; this.style.transform='translateY(-1px)';" 
              onmouseout="this.style.background='#0077B5'; this.style.transform='translateY(0)';">
@@ -76,7 +78,7 @@
     <% if @post.previous_post %>
       <div class="post-nav-item prev">
         <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">← Previous Post</span>
-        <a href="/<%= @post.previous_post.slug %>.html" class="post-nav-title" style="font-family: var(--font-sans);">
+        <a href="/<%= @post.previous_post.slug %>.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Previous post: <%= @post.previous_post.title %>">
           <%= @post.previous_post.title %>
         </a>
       </div>
@@ -87,7 +89,7 @@
     <% if @post.next_post %>
       <div class="post-nav-item next">
         <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">Next Post →</span>
-        <a href="/<%= @post.next_post.slug %>.html" class="post-nav-title" style="font-family: var(--font-sans);">
+        <a href="/<%= @post.next_post.slug %>.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Next post: <%= @post.next_post.title %>">
           <%= @post.next_post.title %>
         </a>
       </div>
@@ -98,7 +100,7 @@
   
   <!-- Back to Home -->
   <div style="text-align: center; margin-top: var(--space-12); padding-top: var(--space-8); border-top: 1px solid var(--gray-100);">
-    <a href="/" class="btn" style="background: var(--gray-100); color: var(--gray-700); border-color: var(--gray-200);" onmouseover="this.style.background='var(--gray-200)'; this.style.transform='translateY(-1px)';" onmouseout="this.style.background='var(--gray-100)'; this.style.transform='translateY(0)';">
+    <a href="/" class="btn" style="background: var(--gray-100); color: var(--gray-700); border-color: var(--gray-200);" onmouseover="this.style.background='var(--gray-200)'; this.style.transform='translateY(-1px)';" onmouseout="this.style.background='var(--gray-100)'; this.style.transform='translateY(0)';" aria-label="Go back to articles list">
       <div style="width: 1rem; height: 1rem; margin-right: var(--space-2);">
         <%= heroicon_tag "arrow-left", size: 20 %>
       </div>

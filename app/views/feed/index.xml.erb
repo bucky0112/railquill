@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title><%= @site_config.site_name %></title>
+    <link><%= @base_url %></link>
+    <description><%= @site_config.welcome_text %></description>
+    <language>en-us</language>
+    <atom:link href="<%= @base_url %>/feed.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate><%= @last_modified.rfc822 if @last_modified %></lastBuildDate>
+    <generator>Railquill - Rails Blog Generator</generator>
+    
+    <% @posts.each do |post| %>
+    <item>
+      <title><%= post.title %></title>
+      <link><%= @base_url %>/<%= post.slug %>.html</link>
+      <description><%= post.excerpt || post.meta_description || strip_tags(truncate(post.body_md, length: 200)) %></description>
+      <content:encoded><![CDATA[
+        <% if post.featured_image_url.present? %>
+          <img src="<%= post.featured_image_url %>" alt="<%= post.featured_image_alt.presence || post.title %>" style="max-width: 100%; height: auto; margin-bottom: 1rem;" />
+        <% end %>
+        <%= markdown_to_html(post.body_md) %>
+      ]]></content:encoded>
+      <pubDate><%= (post.published_at || post.created_at).rfc822 %></pubDate>
+      <guid isPermaLink="true"><%= @base_url %>/<%= post.slug %>.html</guid>
+      <author>bucky0112@gmail.com (Bucky Chu)</author>
+      <% if post.reading_time.present? %>
+      <category>Reading Time: <%= post.reading_time %> minutes</category>
+      <% end %>
+    </item>
+    <% end %>
+  </channel>
+</rss>

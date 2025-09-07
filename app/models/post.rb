@@ -48,7 +48,7 @@ class Post < ApplicationRecord
 
   # Ransack configuration for ActiveAdmin
   def self.ransackable_attributes(auth_object = nil)
-    [ "body_md", "created_at", "excerpt", "featured_image_url", "id", "meta_description", "published_at", "reading_time", "slug", "status", "title", "updated_at", "word_count" ]
+    [ "body_md", "created_at", "excerpt", "featured_image_alt", "featured_image_url", "id", "meta_description", "published_at", "reading_time", "slug", "status", "title", "updated_at", "word_count" ]
   end
 
   def self.ransackable_associations(auth_object = nil)

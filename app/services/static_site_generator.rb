@@ -44,13 +44,18 @@ class StaticSiteGenerator
     sitemap_xml = render_sitemap(posts)
     File.write(output_dir.join("sitemap.xml"), sitemap_xml)
 
+    # Generate RSS feed
+    Rails.logger.info "Generating RSS feed..."
+    rss_xml = render_rss_feed(posts)
+    File.write(output_dir.join("feed.xml"), rss_xml)
+
     # Copy static assets (favicons, manifest, etc.)
     Rails.logger.info "Copying static assets..."
     copy_static_assets(output_dir)
 
     Rails.logger.info "Static site generated successfully!"
     Rails.logger.info "Output directory: #{output_dir}"
-    Rails.logger.info "Total pages generated: #{posts.count + 4} (index + about + archive + sitemap + #{posts.count} posts)"
+    Rails.logger.info "Total pages generated: #{posts.count + 5} (index + about + archive + sitemap + RSS + #{posts.count} posts)"
   end
 
   def render_index(posts)
@@ -95,7 +100,8 @@ class StaticSiteGenerator
       layout: "static",
       assigns: {
         site_config: @site_config,
-        page_title: "About #{@site_config.site_name}"
+        page_title: "About #{@site_config.site_name}",
+        page_description: "Learn more about #{@site_config.site_name} and the story behind this blog."
       },
       locals: {
         markdown_to_html: method(:markdown_to_html)
@@ -111,7 +117,8 @@ class StaticSiteGenerator
       assigns: {
         posts: posts,
         site_config: @site_config,
-        page_title: "Archive - #{@site_config.site_name}"
+        page_title: "Archive - #{@site_config.site_name}",
+        page_description: "Browse all #{posts.count} published articles on #{@site_config.site_name}, organized chronologically for easy discovery."
       },
       locals: {
         markdown_to_html: method(:markdown_to_html),
@@ -133,6 +140,30 @@ class StaticSiteGenerator
         posts: @posts,
         site_config: @site_config,
         last_modified: @last_modified
+      }
+    )
+  end
+
+  def render_rss_feed(posts)
+    @site_config = SiteConfig.instance
+    @posts = posts.limit(20) # Limit RSS to 20 most recent posts
+    @last_modified = posts.maximum(:updated_at)
+    @base_url = "https://railquill.vercel.app"
+
+    ApplicationController.render(
+      template: "feed/index",
+      layout: false,
+      formats: [ :xml ],
+      assigns: {
+        posts: @posts,
+        site_config: @site_config,
+        last_modified: @last_modified,
+        base_url: @base_url
+      },
+      locals: {
+        markdown_to_html: method(:markdown_to_html),
+        strip_tags: method(:strip_tags),
+        truncate: method(:truncate)
       }
     )
   end

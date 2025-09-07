@@ -9,6 +9,8 @@
       <meta name="description" content="<%= @post.meta_description %>">
     <% elsif @post && @post.excerpt.present? %>
       <meta name="description" content="<%= @post.excerpt %>">
+    <% elsif @page_description.present? %>
+      <meta name="description" content="<%= @page_description %>">
     <% else %>
       <meta name="description" content="<%= @site_config.welcome_text %>">
     <% end %>
@@ -37,13 +39,13 @@
       <!-- Default page Open Graph -->
       <meta property="og:type" content="website">
       <meta property="og:title" content="<%= @page_title || @site_config.site_name %>">
-      <meta property="og:description" content="<%= @site_config.welcome_text %>">
+      <meta property="og:description" content="<%= @page_description.presence || @site_config.welcome_text %>">
       <meta property="og:image" content="<%= request.base_url %>/og-image.png">
       
       <!-- Twitter -->
       <meta property="twitter:card" content="summary_large_image">
       <meta property="twitter:title" content="<%= @page_title || @site_config.site_name %>">
-      <meta property="twitter:description" content="<%= @site_config.welcome_text %>">
+      <meta property="twitter:description" content="<%= @page_description.presence || @site_config.welcome_text %>">
       <meta property="twitter:image" content="<%= request.base_url %>/og-image.png">
     <% end %>
     
@@ -222,6 +224,12 @@
         color: var(--primary-600);
       }
       
+      header a:focus {
+        color: var(--primary-600);
+        outline: 2px solid var(--primary-500);
+        outline-offset: 2px;
+      }
+      
       .header-nav {
         display: flex;
         gap: 2rem;
@@ -333,6 +341,12 @@
       
       article a:hover {
         border-bottom-color: var(--primary-600);
+      }
+      
+      article a:focus {
+        border-bottom-color: var(--primary-600);
+        outline: 2px solid var(--primary-500);
+        outline-offset: 2px;
       }
       
       /* Drop cap for article content */
@@ -494,7 +508,7 @@
       .post-meta-divider {
         width: 4px;
         height: 4px;
-        background: var(--gray-400);
+        background: var(--gray-500);
         border-radius: 50%;
       }
       
@@ -788,6 +802,11 @@
         transform: translateY(-1px);
       }
       
+      .btn:focus {
+        outline: 2px solid var(--primary-500);
+        outline-offset: 2px;
+      }
+      
       .badge {
         display: inline-flex;
         align-items: center;
@@ -853,13 +872,18 @@
     <header>
       <div class="container">
         <div class="header-content">
-          <h1><a href="/"><%= @site_config.site_name %></a></h1>
+          <% if @post %>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;"><%= @site_config.site_name %></a></div>
+          <% else %>
+            <h1><a href="/"><%= @site_config.site_name %></a></h1>
+          <% end %>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
             <a href="/archive">Archive</a>
-            <a href="/feed.xml" title="RSS Feed">
+            <a href="/feed.xml" title="RSS Feed" aria-label="RSS Feed">
               <%= heroicon_tag "rss", size: 20 %>
+              <span class="sr-only">RSS Feed</span>
             </a>
           </nav>
         </div>
