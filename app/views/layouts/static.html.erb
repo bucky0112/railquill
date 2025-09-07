@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
+    <!-- SEO: Allow search engine indexing -->
+    <meta name="robots" content="index, follow">
+    
     <% if @post && @post.meta_description.present? %>
       <meta name="description" content="<%= @post.meta_description %>">
     <% elsif @post && @post.excerpt.present? %>
