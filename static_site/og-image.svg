@@ -1,0 +1,61 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366F1"/>
+      <stop offset="100%" style="stop-color:#4F46E5"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  
+  <!-- Pattern overlay -->
+  <defs>
+    <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="20" cy="20" r="2" fill="white" opacity="0.1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+  
+  <!-- Main content area -->
+  <g transform="translate(100, 150)">
+    <!-- Logo/Icon -->
+    <g transform="translate(50, 50)">
+      <!-- Quill/Pen -->
+      <path d="M40 25 L110 25 L100 40 L90 50 L80 60 L70 70 L60 80 L50 90 L40 100 L30 90 L40 25 Z" 
+            fill="white" opacity="0.9"/>
+      <!-- Ink drop -->
+      <circle cx="45" cy="95" r="6" fill="white" opacity="0.7"/>
+      <!-- Rails/Lines -->
+      <rect x="20" y="110" width="100" height="4" fill="white" opacity="0.8" rx="2"/>
+      <rect x="20" y="120" width="80" height="3" fill="white" opacity="0.6" rx="1.5"/>
+      <rect x="20" y="130" width="90" height="3" fill="white" opacity="0.6" rx="1.5"/>
+    </g>
+    
+    <!-- Title -->
+    <text x="200" y="80" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="white">
+      Railquill
+    </text>
+    
+    <!-- Subtitle -->
+    <text x="200" y="120" font-family="Arial, sans-serif" font-size="28" fill="white" opacity="0.9">
+      Modern Rails Blog Platform
+    </text>
+    
+    <!-- Description -->
+    <text x="200" y="160" font-family="Arial, sans-serif" font-size="20" fill="white" opacity="0.8">
+      Thoughts on Ruby, Rails, and building beautiful web applications.
+    </text>
+    <text x="200" y="190" font-family="Arial, sans-serif" font-size="20" fill="white" opacity="0.8">
+      Join me on this journey of continuous learning and clean code.
+    </text>
+    
+    <!-- Bottom accent -->
+    <rect x="0" y="280" width="1000" height="2" fill="white" opacity="0.3"/>
+    
+    <!-- URL -->
+    <text x="200" y="320" font-family="Arial, sans-serif" font-size="16" fill="white" opacity="0.7">
+      railquill.com
+    </text>
+  </g>
+</svg>

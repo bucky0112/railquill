@@ -1,0 +1,25 @@
+# Robots.txt for Railquill Blog
+# See https://www.robotstxt.org/robotstxt.html for documentation
+
+# Allow all crawlers to access the site
+User-agent: *
+Allow: /
+
+# Block admin areas
+Disallow: /admin/
+Disallow: /admin_dashboard
+Disallow: /preview/
+
+# Block Rails specific paths
+Disallow: /rails/
+Disallow: /up
+
+# Allow important files
+Allow: /sitemap.xml
+Allow: /feed.xml
+
+# Sitemap location
+Sitemap: https://railquill.com/sitemap.xml
+
+# Crawl-delay for respectful crawling (optional)
+# Crawl-delay: 1
