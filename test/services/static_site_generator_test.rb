@@ -7,7 +7,9 @@ class StaticSiteGeneratorTest < ActiveSupport::TestCase
     # Create test posts
     @published_post1 = Post.create!(
       title: "First Published Post",
-      body_md: "# First Post\n\nThis is the **first** published post with [a link](http://example.com).",
+      body_md: "## First Post
+
+This is the **first** published post with [a link](http://example.com).",
       status: :published,
       published_at: 2.days.ago,
       excerpt: "This is the first published post",
@@ -17,7 +19,13 @@ class StaticSiteGeneratorTest < ActiveSupport::TestCase
 
     @published_post2 = Post.create!(
       title: "Second Published Post",
-      body_md: "# Second Post\n\nThis is the second post.\n\n```ruby\nputs 'hello world'\n```",
+      body_md: "## Second Post
+
+This is the second post.
+
+```ruby
+puts 'hello world'
+```",
       status: :published,
       published_at: 1.day.ago,
       excerpt: "This is the second published post"
@@ -25,7 +33,9 @@ class StaticSiteGeneratorTest < ActiveSupport::TestCase
 
     @draft_post = Post.create!(
       title: "Draft Post",
-      body_md: "# Draft\n\nThis should not appear in static generation.",
+      body_md: "## Draft
+
+This should not appear in static generation.",
       status: :draft
     )
   end
@@ -92,20 +102,24 @@ class StaticSiteGeneratorTest < ActiveSupport::TestCase
     assert_not_nil html
     assert html.length > 0
     assert_includes html, @published_post1.title
-    # Should contain HTML-converted content, not raw markdown
-    assert_includes html, "<h1>"  # Markdown converted to HTML
+    
+    # Should contain the post title as H1 (SEO best practice)
+    assert_includes html, "<h1"
+    
+    # Should contain HTML-converted content from markdown
+    assert_includes html, "<h2"  # Markdown ## converted to HTML <h2> (may have attributes)
   end
 
   test "should render post with markdown conversion" do
     html = @generator.render_post(@published_post1)
 
     # Should convert markdown to HTML
-    assert_includes html, "<h1>"  # # becomes <h1>
+    assert_includes html, "<h2"  # ## becomes <h2> (may have attributes)
     assert_includes html, "<strong>"  # ** becomes <strong>
     assert_includes html, "<a href=\"http://example.com\""  # [link](url) becomes <a>
 
     # Should not include raw markdown
-    assert_not_includes html, "# First Post"  # Raw markdown should be converted
+    assert_not_includes html, "## First Post"  # Raw markdown should be converted
     assert_not_includes html, "**first**"  # Raw markdown should be converted
   end
 
