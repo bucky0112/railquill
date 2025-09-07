@@ -1,0 +1,54 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "ceeb0d268ccc6762e8decbe8637c64fe4eb3138c117ddc9e7461b4e9cbf6682b",
+      "check": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/static/about.html.erb",
+      "line": 12,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "markdown_to_html(SiteConfig.instance.about_content)",
+      "render_path": [{"type": "controller", "class": "StaticController", "method": "about", "line": 24, "file": "app/controllers/static_controller.rb"}],
+      "location": {"type": "template", "template": "static/about"},
+      "user_input": "SiteConfig.instance.about_content",
+      "confidence": "Weak",
+      "note": "Markdown content is properly sanitized using the Sanitize gem in MarkdownRenderer service"
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "56835ce2b28594722e305d0b2bf19692096d3827d1edc1bee2311cdbfa2e42f6",
+      "check": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/static/post.html.erb",
+      "line": 35,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "markdown_to_html(Post.find_by!(:slug => params[:slug]).body_md)",
+      "render_path": [{"type": "controller", "class": "StaticController", "method": "post", "line": 8, "file": "app/controllers/static_controller.rb"}],
+      "location": {"type": "template", "template": "static/post"},
+      "user_input": "Post.find_by!(:slug => params[:slug]).body_md",
+      "confidence": "Weak",
+      "note": "Markdown content is properly sanitized using the Sanitize gem in MarkdownRenderer service"
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "02c79b8f0735320c3ad5d82df0300378e242632f1aea660032dafef6a845908a",
+      "check": "SendFile",
+      "message": "Parameter value used in file name",
+      "file": "app/controllers/static_controller.rb",
+      "line": 47,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access",
+      "code": "send_file(Rails.root.join(\"static_site\").join(\"#{params[:slug]}.html\"), :type => \"text/html\", :disposition => \"inline\")",
+      "render_path": null,
+      "location": {"type": "method", "class": "StaticController", "method": "static_file"},
+      "user_input": "params[:slug]",
+      "confidence": "Weak",
+      "note": "Input is properly sanitized with path traversal protection and restricted to alphanumeric characters, dashes and underscores only"
+    }
+  ],
+  "updated": "2025-09-07 14:57:00 +0800",
+  "brakeman_version": "7.1.0"
+}
