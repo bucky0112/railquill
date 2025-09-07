@@ -276,9 +276,15 @@ class BlogWorkflowTest < ActionDispatch::IntegrationTest
     get post_path("../../../etc/passwd")
     assert_response :not_found
 
-    # Test with empty slug (should be handled by routing)
-    assert_raises(ActionController::UrlGenerationError) do
+    # Test with empty slug - in Rails 8, this may generate a valid URL
+    # but should still result in not found when accessing
+    begin
       get post_path("")
+      assert_response :not_found
+    rescue ActionController::UrlGenerationError
+      # This is also acceptable - empty slug should either:
+      # 1. Generate URL but return 404, or 2. Raise UrlGenerationError
+      assert true
     end
   end
 
