@@ -19,7 +19,7 @@ Allow: /sitemap.xml
 Allow: /feed.xml
 
 # Sitemap location
-Sitemap: https://railquill.com/sitemap.xml
+Sitemap: https://railquill.vercel.app/sitemap.xml
 
 # Crawl-delay for respectful crawling (optional)
 # Crawl-delay: 1

@@ -865,6 +865,17 @@
         .hero p { font-size: var(--text-lg); }
         .container { padding: 0 var(--space-4); }
         .container-narrow { padding: 0 var(--space-4); }
+        
+        /* Ensure minimum font sizes for accessibility */
+        body { font-size: 16px; }
+        .post-card-meta { font-size: 14px; }
+        .footer-section p,
+        .footer-section a { font-size: 14px; }
+        
+        /* Ensure tap targets are at least 44px */
+        .btn { min-height: 44px; padding: var(--space-3) var(--space-4); }
+        header a { min-height: 44px; display: flex; align-items: center; }
+        .post-nav-title { min-height: 44px; display: flex; align-items: center; }
       }
     </style>
   </head>

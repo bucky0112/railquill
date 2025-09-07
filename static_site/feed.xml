@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Railquill</title>
+    <link>https://railquill.vercel.app</link>
+    <description>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.</description>
+    <language>en-us</language>
+    <atom:link href="https://railquill.vercel.app/feed.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 07 Sep 2025 12:17:32 +0000</lastBuildDate>
+    <generator>Railquill - Rails Blog Generator</generator>
+    
+    <item>
+      <title>Debug Test Post 1757247452</title>
+      <link>https://railquill.vercel.app/debug-test-post-1757247452.html</link>
+      <description>Test Header
+
+Some content here</description>
+      <content:encoded><![CDATA[
+        &lt;h2 id=&quot;test-header&quot;&gt;Test Header&lt;/h2&gt;
+
+&lt;p&gt;Some content here&lt;/p&gt;
+
+      ]]></content:encoded>
+      <pubDate>Sun, 07 Sep 2025 12:17:32 +0000</pubDate>
+      <guid isPermaLink="true">https://railquill.vercel.app/debug-test-post-1757247452.html</guid>
+      <author>bucky0112@gmail.com (Bucky Chu)</author>
+      <category>Reading Time: 1 minutes</category>
+    </item>
+    <item>
+      <title>Test Post</title>
+      <link>https://railquill.vercel.app/test-post.html</link>
+      <description>Test Header\n\nSome content</description>
+      <content:encoded><![CDATA[
+        &lt;h2 id=&quot;test-header-n-nsome-content&quot;&gt;Test Header\n\nSome content&lt;/h2&gt;
+
+      ]]></content:encoded>
+      <pubDate>Sun, 07 Sep 2025 12:15:43 +0000</pubDate>
+      <guid isPermaLink="true">https://railquill.vercel.app/test-post.html</guid>
+      <author>bucky0112@gmail.com (Bucky Chu)</author>
+      <category>Reading Time: 1 minutes</category>
+    </item>
+  </channel>
+</rss>
