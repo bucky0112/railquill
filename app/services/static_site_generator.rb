@@ -143,7 +143,7 @@ class StaticSiteGenerator
     # List of static files to copy from public/
     static_files = [
       "favicon.ico",
-      "icon.svg", 
+      "icon.svg",
       "icon.png",
       "icon-192.png",
       "icon-512.png",
@@ -154,11 +154,11 @@ class StaticSiteGenerator
     ]
 
     public_dir = Rails.root.join("public")
-    
+
     static_files.each do |file|
       source_path = public_dir.join(file)
       dest_path = output_dir.join(file)
-      
+
       if File.exist?(source_path)
         FileUtils.cp(source_path, dest_path)
         Rails.logger.debug "Copied #{file} to static site"
