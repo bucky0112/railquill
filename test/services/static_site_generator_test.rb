@@ -102,10 +102,10 @@ This should not appear in static generation.",
     assert_not_nil html
     assert html.length > 0
     assert_includes html, @published_post1.title
-    
+
     # Should contain the post title as H1 (SEO best practice)
     assert_includes html, "<h1"
-    
+
     # Should contain HTML-converted content from markdown
     assert_includes html, "<h2"  # Markdown ## converted to HTML <h2> (may have attributes)
   end
