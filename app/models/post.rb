@@ -34,7 +34,7 @@ class Post < ApplicationRecord
   def publish!
     update!(status: :published, published_at: published_at || Time.current)
   end
-  
+
   # Ensure published_at is always set when status changes to published
   def ensure_published_at
     if published? && published_at.blank?
@@ -89,23 +89,23 @@ class Post < ApplicationRecord
     # 3. Title, slug, or other important fields changed for published posts
     return false unless saved_changes.any?
 
-    status_changed = saved_changes.key?('status')
-    content_fields_changed = (saved_changes.keys & ['title', 'body_md', 'excerpt', 'published_at', 'slug']).any?
-    
+    status_changed = saved_changes.key?("status")
+    content_fields_changed = (saved_changes.keys & [ "title", "body_md", "excerpt", "published_at", "slug" ]).any?
+
     # Regenerate if status changed OR if important fields changed on a published post
     status_changed || (published? && content_fields_changed)
   end
 
   def regenerate_static_site
     Rails.logger.info "🚀 Queuing static site regeneration due to post changes: #{title}"
-    
+
     begin
       if Rails.env.test?
         # Don't regenerate in test environment
-        return
+        nil
       elsif Rails.env.development?
         # In development, use immediate background process for faster feedback
-        pid = spawn("bin/rails static:publish", chdir: Rails.root, out: '/dev/null', err: '/dev/null')
+        pid = spawn("bin/rails static:publish", chdir: Rails.root, out: "/dev/null", err: "/dev/null")
         Process.detach(pid)  # Don't wait for it to finish
       else
         # In production, use proper background job system
